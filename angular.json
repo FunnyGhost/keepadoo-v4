@@ -24,9 +24,12 @@
             "tsConfig": "apps/keepadoo/tsconfig.app.json",
             "assets": [
               "apps/keepadoo/src/favicon.ico",
-              "apps/keepadoo/src/assets"
+              "apps/keepadoo/src/assets",
+              "apps/keepadoo/src/manifest.json"
             ],
-            "styles": ["apps/keepadoo/src/styles.scss"],
+            "styles": [
+              "apps/keepadoo/src/styles.scss"
+            ],
             "scripts": [],
             "es5BrowserSupport": true
           },
@@ -53,7 +56,8 @@
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
                 }
-              ]
+              ],
+              "serviceWorker": true
             }
           }
         },
@@ -81,7 +85,9 @@
               "apps/keepadoo/tsconfig.app.json",
               "apps/keepadoo/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**"]
+            "exclude": [
+              "**/node_modules/**"
+            ]
           }
         },
         "test": {
@@ -116,7 +122,9 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": "apps/keepadoo-e2e/tsconfig.e2e.json",
-            "exclude": ["**/node_modules/**"]
+            "exclude": [
+              "**/node_modules/**"
+            ]
           }
         }
       }
