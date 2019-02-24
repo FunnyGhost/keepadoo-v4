@@ -2,7 +2,126 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "newProjectRoot": "",
-  "projects": {},
+  "projects": {
+    "keepadoo": {
+      "root": "apps/keepadoo/",
+      "sourceRoot": "apps/keepadoo/src",
+      "projectType": "application",
+      "prefix": "keepadoo",
+      "schematics": {
+        "@nrwl/schematics:component": {
+          "style": "scss"
+        }
+      },
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/keepadoo",
+            "index": "apps/keepadoo/src/index.html",
+            "main": "apps/keepadoo/src/main.ts",
+            "polyfills": "apps/keepadoo/src/polyfills.ts",
+            "tsConfig": "apps/keepadoo/tsconfig.app.json",
+            "assets": [
+              "apps/keepadoo/src/favicon.ico",
+              "apps/keepadoo/src/assets"
+            ],
+            "styles": ["apps/keepadoo/src/styles.scss"],
+            "scripts": [],
+            "es5BrowserSupport": true
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/keepadoo/src/environments/environment.ts",
+                  "with": "apps/keepadoo/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "keepadoo:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "keepadoo:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "keepadoo:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/keepadoo/tsconfig.app.json",
+              "apps/keepadoo/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/builders:jest",
+          "options": {
+            "jestConfig": "apps/keepadoo/jest.config.js",
+            "tsConfig": "apps/keepadoo/tsconfig.spec.json",
+            "setupFile": "apps/keepadoo/src/test-setup.ts"
+          }
+        }
+      }
+    },
+    "keepadoo-e2e": {
+      "root": "apps/keepadoo-e2e",
+      "projectType": "application",
+      "prefix": "",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/builders:cypress",
+          "options": {
+            "cypressConfig": "apps/keepadoo-e2e/cypress.json",
+            "tsConfig": "apps/keepadoo-e2e/tsconfig.e2e.json",
+            "devServerTarget": "keepadoo:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "keepadoo:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": "apps/keepadoo-e2e/tsconfig.e2e.json",
+            "exclude": ["**/node_modules/**"]
+          }
+        }
+      }
+    }
+  },
   "cli": {
     "warnings": {
       "typescriptMismatch": false,
@@ -17,5 +136,6 @@
     "@nrwl/schematics:library": {
       "style": "scss"
     }
-  }
+  },
+  "defaultProject": "keepadoo"
 }
