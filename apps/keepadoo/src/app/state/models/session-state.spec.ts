@@ -1,3 +1,4 @@
+import { testUser } from '../../../test-utilities/test-objects';
 import {
   createInitialState,
   createSession,
@@ -15,11 +16,7 @@ describe('SessionState', () => {
 
   describe('createSession', () => {
     it('should create a session with the given user', () => {
-      const inputUser: User = {
-        firstName: 'Bruce',
-        lastName: 'Wayne',
-        token: 'BATMAN'
-      };
+      const inputUser = testUser;
       const result: User = createSession(inputUser);
       expect(result).toEqual(inputUser);
     });
