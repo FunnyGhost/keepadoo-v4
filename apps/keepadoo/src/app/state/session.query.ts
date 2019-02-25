@@ -10,7 +10,7 @@ export class SessionQuery extends Query<SessionState> {
 
   loggedInUser$ = this.select().pipe(
     filter(({ user }) => toBoolean(user)),
-    map(({ user: { firstName, lastName } }) => `${firstName} ${lastName}`)
+    map(({ user: { displayName } }) => `${displayName}`)
   );
 
   constructor(protected store: SessionStore) {

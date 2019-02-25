@@ -35,11 +35,11 @@ describe('SessionQuery', () => {
   });
 
   describe('loggedInUser$', () => {
-    it('should return the logged in user full name', done => {
+    it('should return the logged in user display name', done => {
       store.update({ user: testUser });
 
       query.loggedInUser$.subscribe((data: string) => {
-        expect(data).toBe(`${testUser.firstName} ${testUser.lastName}`);
+        expect(data).toBe(`${testUser.displayName}`);
         done();
       });
     });
