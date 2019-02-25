@@ -1,10 +1,8 @@
 import { TestBed } from '@angular/core/testing';
+import { Router } from '@angular/router';
+import { routerMock, sessionQueryMock } from '../../test-utilities/test-mocks';
 import { AuthGuard } from './auth.guard';
 import { SessionQuery } from './session.query';
-
-const sessionQueryMock = {
-  isLoggedIn() {}
-};
 
 describe('AuthGuard', () => {
   let guard: AuthGuard;
@@ -14,7 +12,8 @@ describe('AuthGuard', () => {
     TestBed.configureTestingModule({
       providers: [
         AuthGuard,
-        { provide: SessionQuery, useValue: sessionQueryMock }
+        { provide: SessionQuery, useValue: sessionQueryMock },
+        { provide: Router, useValue: routerMock }
       ]
     });
 
@@ -34,5 +33,15 @@ describe('AuthGuard', () => {
 
     const result = guard.canActivate();
     expect(result).toBe(false);
+  });
+
+  it('should redirect to login if the user is not logged in', () => {
+    const router: Router = TestBed.get(Router);
+    jest.spyOn(router, 'navigateByUrl');
+    jest.spyOn(query, 'isLoggedIn').mockReturnValue(false);
+
+    guard.canActivate();
+
+    expect(router.navigateByUrl).toHaveBeenCalledWith('/login');
   });
 });
