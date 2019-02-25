@@ -8,6 +8,7 @@ import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
+import { AuthGuard } from './state/auth.guard';
 
 const routes: Route[] = [
   {
@@ -16,7 +17,7 @@ const routes: Route[] = [
   },
   {
     path: 'home',
-    canActivate: [],
+    canActivate: [AuthGuard],
     component: HomeComponent
   }
 ];
