@@ -2,13 +2,10 @@ import { TestBed } from '@angular/core/testing';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
+import { routerMock, sessionStoreMock } from '../../test-utilities/test-mocks';
 import { testFirebaseUser, testUser } from '../../test-utilities/test-objects';
 import { AuthService } from './auth.service';
 import { SessionStore } from './session.store';
-
-const sessionStoreMock = {
-  login: jest.fn()
-};
 
 const angularFireAuthMock = {
   authState: new Subject<any>(),
@@ -16,10 +13,6 @@ const angularFireAuthMock = {
     signInWithEmailAndPassword: jest.fn(),
     signOut: jest.fn()
   }
-};
-
-const routerMock = {
-  navigate: jest.fn()
 };
 
 describe('AuthService', () => {
