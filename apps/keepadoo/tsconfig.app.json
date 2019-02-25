@@ -4,6 +4,6 @@
     "outDir": "../../dist/out-tsc/apps/keepadoo",
     "types": []
   },
-  "exclude": ["src/test-setup.ts", "**/*.spec.ts"],
+  "exclude": ["src/test-setup.ts", "src/test-utilities/*.ts", "**/*.spec.ts"],
   "include": ["**/*.ts"]
 }
