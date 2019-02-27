@@ -13,3 +13,9 @@ export const sessionQueryMock = {
 export const sessionStoreMock = {
   login: jest.fn()
 };
+
+/* istanbul ignore next */
+export const authServiceMock = {
+  signIn: jest.fn(),
+  signOut: jest.fn()
+};
