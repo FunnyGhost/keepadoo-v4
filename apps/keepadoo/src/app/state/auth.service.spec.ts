@@ -59,12 +59,12 @@ describe('AuthService', () => {
     });
   });
 
-  describe('signin', () => {
+  describe('signIn', () => {
     it('should sign in with email and password', async () => {
       const inputEmail = 'test@test.com';
       const inputPassword = 'password';
 
-      await service.signin(inputEmail, inputPassword);
+      await service.signIn(inputEmail, inputPassword);
       expect(
         angularFireAuthMock.auth.signInWithEmailAndPassword
       ).toHaveBeenCalledWith(inputEmail, inputPassword);
