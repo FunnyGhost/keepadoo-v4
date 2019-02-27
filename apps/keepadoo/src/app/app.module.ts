@@ -5,6 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { Route, RouterModule } from '@angular/router';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { AkitaNgDevtools } from '@datorama/akita-ngdevtools';
 import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -37,6 +38,7 @@ const routes: Route[] = [
       enabled: environment.production
     }),
     AngularFireModule.initializeApp(environment.firebase),
+    environment.production ? [] : AkitaNgDevtools.forRoot(),
     AngularFireAuthModule,
     ReactiveFormsModule
   ],
