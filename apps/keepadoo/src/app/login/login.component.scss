@@ -13,6 +13,7 @@
     width: 340px;
     height: 480px;
     margin: 50px 4px;
+    border-radius: 5px;
     background-color: $white;
 
     .logo-container {
@@ -43,6 +44,7 @@
       margin: 20px;
       height: 41px;
       border: 1px solid $color-primary-1;
+      border-radius: 3px;
       color: $color-primary-1;
 
       svg {
@@ -111,6 +113,7 @@
         color: $white;
         background-color: #190534;
         border: none;
+        border-radius: 3px;
         font-family: $main-font;
         font-weight: bold;
         text-transform: uppercase;
@@ -118,6 +121,13 @@
 
         &:focus {
           outline: none;
+        }
+
+        &:disabled {
+          border: 1px solid $disabled;
+          background-color: $white;
+          color: $disabled;
+          cursor: default;
         }
       }
     }
