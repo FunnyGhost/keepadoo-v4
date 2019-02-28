@@ -71,7 +71,6 @@ describe('AuthService', () => {
     });
 
     it('should set loading when waiting for authentication', async () => {
-      jest.spyOn(store, 'setLoading');
       const inputEmail = 'test@test.com';
       const inputPassword = 'password';
 
@@ -110,9 +109,9 @@ describe('AuthService', () => {
       const errorToUse = 'Invalid username/password';
       const inputEmail = 'test@test.com';
       const inputPassword = 'password';
-      angularFireAuthMock.auth.signInWithEmailAndPassword.mockRejectedValue(
-        errorToUse
-      );
+      angularFireAuthMock.auth.signInWithEmailAndPassword.mockRejectedValue({
+        message: errorToUse
+      });
 
       await service.signIn(inputEmail, inputPassword);
 

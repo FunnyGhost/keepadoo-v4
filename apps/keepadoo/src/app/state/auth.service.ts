@@ -46,7 +46,7 @@ export class AuthService {
         password
       );
     } catch (error) {
-      this.sessionStore.setError(error);
+      this.sessionStore.setError(error.message);
     }
 
     this.sessionStore.setLoading(false);
