@@ -11,7 +11,9 @@ export const sessionQueryMock = {
 
 /* istanbul ignore next */
 export const sessionStoreMock = {
-  login: jest.fn()
+  login: jest.fn(),
+  setLoading: jest.fn(),
+  setError: jest.fn()
 };
 
 /* istanbul ignore next */
