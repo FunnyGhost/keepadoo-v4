@@ -69,6 +69,68 @@ describe('AuthService', () => {
         angularFireAuthMock.auth.signInWithEmailAndPassword
       ).toHaveBeenCalledWith(inputEmail, inputPassword);
     });
+
+    it('should set loading when waiting for authentication', async () => {
+      jest.spyOn(store, 'setLoading');
+      const inputEmail = 'test@test.com';
+      const inputPassword = 'password';
+
+      await service.signIn(inputEmail, inputPassword);
+
+      expect(store.setLoading).toHaveBeenCalledWith(true);
+      expect(store.setLoading).toHaveBeenLastCalledWith(false);
+      expect(
+        angularFireAuthMock.auth.signInWithEmailAndPassword
+      ).toHaveBeenCalledWith(inputEmail, inputPassword);
+    });
+
+    it('should unset loading when authentication is finished', async () => {
+      const inputEmail = 'test@test.com';
+      const inputPassword = 'password';
+
+      await service.signIn(inputEmail, inputPassword);
+      expect(
+        angularFireAuthMock.auth.signInWithEmailAndPassword
+      ).toHaveBeenCalledWith(inputEmail, inputPassword);
+    });
+
+    it('should not set error when authentication is ok', async () => {
+      const inputEmail = 'test@test.com';
+      const inputPassword = 'password';
+
+      angularFireAuthMock.auth.signInWithEmailAndPassword.mockReturnValueOnce(
+        {}
+      );
+      await service.signIn(inputEmail, inputPassword);
+
+      expect(store.setError).not.toHaveBeenCalled();
+    });
+
+    it('should set error when authentication fails', async () => {
+      const errorToUse = 'Invalid username/password';
+      const inputEmail = 'test@test.com';
+      const inputPassword = 'password';
+      angularFireAuthMock.auth.signInWithEmailAndPassword.mockRejectedValue(
+        errorToUse
+      );
+
+      await service.signIn(inputEmail, inputPassword);
+
+      expect(store.setError).toHaveBeenCalledWith(errorToUse);
+    });
+
+    it('should unset loading when there is an error', async () => {
+      const errorToUse = 'Invalid username/password';
+      const inputEmail = 'test@test.com';
+      const inputPassword = 'password';
+      angularFireAuthMock.auth.signInWithEmailAndPassword.mockRejectedValue(
+        errorToUse
+      );
+
+      await service.signIn(inputEmail, inputPassword);
+
+      expect(store.setLoading).toHaveBeenLastCalledWith(false);
+    });
   });
 
   describe('signOut', () => {

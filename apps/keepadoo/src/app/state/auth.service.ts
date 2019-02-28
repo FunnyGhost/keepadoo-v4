@@ -37,7 +37,20 @@ export class AuthService {
   }
 
   async signIn(email, password) {
-    return await this.afAuth.auth.signInWithEmailAndPassword(email, password);
+    this.sessionStore.setLoading(true);
+    let response;
+
+    try {
+      response = await this.afAuth.auth.signInWithEmailAndPassword(
+        email,
+        password
+      );
+    } catch (error) {
+      this.sessionStore.setError(error);
+    }
+
+    this.sessionStore.setLoading(false);
+    return response;
   }
 
   async signOut() {
