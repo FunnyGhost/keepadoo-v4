@@ -39,8 +39,6 @@
       />
     </div>
 
-    <div class="error" *ngIf="(error$ | async); let error">{{ error }}</div>
-
     <div class="button-container">
       <button
         type="button"
@@ -51,11 +49,14 @@
         <img
           *ngIf="(loading$ | async)"
           class="loading-image"
-          src="/apps/keepadoo/src/assets/spinner.svg"
+          src="/assets/spinner.svg"
           alt=""
         />
-        <span>Login</span>
+
+        <span *ngIf="!(loading$ | async)">Login</span>
       </button>
+
+      <div class="error" *ngIf="(error$ | async); let error">{{ error }}</div>
     </div>
   </form>
 </div>

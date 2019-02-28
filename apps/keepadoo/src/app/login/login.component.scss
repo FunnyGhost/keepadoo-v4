@@ -3,7 +3,7 @@
 .container {
   background-color: $color-primary;
   height: 100vh;
-  min-height: 580px;
+  min-height: 600px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -11,7 +11,7 @@
 
   .login-box {
     width: 340px;
-    height: 480px;
+    height: 510px;
     margin: 50px 4px;
     border-radius: 5px;
     background-color: $white;
@@ -129,7 +129,45 @@
           color: $disabled;
           cursor: default;
         }
+
+        &.loading {
+          border: 1px solid $disabled;
+          background-color: $white;
+          color: $disabled;
+          cursor: default;
+        }
+
+        img {
+          width: 20px;
+          height: 20px;
+          -webkit-animation: spin 4s linear infinite;
+          -moz-animation: spin 4s linear infinite;
+          animation: spin 4s linear infinite;
+        }
       }
     }
+
+    .error {
+      margin: 20px;
+      color: $error;
+      font-family: $secondary-font-light;
+    }
+  }
+}
+
+@-moz-keyframes spin {
+  100% {
+    -moz-transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes spin {
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+@keyframes spin {
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
   }
 }
