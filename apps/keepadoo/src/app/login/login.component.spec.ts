@@ -1,9 +1,22 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AbstractControl, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { authServiceMock } from '../../test-utilities/test-mocks';
 import { AuthService } from '../state/auth.service';
+import { SessionQuery } from '../state/session.query';
 import { LoginComponent } from './login.component';
+
+const queryMock = {
+  error: new BehaviorSubject<string | null>(null),
+  selectError(): Observable<string | null> {
+    return this.error.asObservable();
+  },
+  loading: new BehaviorSubject<boolean>(false),
+  selectLoading(): Observable<boolean> {
+    return this.loading.asObservable();
+  }
+};
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -18,6 +31,10 @@ describe('LoginComponent', () => {
         {
           provide: AuthService,
           useValue: authServiceMock
+        },
+        {
+          provide: SessionQuery,
+          useValue: queryMock
         }
       ]
     }).compileComponents();
@@ -145,6 +162,46 @@ describe('LoginComponent', () => {
       const loginButton = fixture.debugElement.query(By.css('button'));
 
       expect(loginButton.nativeElement.disabled).toBeTruthy();
+    });
+  });
+
+  describe('Error', () => {
+    it('should not be visible if there is no error', () => {
+      queryMock.error.next(null);
+
+      const errorElements = fixture.debugElement.queryAll(By.css('.error'));
+
+      expect(errorElements.length).toBe(0);
+    });
+
+    it('should be visible if there is an error', () => {
+      const errorToUse = 'Invalid username/password';
+      queryMock.error.next(errorToUse);
+      fixture.detectChanges();
+
+      const errorElements = fixture.debugElement.queryAll(By.css('.error'));
+
+      expect(errorElements.length).toBe(1);
+      expect(errorElements[0].nativeElement.innerHTML).toContain(errorToUse);
+    });
+  });
+
+  describe('Loading', () => {
+    it('should not be visible if it it not loading', () => {
+      queryMock.loading.next(false);
+
+      const loadingElements = fixture.debugElement.queryAll(By.css('.loading'));
+
+      expect(loadingElements.length).toBe(0);
+    });
+
+    it('should be visible if it is loading', () => {
+      queryMock.loading.next(true);
+      fixture.detectChanges();
+
+      const loadingElements = fixture.debugElement.queryAll(By.css('.loading'));
+
+      expect(loadingElements.length).toBe(1);
     });
   });
 });

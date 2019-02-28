@@ -39,9 +39,22 @@
       />
     </div>
 
+    <div class="error" *ngIf="(error$ | async); let error">{{ error }}</div>
+
     <div class="button-container">
-      <button type="button" (click)="onSubmit()" [disabled]="!loginForm.valid">
-        Login
+      <button
+        type="button"
+        (click)="onSubmit()"
+        [disabled]="!loginForm.valid"
+        [class.loading]="loading$ | async"
+      >
+        <img
+          *ngIf="(loading$ | async)"
+          class="loading-image"
+          src="/apps/keepadoo/src/assets/spinner.svg"
+          alt=""
+        />
+        <span>Login</span>
       </button>
     </div>
   </form>
