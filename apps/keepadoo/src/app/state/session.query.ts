@@ -20,4 +20,8 @@ export class SessionQuery extends Query<SessionState> {
   isLoggedIn(): boolean {
     return toBoolean(this.getValue().user);
   }
+
+  redirectUrl(): string {
+    return this.getValue().redirectUrl;
+  }
 }

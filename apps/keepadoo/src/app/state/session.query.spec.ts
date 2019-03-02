@@ -1,4 +1,5 @@
 import { testUser } from '../../test-utilities/test-objects';
+import { createInitialState } from './models/session-state';
 import { SessionQuery } from './session.query';
 import { SessionStore } from './session.store';
 
@@ -58,6 +59,23 @@ describe('SessionQuery', () => {
 
       const result = query.isLoggedIn();
       expect(result).toBe(false);
+    });
+  });
+
+  describe('redirectUrl', () => {
+    it('should return the redirectUrl', () => {
+      const inputRedirectUrl = 'home';
+      store.update({ redirectUrl: inputRedirectUrl });
+
+      const result = query.redirectUrl();
+      expect(result).toBe(inputRedirectUrl);
+    });
+
+    it('should return empty string if the redirectUrl was not set', () => {
+      store.update(createInitialState());
+
+      const result = query.redirectUrl();
+      expect(result).toBe('');
     });
   });
 });
