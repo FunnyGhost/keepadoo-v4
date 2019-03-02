@@ -8,9 +8,14 @@ import { User } from './user';
 
 describe('SessionState', () => {
   describe('createInitialState', () => {
+    const initialSessionState: SessionState = createInitialState();
+
     it('should set the user to null', () => {
-      const initialSessionState: SessionState = createInitialState();
       expect(initialSessionState.user).toBeNull();
+    });
+
+    it('should set the redirectUrl to empty string', () => {
+      expect(initialSessionState.redirectUrl).toBe('');
     });
   });
 
