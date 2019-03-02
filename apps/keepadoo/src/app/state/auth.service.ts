@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { User as FirebaseUser } from 'firebase';
 import { map } from 'rxjs/operators';
 import { User } from './models/user';
+import { SessionQuery } from './session.query';
 import { SessionStore } from './session.store';
 
 @Injectable({
@@ -12,6 +13,7 @@ import { SessionStore } from './session.store';
 export class AuthService {
   constructor(
     private sessionStore: SessionStore,
+    private query: SessionQuery,
     private afAuth: AngularFireAuth,
     private router: Router
   ) {
@@ -33,6 +35,10 @@ export class AuthService {
       )
       .subscribe((data: User) => {
         this.sessionStore.login(data);
+        if (data) {
+          const redirectUrl = this.query.redirectUrl();
+          this.router.navigateByUrl(redirectUrl);
+        }
       });
   }
 

@@ -2,9 +2,14 @@ import { TestBed } from '@angular/core/testing';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
-import { routerMock, sessionStoreMock } from '../../test-utilities/test-mocks';
+import {
+  routerMock,
+  sessionQueryMock,
+  sessionStoreMock
+} from '../../test-utilities/test-mocks';
 import { testFirebaseUser, testUser } from '../../test-utilities/test-objects';
 import { AuthService } from './auth.service';
+import { SessionQuery } from './session.query';
 import { SessionStore } from './session.store';
 
 const angularFireAuthMock = {
@@ -18,6 +23,8 @@ const angularFireAuthMock = {
 describe('AuthService', () => {
   let service: AuthService;
   let store: SessionStore;
+  let query: SessionQuery;
+  let router: Router;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -25,6 +32,10 @@ describe('AuthService', () => {
         {
           provide: SessionStore,
           useValue: sessionStoreMock
+        },
+        {
+          provide: SessionQuery,
+          useValue: sessionQueryMock
         },
         {
           provide: AngularFireAuth,
@@ -39,6 +50,8 @@ describe('AuthService', () => {
 
     service = TestBed.get(AuthService);
     store = TestBed.get(SessionStore);
+    query = TestBed.get(SessionQuery);
+    router = TestBed.get(Router);
   });
 
   it('should be created', () => {
@@ -50,6 +63,23 @@ describe('AuthService', () => {
       angularFireAuthMock.authState.next(testFirebaseUser);
 
       expect(store.login).toHaveBeenCalledWith(testUser);
+    });
+
+    it('should redirect to the storedRedirectURL when the user logs in', () => {
+      const redirectUrl = 'i-am-batman';
+      jest.spyOn(query, 'redirectUrl').mockReturnValue(redirectUrl);
+      angularFireAuthMock.authState.next(testFirebaseUser);
+
+      expect(store.login).toHaveBeenCalledWith(testUser);
+      expect(router.navigateByUrl).toHaveBeenCalledWith(redirectUrl);
+    });
+
+    it('should not redirect to the storedRedirectURL when the user logs out', () => {
+      const redirectUrl = 'i-am-batman';
+      jest.spyOn(query, 'redirectUrl').mockReturnValue(redirectUrl);
+      angularFireAuthMock.authState.next(null);
+
+      expect(router.navigateByUrl).not.toHaveBeenCalledWith(redirectUrl);
     });
 
     it('should login with null when the firebase user is not there', () => {
@@ -151,5 +181,6 @@ describe('AuthService', () => {
     angularFireAuthMock.auth.signInWithEmailAndPassword.mockClear();
     angularFireAuthMock.auth.signOut.mockClear();
     routerMock.navigate.mockClear();
+    routerMock.navigateByUrl.mockClear();
   });
 });
