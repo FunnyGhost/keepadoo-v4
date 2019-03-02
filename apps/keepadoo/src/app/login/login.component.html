@@ -53,7 +53,7 @@
           alt=""
         />
 
-        <span *ngIf="!(loading$ | async)">Login</span>
+        <span class="login-button-text" *ngIf="!(loading$ | async)">Login</span>
       </button>
 
       <div class="error" *ngIf="(error$ | async); let error">{{ error }}</div>

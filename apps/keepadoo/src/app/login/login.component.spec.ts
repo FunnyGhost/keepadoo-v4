@@ -187,21 +187,46 @@ describe('LoginComponent', () => {
   });
 
   describe('Loading', () => {
-    it('should not be visible if it it not loading', () => {
-      queryMock.loading.next(false);
+    describe('isNotLoading', () => {
+      beforeEach(function() {
+        queryMock.loading.next(false);
+        fixture.detectChanges();
+      });
 
-      const loadingElements = fixture.debugElement.queryAll(By.css('.loading'));
+      it('should not show the loading image', () => {
+        const loadingImage = fixture.debugElement.queryAll(
+          By.css('.loading-image')
+        );
+        expect(loadingImage.length).toBe(0);
+      });
 
-      expect(loadingElements.length).toBe(0);
+      it('should show the login button text', () => {
+        const loginButtonText = fixture.debugElement.queryAll(
+          By.css('.login-button-text')
+        );
+        expect(loginButtonText.length).toBe(1);
+      });
     });
 
-    it('should be visible if it is loading', () => {
-      queryMock.loading.next(true);
-      fixture.detectChanges();
+    describe('isLoading', () => {
+      beforeEach(function() {
+        queryMock.loading.next(true);
+        fixture.detectChanges();
+      });
 
-      const loadingElements = fixture.debugElement.queryAll(By.css('.loading'));
+      it('should show the loading image', () => {
+        const loadingImage = fixture.debugElement.queryAll(
+          By.css('.loading-image')
+        );
+        expect(loadingImage.length).toBe(1);
+      });
 
-      expect(loadingElements.length).toBe(1);
+      it('should not show the login button text', () => {
+        const loginButtonText = fixture.debugElement.queryAll(
+          By.css('.loading-button-text')
+        );
+        expect(loginButtonText.length).toBe(0);
+      });
     });
   });
 });
