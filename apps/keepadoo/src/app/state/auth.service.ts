@@ -34,10 +34,12 @@ export class AuthService {
         })
       )
       .subscribe((data: User) => {
-        this.sessionStore.login(data);
         if (data) {
+          this.sessionStore.login(data);
           const redirectUrl = this.query.redirectUrl();
           this.router.navigateByUrl(redirectUrl);
+        } else {
+          this.sessionStore.logout();
         }
       });
   }

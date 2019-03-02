@@ -82,10 +82,10 @@ describe('AuthService', () => {
       expect(router.navigateByUrl).not.toHaveBeenCalledWith(redirectUrl);
     });
 
-    it('should login with null when the firebase user is not there', () => {
+    it('should logout when the firebase user is not there', () => {
       angularFireAuthMock.authState.next(null);
 
-      expect(store.login).toHaveBeenCalledWith(null);
+      expect(store.logout).toHaveBeenCalled();
     });
   });
 
