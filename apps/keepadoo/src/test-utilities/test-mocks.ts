@@ -1,5 +1,6 @@
 /* istanbul ignore next */
 export const routerMock = {
+  url: 'i-am-batman',
   navigateByUrl: jest.fn(),
   navigate: jest.fn()
 };
@@ -11,6 +12,7 @@ export const sessionQueryMock = {
 
 /* istanbul ignore next */
 export const sessionStoreMock = {
+  update: jest.fn(),
   login: jest.fn(),
   setLoading: jest.fn(),
   setError: jest.fn()
