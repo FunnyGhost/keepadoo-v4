@@ -15,6 +15,7 @@ export const sessionQueryMock = {
 export const sessionStoreMock = {
   update: jest.fn(),
   login: jest.fn(),
+  logout: jest.fn(),
   setLoading: jest.fn(),
   setError: jest.fn()
 };
