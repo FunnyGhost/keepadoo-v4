@@ -7,7 +7,8 @@ export const routerMock = {
 
 /* istanbul ignore next */
 export const sessionQueryMock = {
-  isLoggedIn: jest.fn()
+  isLoggedIn: jest.fn(),
+  redirectUrl: jest.fn()
 };
 
 /* istanbul ignore next */
