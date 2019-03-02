@@ -18,4 +18,8 @@ export class SessionStore extends Store<SessionState> {
     const user = createSession(data);
     this.update({ user });
   }
+
+  logout(): void {
+    this.update(createInitialState());
+  }
 }
