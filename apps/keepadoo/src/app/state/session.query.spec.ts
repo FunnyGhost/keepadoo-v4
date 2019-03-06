@@ -46,6 +46,17 @@ describe('SessionQuery', () => {
     });
   });
 
+  describe('userId$', () => {
+    it('should return the logged in userId', done => {
+      store.update({ user: testUser });
+
+      query.userId$.subscribe((data: string) => {
+        expect(data).toBe(`${testUser.userId}`);
+        done();
+      });
+    });
+  });
+
   describe('isLoggedIn', () => {
     it('should return true if the user is logged in', () => {
       store.update({ user: testUser });
