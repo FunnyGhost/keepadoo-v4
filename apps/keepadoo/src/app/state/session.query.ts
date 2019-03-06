@@ -24,4 +24,13 @@ export class SessionQuery extends Query<SessionState> {
   redirectUrl(): string {
     return this.getValue().redirectUrl;
   }
+
+  userId(): string {
+    const user = this.getValue().user;
+    if (user) {
+      return user.userId;
+    }
+
+    throw new Error('User not logged in');
+  }
 }

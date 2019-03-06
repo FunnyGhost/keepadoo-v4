@@ -78,4 +78,19 @@ describe('SessionQuery', () => {
       expect(result).toBe('');
     });
   });
+
+  describe('userId', () => {
+    it('should return the current user id', () => {
+      store.update({ user: testUser });
+
+      const result = query.userId();
+      expect(result).toBe(testUser.userId);
+    });
+
+    it('should throw if the user is not logged in', () => {
+      store.update(createInitialState());
+
+      expect(() => query.userId()).toThrow();
+    });
+  });
 });
