@@ -33,7 +33,8 @@ export const moviesListsStoreMock = {
   add: jest.fn(),
   update: jest.fn(),
   remove: jest.fn(),
-  setActive: jest.fn()
+  setActive: jest.fn(),
+  removeActive: jest.fn()
 };
 
 /* istanbul ignore next */
