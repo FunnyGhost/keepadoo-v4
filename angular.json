@@ -143,6 +143,9 @@
     },
     "@nrwl/schematics:library": {
       "style": "scss"
+    },
+    "@nrwl/schematics:component": {
+      "styleext": "scss"
     }
   },
   "defaultProject": "keepadoo"
