@@ -2,6 +2,6 @@ import { ID } from '@datorama/akita';
 
 export interface MoviesList {
   id: ID;
-  name: string;
+  name?: string;
   userId: string;
 }
