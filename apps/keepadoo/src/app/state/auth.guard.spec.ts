@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { Router } from '@angular/router';
+import { Router, RouterStateSnapshot } from '@angular/router';
 import {
   routerMock,
   sessionQueryMock,
@@ -32,7 +32,9 @@ describe('AuthGuard', () => {
   it('should return true if the user is logged in', () => {
     jest.spyOn(query, 'isLoggedIn').mockReturnValue(true);
 
-    const result = guard.canActivate();
+    const result = guard.canActivate(null, {
+      url: 'some-url-here'
+    } as RouterStateSnapshot);
     expect(result).toBe(true);
   });
 
@@ -42,23 +44,26 @@ describe('AuthGuard', () => {
     });
 
     it('should return false if the user is not logged in', () => {
-      const result = guard.canActivate();
+      const result = guard.canActivate(null, {
+        url: 'some-url-here'
+      } as RouterStateSnapshot);
       expect(result).toBe(false);
     });
 
     it('should redirect to login if the user is not logged in', () => {
       const router: Router = TestBed.get(Router);
 
-      guard.canActivate();
+      guard.canActivate(null, { url: 'some-url-here' } as RouterStateSnapshot);
 
       expect(router.navigateByUrl).toHaveBeenCalledWith('/login');
     });
 
     it('should set the redirectUrl in the store', () => {
-      guard.canActivate();
+      const urlToUse = 'some-url-here';
+      guard.canActivate(null, { url: urlToUse } as RouterStateSnapshot);
 
       expect(store.update).toHaveBeenCalledWith({
-        redirectUrl: routerMock.url
+        redirectUrl: urlToUse
       });
     });
   });
