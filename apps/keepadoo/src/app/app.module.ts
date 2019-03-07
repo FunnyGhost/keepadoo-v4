@@ -25,7 +25,14 @@ const routes: Route[] = [
   {
     path: 'home',
     canActivate: [AuthGuard],
-    component: HomeComponent
+    component: HomeComponent,
+    children: [
+      {
+        path: 'movies-lists',
+        loadChildren:
+          'apps/keepadoo/src/app/movies-lists/movies-lists.module#MoviesListsModule'
+      }
+    ]
   }
 ];
 
