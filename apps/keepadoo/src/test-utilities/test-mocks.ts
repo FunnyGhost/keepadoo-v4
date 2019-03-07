@@ -26,3 +26,15 @@ export const authServiceMock = {
   signIn: jest.fn(),
   signOut: jest.fn()
 };
+
+/* istanbul ignore next */
+export const moviesListsStoreMock = {
+  set: jest.fn(),
+  add: jest.fn(),
+  update: jest.fn(),
+  remove: jest.fn(),
+  setActive: jest.fn()
+};
+
+/* istanbul ignore next */
+export const moviesListsQueryMock = {};
