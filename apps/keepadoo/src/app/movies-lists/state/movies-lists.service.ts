@@ -3,12 +3,12 @@ import {
   AngularFirestore,
   AngularFirestoreCollection
 } from '@angular/fire/firestore';
+import { map } from 'rxjs/operators';
 import { SessionQuery } from '../../state/session.query';
-import { MoviesListsModule } from '../movies-lists.module';
 import { MoviesList } from './models/movies-list';
 import { MoviesListsStore } from './movies-lists.store';
 
-@Injectable({ providedIn: MoviesListsModule })
+@Injectable()
 export class MoviesListsService {
   private moviesListsCollection: AngularFirestoreCollection;
 
@@ -29,7 +29,19 @@ export class MoviesListsService {
 
   fetch(): void {
     this.moviesListsCollection
-      .valueChanges()
+      .auditTrail()
+      .pipe(
+        map((changes: any[]) => {
+          const list = changes.map(
+            data =>
+              ({
+                id: data.payload.doc.id,
+                ...data.payload.doc.data()
+              } as MoviesList)
+          );
+          return list;
+        })
+      )
       .subscribe((moviesLists: MoviesList[]) => {
         this.moviesListsStore.set(moviesLists);
       });
