@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { Route, RouterModule } from '@angular/router';
@@ -47,6 +48,7 @@ const routes: Route[] = [
     AngularFireModule.initializeApp(environment.firebase),
     environment.production ? [] : AkitaNgDevtools.forRoot(),
     AngularFireAuthModule,
+    AngularFirestoreModule,
     ReactiveFormsModule
   ],
   providers: [],
