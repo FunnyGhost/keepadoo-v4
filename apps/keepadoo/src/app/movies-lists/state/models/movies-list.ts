@@ -1,7 +1,8 @@
-import { ID } from '@datorama/akita';
+import { Movie } from '../../movies/state/models/movie';
 
 export interface MoviesList {
-  id: ID;
+  id: string;
   name?: string;
   userId: string;
+  lastMovies?: Movie[];
 }
