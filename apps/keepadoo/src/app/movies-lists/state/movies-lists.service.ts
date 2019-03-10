@@ -3,19 +3,23 @@ import {
   AngularFirestore,
   AngularFirestoreCollection
 } from '@angular/fire/firestore';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { SessionQuery } from '../../state/session.query';
+import { Movie } from '../movies/state/models/movie';
+import { MoviesService } from '../movies/state/movie.service';
 import { MoviesList } from './models/movies-list';
 import { MoviesListsStore } from './movies-lists.store';
 
 @Injectable()
 export class MoviesListsService {
+  readonly MOST_RECENT_MOVIES_LIMIT = 4;
   private moviesListsCollection: AngularFirestoreCollection;
 
   constructor(
     private moviesListsStore: MoviesListsStore,
     private firestoreService: AngularFirestore,
-    private sessionQuery: SessionQuery
+    private sessionQuery: SessionQuery,
+    private moviesService: MoviesService
   ) {
     this.sessionQuery.userId$.subscribe((userId: string) => {
       if (userId) {
@@ -40,6 +44,15 @@ export class MoviesListsService {
               } as MoviesList)
           );
           return list;
+        }),
+        tap((moviesLists: MoviesList[]) => {
+          moviesLists.forEach((list: MoviesList) => {
+            this.moviesService
+              .getMoviesInList(list.id, this.MOST_RECENT_MOVIES_LIMIT)
+              .subscribe((movies: Movie[]) => {
+                this.addMoviesToList(list.id, movies);
+              });
+          });
         })
       )
       .subscribe((moviesLists: MoviesList[]) => {
@@ -71,6 +84,10 @@ export class MoviesListsService {
 
   removeActive(id: string): void {
     this.moviesListsStore.removeActive(id);
+  }
+
+  private addMoviesToList(listId: string, movies: Movie[]): void {
+    this.moviesListsStore.update(listId, { lastMovies: movies });
   }
 
   private setupMoviesListsCollection(

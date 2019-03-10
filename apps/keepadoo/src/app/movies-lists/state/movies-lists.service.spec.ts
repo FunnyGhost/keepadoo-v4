@@ -7,10 +7,12 @@ import {
   sessionQueryMock
 } from '../../../test-utilities/test-mocks';
 import {
+  testMovies,
   testMoviestLists,
   testUser
 } from '../../../test-utilities/test-objects';
 import { SessionQuery } from '../../state/session.query';
+import { MoviesService } from '../movies/state/movie.service';
 import { MoviesList } from './models/movies-list';
 import { MoviesListsService } from './movies-lists.service';
 import { MoviesListsStore } from './movies-lists.store';
@@ -60,6 +62,10 @@ const sessionStoreQueryMock = {
   userId$: new BehaviorSubject<string>(testUser.userId)
 };
 
+const moviesServiceMock = {
+  getMoviesInList: jest.fn().mockReturnValue(of(testMovies))
+};
+
 describe('MoviesListsService', () => {
   let moviesListsService: MoviesListsService;
   let moviesListsStore: MoviesListsStore;
@@ -81,6 +87,10 @@ describe('MoviesListsService', () => {
         {
           provide: SessionQuery,
           useValue: sessionStoreQueryMock
+        },
+        {
+          provide: MoviesService,
+          useValue: moviesServiceMock
         }
       ],
       imports: [HttpClientTestingModule]
@@ -100,12 +110,22 @@ describe('MoviesListsService', () => {
 
   describe('fetch', () => {
     it('should get all the movies lists for the logged in user', () => {
+      const expectedLimit = 4;
       sessionStoreQueryMock.userId$.next('batman');
       expect(firestoreMockSpy).toHaveBeenCalledWith(
         'movies-lists',
         expect.any(Function)
       );
       expect(moviesListsStoreMock.set).toHaveBeenCalledWith(testMoviestLists);
+      testMoviestLists.forEach((list: MoviesList) => {
+        expect(moviesServiceMock.getMoviesInList).toHaveBeenCalledWith(
+          list.id,
+          expectedLimit
+        );
+        expect(moviesListsStoreMock.update).toHaveBeenCalledWith(list.id, {
+          lastMovies: testMovies
+        });
+      });
     });
 
     it('should clear the store if the user logs out', () => {
