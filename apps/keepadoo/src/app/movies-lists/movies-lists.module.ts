@@ -6,9 +6,10 @@ import { MoviesService } from './movies/state/movies.service';
 import { MoviesListsQuery } from './state/movies-lists.query';
 import { MoviesListsService } from './state/movies-lists.service';
 import { MoviesListsStore } from './state/movies-lists.store';
+import { MoviesListComponent } from './movies-list/movies-list.component';
 
 @NgModule({
-  declarations: [MoviesListsComponent],
+  declarations: [MoviesListsComponent, MoviesListComponent],
   providers: [
     MoviesListsQuery,
     MoviesListsService,
