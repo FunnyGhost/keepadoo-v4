@@ -1,0 +1,14 @@
+@import '../../../variables';
+
+.container {
+  margin-bottom: 75px;
+}
+
+h1 {
+  font-family: $main-font;
+  font-weight: 700;
+  font-size: 1.75rem;
+  text-transform: uppercase;
+  margin: 28px auto;
+  text-align: center;
+}

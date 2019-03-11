@@ -1,6 +1,9 @@
-<ng-container *ngIf="(moviesLists$ | async); let moviesLists">
-  <keepadoo-movies-list
-    *ngFor="let moviesList of moviesLists"
-    [moviesList]="moviesList"
-  ></keepadoo-movies-list>
-</ng-container>
+<div class="container">
+  <h1>Your lists</h1>
+  <ng-container *ngIf="(moviesLists$ | async); let moviesLists">
+    <keepadoo-movies-list
+      *ngFor="let moviesList of moviesLists"
+      [moviesList]="moviesList"
+    ></keepadoo-movies-list>
+  </ng-container>
+</div>
