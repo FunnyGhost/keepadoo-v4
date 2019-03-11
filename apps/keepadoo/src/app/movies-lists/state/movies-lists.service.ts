@@ -6,7 +6,7 @@ import {
 import { map, tap } from 'rxjs/operators';
 import { SessionQuery } from '../../state/session.query';
 import { Movie } from '../movies/state/models/movie';
-import { MoviesService } from '../movies/state/movie.service';
+import { MoviesService } from '../movies/state/movies.service';
 import { MoviesList } from './models/movies-list';
 import { MoviesListsStore } from './movies-lists.store';
 

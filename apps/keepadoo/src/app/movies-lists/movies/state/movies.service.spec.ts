@@ -1,9 +1,9 @@
 import { TestBed } from '@angular/core/testing';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { testMovies } from 'apps/keepadoo/src/test-utilities/test-objects';
 import { of } from 'rxjs';
+import { testMovies } from '../../../../test-utilities/test-objects';
 import { Movie } from './models/movie';
-import { MoviesService } from './movie.service';
+import { MoviesService } from './movies.service';
 
 const firestoreMock = {
   collection() {}

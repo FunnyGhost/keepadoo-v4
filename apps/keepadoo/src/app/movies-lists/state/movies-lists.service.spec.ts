@@ -12,7 +12,7 @@ import {
   testUser
 } from '../../../test-utilities/test-objects';
 import { SessionQuery } from '../../state/session.query';
-import { MoviesService } from '../movies/state/movie.service';
+import { MoviesService } from '../movies/state/movies.service';
 import { MoviesList } from './models/movies-list';
 import { MoviesListsService } from './movies-lists.service';
 import { MoviesListsStore } from './movies-lists.store';
