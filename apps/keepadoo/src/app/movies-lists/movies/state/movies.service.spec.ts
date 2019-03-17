@@ -9,6 +9,8 @@ const firestoreMock = {
   collection() {}
 };
 
+const listSizeToUse = 34;
+
 const firestoreMockSpy = jest
   .spyOn(firestoreMock, 'collection')
   .mockReturnValue({
@@ -33,6 +35,9 @@ const firestoreMockSpy = jest
           }
         ]);
       }
+    },
+    get() {
+      return of({ size: listSizeToUse });
     }
   });
 
@@ -63,6 +68,15 @@ describe('MoviesService', () => {
         expect(data.length).toBe(2);
         expect(data[0]).toEqual(testMovies[0]);
         expect(data[1]).toEqual(testMovies[1]);
+        done();
+      });
+    });
+  });
+
+  describe('getNumberOfMoviesInList', () => {
+    it('should return the number of movies in list', done => {
+      service.getNumberOfMoviesInList('1').subscribe((data: number) => {
+        expect(data).toBe(listSizeToUse);
         done();
       });
     });
