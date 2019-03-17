@@ -53,6 +53,15 @@ export class MoviesListsService {
                 this.addMoviesToList(list.id, movies);
               });
           });
+        }),
+        tap((moviesLists: MoviesList[]) => {
+          moviesLists.forEach((list: MoviesList) => {
+            this.moviesService
+              .getNumberOfMoviesInList(list.id)
+              .subscribe((itemsCount: number) => {
+                this.setListSize(list.id, itemsCount);
+              });
+          });
         })
       )
       .subscribe((moviesLists: MoviesList[]) => {
@@ -63,7 +72,12 @@ export class MoviesListsService {
   async add(moviesList: Partial<MoviesList>): Promise<void> {
     const userId = this.sessionQuery.userId();
     const id = this.firestoreService.createId();
-    const list: MoviesList = { ...moviesList, id: id, userId: userId };
+    const list: MoviesList = {
+      ...moviesList,
+      id: id,
+      userId: userId,
+      numberOfMovies: 0
+    };
     await this.moviesListsCollection.doc(id).set(list);
     this.moviesListsStore.add(list);
   }
@@ -88,6 +102,10 @@ export class MoviesListsService {
 
   private addMoviesToList(listId: string, movies: Movie[]): void {
     this.moviesListsStore.update(listId, { lastMovies: movies });
+  }
+
+  private setListSize(listId: string, size: number): void {
+    this.moviesListsStore.update(listId, { numberOfMovies: size });
   }
 
   private setupMoviesListsCollection(

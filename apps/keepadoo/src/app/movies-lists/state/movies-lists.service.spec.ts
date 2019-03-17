@@ -62,8 +62,10 @@ const sessionStoreQueryMock = {
   userId$: new BehaviorSubject<string>(testUser.userId)
 };
 
+const listSizeToUse = 54;
 const moviesServiceMock = {
-  getMoviesInList: jest.fn().mockReturnValue(of(testMovies))
+  getMoviesInList: jest.fn().mockReturnValue(of(testMovies)),
+  getNumberOfMoviesInList: jest.fn().mockReturnValue(of(listSizeToUse))
 };
 
 describe('MoviesListsService', () => {
@@ -125,6 +127,12 @@ describe('MoviesListsService', () => {
         expect(moviesListsStoreMock.update).toHaveBeenCalledWith(list.id, {
           lastMovies: testMovies
         });
+        expect(moviesServiceMock.getNumberOfMoviesInList).toHaveBeenCalledWith(
+          list.id
+        );
+        expect(moviesListsStoreMock.update).toHaveBeenCalledWith(list.id, {
+          numberOfMovies: listSizeToUse
+        });
       });
     });
 
@@ -152,7 +160,8 @@ describe('MoviesListsService', () => {
       const expectedMoviesList: MoviesList = {
         id: idToUse,
         name: 'awesome movies',
-        userId: testUser.userId
+        userId: testUser.userId,
+        numberOfMovies: 0
       };
 
       await moviesListsService.add(moviesListToAdd);
@@ -170,7 +179,8 @@ describe('MoviesListsService', () => {
       const moviesListToUpdate: MoviesList = {
         id: idToUse,
         name: 'awesome movies',
-        userId: testUser.userId
+        userId: testUser.userId,
+        numberOfMovies: 0
       };
 
       await moviesListsService.update(idToUse, moviesListToUpdate);
