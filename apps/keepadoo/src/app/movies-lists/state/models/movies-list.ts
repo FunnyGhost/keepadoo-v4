@@ -5,4 +5,5 @@ export interface MoviesList {
   name?: string;
   userId: string;
   lastMovies?: Movie[];
+  numberOfMovies: number;
 }
