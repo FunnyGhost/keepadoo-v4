@@ -20,6 +20,7 @@ export const testMoviestLists: MoviesList[] = [
     id: '1',
     name: 'to see',
     userId: 'batman',
+    numberOfMovies: 34,
     lastMovies: [
       {
         id: '1',
@@ -38,6 +39,7 @@ export const testMoviestLists: MoviesList[] = [
     id: '2',
     name: 'seen',
     userId: 'joker',
+    numberOfMovies: 3,
     lastMovies: [
       {
         id: '2',
