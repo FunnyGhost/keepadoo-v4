@@ -1,9 +1,18 @@
 import { TestBed } from '@angular/core/testing';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { of } from 'rxjs';
-import { testMovies } from '../../../../test-utilities/test-objects';
+import { of, Subject } from 'rxjs';
+import { moviesStoreMock } from '../../../../test-utilities/test-mocks';
+import {
+  testMovies,
+  testMoviestLists,
+  testUser
+} from '../../../../test-utilities/test-objects';
+import { SessionQuery } from '../../../state/session.query';
+import { MoviesList } from '../../state/models/movies-list';
+import { MoviesListsQuery } from '../../state/movies-lists.query';
 import { Movie } from './models/movie';
 import { MoviesService } from './movies.service';
+import { MoviesStore } from './movies.store';
 
 const firestoreMock = {
   collection() {}
@@ -11,38 +20,47 @@ const firestoreMock = {
 
 const listSizeToUse = 34;
 
-const firestoreMockSpy = jest
-  .spyOn(firestoreMock, 'collection')
-  .mockReturnValue({
-    snapshotChanges() {
-      {
-        return of([
-          {
-            payload: {
-              doc: {
-                id: testMovies[0].id,
-                data: () => testMovies[0]
-              }
-            }
-          },
-          {
-            payload: {
-              doc: {
-                id: testMovies[1].id,
-                data: () => testMovies[1]
-              }
+jest.spyOn(firestoreMock, 'collection').mockReturnValue({
+  snapshotChanges() {
+    {
+      return of([
+        {
+          payload: {
+            doc: {
+              id: testMovies[0].id,
+              data: () => testMovies[0]
             }
           }
-        ]);
-      }
-    },
-    get() {
-      return of({ size: listSizeToUse });
+        },
+        {
+          payload: {
+            doc: {
+              id: testMovies[1].id,
+              data: () => testMovies[1]
+            }
+          }
+        }
+      ]);
     }
-  });
+  },
+  get() {
+    return of({ size: listSizeToUse });
+  }
+});
+
+const sessionQueryMock = {
+  userId: () => testUser.userId,
+  userId$: new Subject<string>()
+};
+
+const activeList = new Subject<MoviesList>();
+const moviesListsQueryMock = {
+  selectActive: () => activeList.asObservable()
+};
 
 describe('MoviesService', () => {
   let service: MoviesService;
+  let moviesStore: MoviesStore;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -51,15 +69,56 @@ describe('MoviesService', () => {
         {
           provide: AngularFirestore,
           useValue: firestoreMock
+        },
+        {
+          provide: SessionQuery,
+          useValue: sessionQueryMock
+        },
+        {
+          provide: MoviesListsQuery,
+          useValue: moviesListsQueryMock
+        },
+        {
+          provide: MoviesStore,
+          useValue: moviesStoreMock
         }
       ]
     });
 
     service = TestBed.get(MoviesService);
+    moviesStore = TestBed.get(MoviesStore);
   });
 
   it('should be created', () => {
     expect(service).toBeTruthy();
+  });
+
+  describe('Listen to the selected list', () => {
+    describe('User is logged in', () => {
+      beforeEach(() => {
+        sessionQueryMock.userId$.next(testUser.userId);
+        jest.spyOn(service, 'getMoviesInList').mockReturnValue(of(testMovies));
+      });
+      it('should populate the store with the movies in the currently selected list', () => {
+        activeList.next(testMoviestLists[0]);
+        expect(moviesStore.set).toHaveBeenCalledWith(testMovies);
+      });
+
+      it('should clear the store if there is no selected list', () => {
+        activeList.next(undefined);
+
+        expect(moviesStore.set).toHaveBeenLastCalledWith([]);
+      });
+    });
+
+    describe('User is not logged in', () => {
+      beforeEach(() => {
+        sessionQueryMock.userId$.next(undefined);
+      });
+      it('should clear the store', () => {
+        expect(moviesStore.set).toHaveBeenLastCalledWith([]);
+      });
+    });
   });
 
   describe('getMoviesInList', () => {
@@ -80,5 +139,9 @@ describe('MoviesService', () => {
         done();
       });
     });
+  });
+
+  afterEach(() => {
+    moviesStoreMock.set.mockClear();
   });
 });

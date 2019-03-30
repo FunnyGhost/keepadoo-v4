@@ -1,12 +1,33 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, QuerySnapshot } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
+import { combineLatest, Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
+import { SessionQuery } from '../../../state/session.query';
+import { MoviesListsQuery } from '../../state/movies-lists.query';
 import { Movie } from './models/movie';
+import { MoviesStore } from './movies.store';
 
 @Injectable()
 export class MoviesService {
-  constructor(private firestoreService: AngularFirestore) {}
+  constructor(
+    private firestoreService: AngularFirestore,
+    sessionQuery: SessionQuery,
+    moviesListsQuery: MoviesListsQuery,
+    moviesStore: MoviesStore
+  ) {
+    combineLatest(
+      sessionQuery.userId$,
+      moviesListsQuery.selectActive()
+    ).subscribe(([userId, moviesList]) => {
+      if (!userId || !moviesList) {
+        moviesStore.set([]);
+      } else {
+        this.getMoviesInList(moviesList).subscribe(movies =>
+          moviesStore.set(movies)
+        );
+      }
+    });
+  }
 
   public getMoviesInList(listId: string, limit = 0): Observable<Movie[]> {
     return this.firestoreService
