@@ -34,6 +34,14 @@ describe('MoviesListComponent', () => {
       expect(titleElement.nativeElement.innerHTML).toBe(listToUse.name);
     });
 
+    it('should show the list size', () => {
+      const sizeElement = fixture.debugElement.query(By.css('.list-size'));
+
+      expect(sizeElement.nativeElement.innerHTML).toContain(
+        listToUse.numberOfMovies
+      );
+    });
+
     it('should show the last movies in list', () => {
       const imgTags = fixture.debugElement
         .queryAll(By.css('img'))

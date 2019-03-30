@@ -3,13 +3,20 @@
 .heading {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
   align-items: center;
   padding: 18px 0 12px 46px;
   background-color: $grey;
 }
 
+.list-title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
 svg {
-  margin-left: 16px;
+  margin-left: 1rem;
   margin-bottom: 3px;
   width: 18px;
   height: 18px;
@@ -25,6 +32,14 @@ h4 {
   font-size: 0.875rem;
   text-transform: uppercase;
   color: $color-primary;
+}
+
+.list-size {
+  font-family: $secondary-font-light;
+  font-weight: 200;
+  font-style: italic;
+  font-size: 0.75rem;
+  margin-right: 19px;
 }
 
 .movies {
