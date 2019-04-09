@@ -4,6 +4,7 @@
     <keepadoo-movies-list
       *ngFor="let moviesList of moviesLists"
       [moviesList]="moviesList"
+      (listClick)="goToList($event)"
     ></keepadoo-movies-list>
   </ng-container>
 </div>
