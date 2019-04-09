@@ -47,6 +47,7 @@
     "angular-fire-schematics": "1.0.0",
     "core-js": "^2.5.4",
     "firebase": "5.8.4",
+    "ng-mocks": "7.7.0",
     "rxjs": "6.3.3",
     "zone.js": "^0.8.26"
   },

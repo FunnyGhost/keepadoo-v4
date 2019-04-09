@@ -5901,6 +5901,11 @@ neo-async@^2.5.0:
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.0.tgz#b9d15e4d71c6762908654b5183ed38b753340835"
   integrity sha512-MFh0d/Wa7vkKO3Y3LlacqAEeHK0mckVqzDieUKTT+KGxi+zIpeVsFxymkIiRpbpDziHc290Xr9A1O4Om7otoRA==
 
+ng-mocks@7.7.0:
+  version "7.7.0"
+  resolved "https://registry.yarnpkg.com/ng-mocks/-/ng-mocks-7.7.0.tgz#1304393abbbf8ccbd9104403cab33dfe78ca0651"
+  integrity sha512-ACPS1VgNQpp+B7Mld6CS8I5ylSgU5f/t7EEO7UqHb3YtN810+m87EJO42gUa3pCCeRFE4qMIBEWrSk5DqvuMlA==
+
 ngrx-store-freeze@0.2.4:
   version "0.2.4"
   resolved "https://registry.yarnpkg.com/ngrx-store-freeze/-/ngrx-store-freeze-0.2.4.tgz#146687cdf7e21244eb9003c7e883f2125847076c"
