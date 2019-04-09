@@ -38,7 +38,9 @@ export const moviesListsStoreMock = {
 };
 
 /* istanbul ignore next */
-export const moviesListsQueryMock = {};
+export const moviesListsQueryMock = {
+  selectAll: jest.fn()
+};
 
 /* istanbul ignore next */
 export const moviesStoreMock = {
