@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { MoviesListDetailsComponent } from './movies-list-details/movies-list-details.component';
 import { MoviesListComponent } from './movies-list/movies-list.component';
 import { MoviesListsRoutingModule } from './movies-lists-routing.module';
 import { MoviesListsComponent } from './movies-lists/movies-lists.component';
@@ -11,7 +12,11 @@ import { MoviesListsService } from './state/movies-lists.service';
 import { MoviesListsStore } from './state/movies-lists.store';
 
 @NgModule({
-  declarations: [MoviesListsComponent, MoviesListComponent],
+  declarations: [
+    MoviesListsComponent,
+    MoviesListComponent,
+    MoviesListDetailsComponent
+  ],
   providers: [
     MoviesListsQuery,
     MoviesListsService,
