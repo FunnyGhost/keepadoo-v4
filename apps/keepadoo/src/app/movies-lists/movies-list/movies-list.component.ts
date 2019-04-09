@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MoviesList } from '../state/models/movies-list';
 
 @Component({
@@ -8,8 +8,13 @@ import { MoviesList } from '../state/models/movies-list';
 })
 export class MoviesListComponent implements OnInit {
   @Input() moviesList: MoviesList;
+  @Output() listClick = new EventEmitter<string>();
 
   constructor() {}
 
   ngOnInit() {}
+
+  listClicked(): void {
+    this.listClick.emit(this.moviesList.id);
+  }
 }

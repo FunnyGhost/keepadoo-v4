@@ -53,4 +53,14 @@ describe('MoviesListComponent', () => {
       });
     });
   });
+
+  it('should emit when the list is clicked', done => {
+    const title = fixture.debugElement.query(By.css('.heading'));
+    component.listClick.subscribe(listId => {
+      expect(listId).toEqual(listToUse.id);
+      done();
+    });
+
+    title.triggerEventHandler('click', null);
+  });
 });
