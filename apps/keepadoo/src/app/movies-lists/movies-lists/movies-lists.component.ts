@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { routerMock } from 'apps/keepadoo/src/test-utilities/test-mocks';
 import { Observable } from 'rxjs';
 import { MoviesList } from '../state/models/movies-list';
 import { MoviesListsQuery } from '../state/movies-lists.query';
+import { MoviesListsService } from '../state/movies-lists.service';
 
 @Component({
   selector: 'keepadoo-movies-lists',
@@ -15,6 +15,7 @@ export class MoviesListsComponent implements OnInit {
 
   constructor(
     private moviesListsQuery: MoviesListsQuery,
+    private moviesListsService: MoviesListsService,
     private router: Router
   ) {}
 
@@ -23,6 +24,6 @@ export class MoviesListsComponent implements OnInit {
   }
 
   goToList(listId: string): void {
-    routerMock.navigate([listId]);
+    this.router.navigate([listId]);
   }
 }
