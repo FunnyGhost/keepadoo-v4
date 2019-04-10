@@ -99,9 +99,13 @@ describe('MoviesService', () => {
         sessionQueryMock.userId$.next(testUser.userId);
         jest.spyOn(service, 'getMoviesInList').mockReturnValue(of(testMovies));
       });
+
       it('should populate the store with the movies in the currently selected list', () => {
         activeList.next(testMoviestLists[0]);
         expect(moviesStore.set).toHaveBeenCalledWith(testMovies);
+        expect(service.getMoviesInList).toHaveBeenCalledWith(
+          testMoviestLists[0].id
+        );
       });
 
       it('should clear the store if there is no selected list', () => {

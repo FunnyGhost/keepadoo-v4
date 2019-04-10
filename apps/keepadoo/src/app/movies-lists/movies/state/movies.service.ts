@@ -3,6 +3,7 @@ import { AngularFirestore, QuerySnapshot } from '@angular/fire/firestore';
 import { combineLatest, Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 import { SessionQuery } from '../../../state/session.query';
+import { MoviesList } from '../../state/models/movies-list';
 import { MoviesListsQuery } from '../../state/movies-lists.query';
 import { Movie } from './models/movie';
 import { MoviesStore } from './movies.store';
@@ -18,11 +19,11 @@ export class MoviesService {
     combineLatest(
       sessionQuery.userId$,
       moviesListsQuery.selectActive()
-    ).subscribe(([userId, moviesList]) => {
+    ).subscribe(([userId, moviesList]: [string, MoviesList]) => {
       if (!userId || !moviesList) {
         moviesStore.set([]);
       } else {
-        this.getMoviesInList(moviesList).subscribe(movies =>
+        this.getMoviesInList(moviesList.id).subscribe(movies =>
           moviesStore.set(movies)
         );
       }
@@ -48,13 +49,14 @@ export class MoviesService {
       .snapshotChanges()
       .pipe(
         map(changes => {
-          return changes.map(
-            data =>
-              ({
-                id: data.payload.doc.id,
-                ...data.payload.doc.data()
-              } as Movie)
-          );
+          const movies = changes.map(data => {
+            const movie = {
+              id: data.payload.doc.id,
+              ...data.payload.doc.data()
+            } as Movie;
+            return movie;
+          });
+          return movies;
         }),
         take(1)
       );
