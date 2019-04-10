@@ -5,12 +5,15 @@ import { of } from 'rxjs';
 import { moviesQueryMock } from '../../../test-utilities/test-mocks';
 import { testMovies } from '../../../test-utilities/test-objects';
 import { MoviesQuery } from '../movies/state/movies.query';
+import { MoviesService } from '../movies/state/movies.service';
 import { MoviesListsService } from '../state/movies-lists.service';
 import { MoviesListDetailsComponent } from './movies-list-details.component';
 
 const moviesListsServiceMock = {
   setActive: jest.fn()
 };
+
+const moviesServiceMock = {};
 
 const listIdToUse = 'dc-movies';
 const activatedRouteMock = {
@@ -30,6 +33,10 @@ describe('MoviesListDetailsComponent', () => {
         {
           provide: MoviesQuery,
           useValue: moviesQueryMock
+        },
+        {
+          provide: MoviesService,
+          useValue: moviesServiceMock
         },
         {
           provide: MoviesListsService,

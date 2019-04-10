@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Movie } from '../movies/state/models/movie';
 import { MoviesQuery } from '../movies/state/movies.query';
+import { MoviesService } from '../movies/state/movies.service';
 import { MoviesListsService } from '../state/movies-lists.service';
 
 @Component({
@@ -16,6 +17,7 @@ export class MoviesListDetailsComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private moviesListsService: MoviesListsService,
+    private moviesService: MoviesService,
     private moviesQuery: MoviesQuery
   ) {}
 

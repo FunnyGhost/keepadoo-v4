@@ -10,7 +10,10 @@ import {
 import { testMoviestLists } from '../../../test-utilities/test-objects';
 import { MoviesListComponent } from '../movies-list/movies-list.component';
 import { MoviesListsQuery } from '../state/movies-lists.query';
+import { MoviesListsService } from '../state/movies-lists.service';
 import { MoviesListsComponent } from './movies-lists.component';
+
+const moviesListsServiceMock = {};
 
 describe('MoviesListsComponent', () => {
   let component: MoviesListsComponent;
@@ -27,6 +30,10 @@ describe('MoviesListsComponent', () => {
         {
           provide: MoviesListsQuery,
           useValue: moviesListsQueryMock
+        },
+        {
+          provide: MoviesListsService,
+          useValue: moviesListsServiceMock
         }
       ]
     }).compileComponents();
@@ -66,6 +73,8 @@ describe('MoviesListsComponent', () => {
       .map(el => el.componentInstance);
     (moviesListsElements[0] as MoviesListComponent).listClick.emit(listId);
 
-    expect(routerMock.navigate).toHaveBeenCalledWith([listId]);
+    expect(routerMock.navigate).toHaveBeenCalledWith([
+      `/home/movies-lists/${listId}`
+    ]);
   });
 });
