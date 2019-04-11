@@ -1,9 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
+import { MockComponent } from 'ng-mocks';
 import { of } from 'rxjs';
+import { childComponents } from '../../../test-utilities/test-functions';
 import { moviesQueryMock } from '../../../test-utilities/test-mocks';
 import { testMovies } from '../../../test-utilities/test-objects';
+import { MovieComponent } from '../movie/movie.component';
 import { MoviesQuery } from '../movies/state/movies.query';
 import { MoviesService } from '../movies/state/movies.service';
 import { MoviesListsService } from '../state/movies-lists.service';
@@ -28,7 +30,7 @@ describe('MoviesListDetailsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [MoviesListDetailsComponent],
+      declarations: [MoviesListDetailsComponent, MockComponent(MovieComponent)],
       providers: [
         {
           provide: MoviesQuery,
@@ -70,9 +72,18 @@ describe('MoviesListDetailsComponent', () => {
     component.ngOnInit();
     fixture.detectChanges();
 
-    const movieElements = fixture.debugElement.queryAll(By.css('.movie'));
     expect(moviesQueryMock.selectAll).toHaveBeenCalled();
-    expect(movieElements.length).toBe(testMovies.length);
+    const movieComponents = childComponents<MovieComponent>(
+      fixture,
+      MovieComponent
+    );
+    expect(movieComponents.length).toBe(testMovies.length);
+    testMovies.forEach(movie => {
+      const element = movieComponents.find(
+        movieComponent => movieComponent.movie.id === movie.id
+      );
+      expect(element).toBeTruthy();
+    });
   });
 
   afterEach(() => {
