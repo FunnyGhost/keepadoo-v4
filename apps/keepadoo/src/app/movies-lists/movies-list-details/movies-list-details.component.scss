@@ -1,0 +1,19 @@
+@import '../../../variables';
+
+h1 {
+  font-family: $main-font;
+  font-weight: 700;
+  font-size: 1.75rem;
+  text-transform: uppercase;
+  margin: 28px auto;
+  text-align: center;
+  color: $color-primary-1;
+}
+
+section {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: 0 17px 75px 17px;
+  justify-content: space-around;
+}
