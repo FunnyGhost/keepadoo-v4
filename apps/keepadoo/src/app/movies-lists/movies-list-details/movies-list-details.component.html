@@ -1,3 +1,8 @@
-<div class="movie" *ngFor="let movie of (movies$ | async)">
-  <keepadoo-movie [movie]="movie"></keepadoo-movie>
-</div>
+<h1 *ngIf="(selectedList$ | async) as selectedList">{{ selectedList.name }}</h1>
+
+<section class="movies">
+  <keepadoo-movie
+    *ngFor="let movie of (movies$ | async)"
+    [movie]="movie"
+  ></keepadoo-movie>
+</section>

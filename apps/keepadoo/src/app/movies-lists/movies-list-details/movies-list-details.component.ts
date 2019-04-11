@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { Movie } from '../movies/state/models/movie';
 import { MoviesQuery } from '../movies/state/movies.query';
 import { MoviesService } from '../movies/state/movies.service';
+import { MoviesList } from '../state/models/movies-list';
+import { MoviesListsQuery } from '../state/movies-lists.query';
 import { MoviesListsService } from '../state/movies-lists.service';
 
 @Component({
@@ -13,12 +15,14 @@ import { MoviesListsService } from '../state/movies-lists.service';
 })
 export class MoviesListDetailsComponent implements OnInit {
   movies$: Observable<Movie[]>;
+  selectedList$: Observable<MoviesList>;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private moviesListsService: MoviesListsService,
     private moviesService: MoviesService,
-    private moviesQuery: MoviesQuery
+    private moviesQuery: MoviesQuery,
+    private moviesListQuery: MoviesListsQuery
   ) {}
 
   ngOnInit() {
@@ -28,5 +32,8 @@ export class MoviesListDetailsComponent implements OnInit {
     });
 
     this.movies$ = this.moviesQuery.selectAll();
+    this.selectedList$ = this.moviesListQuery.selectActive() as Observable<
+      MoviesList
+    >;
   }
 }
