@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { MovieSearchComponent } from './movie-search/movie-search.component';
 import { MoviesListDetailsComponent } from './movies-list-details/movies-list-details.component';
 import { MoviesListsComponent } from './movies-lists/movies-lists.component';
 
@@ -10,7 +11,7 @@ const routes: Routes = [
   },
   {
     path: 'add',
-    component: MoviesListDetailsComponent
+    component: MovieSearchComponent
   },
   {
     path: '',
