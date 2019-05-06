@@ -11,13 +11,15 @@ import { MoviesListsQuery } from './state/movies-lists.query';
 import { MoviesListsService } from './state/movies-lists.service';
 import { MoviesListsStore } from './state/movies-lists.store';
 import { MovieComponent } from './movie/movie.component';
+import { MovieSearchComponent } from './movie-search/movie-search.component';
 
 @NgModule({
   declarations: [
     MoviesListsComponent,
     MoviesListComponent,
     MoviesListDetailsComponent,
-    MovieComponent
+    MovieComponent,
+    MovieSearchComponent
   ],
   providers: [
     MoviesListsQuery,
