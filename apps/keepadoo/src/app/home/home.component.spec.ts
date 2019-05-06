@@ -1,5 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HomeComponent } from './home.component';
 
@@ -10,6 +11,7 @@ describe('HomeComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule],
+      providers: [],
       declarations: [HomeComponent]
     }).compileComponents();
   }));
@@ -22,6 +24,16 @@ describe('HomeComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should navigate to the add route when the + button is clicked', () => {
+    const router: Router = TestBed.get(Router);
+    jest.spyOn(router, 'navigateByUrl').mockImplementation(() => {});
+
+    const addButton = fixture.debugElement.query(By.css('.add-button'));
+    addButton.triggerEventHandler('click', null);
+
+    expect(router.navigateByUrl).toHaveBeenCalledWith(`${router.url}/add`);
   });
 
   describe('Render', () => {
