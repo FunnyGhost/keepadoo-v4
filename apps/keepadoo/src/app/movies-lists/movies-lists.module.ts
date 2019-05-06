@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { MovieSearchComponent } from './movie-search/movie-search.component';
+import { MovieSearchQuery } from './movie-search/state/movie-search.query';
 import { MovieSearchStore } from './movie-search/state/movie-search.store';
 import { MovieComponent } from './movie/movie.component';
 import { MoviesListDetailsComponent } from './movies-list-details/movies-list-details.component';
@@ -29,7 +30,8 @@ import { MoviesListsStore } from './state/movies-lists.store';
     MoviesStore,
     MoviesQuery,
     MoviesService,
-    MovieSearchStore
+    MovieSearchStore,
+    MovieSearchQuery
   ],
   imports: [CommonModule, MoviesListsRoutingModule]
 })
