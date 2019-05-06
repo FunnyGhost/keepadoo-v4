@@ -9,6 +9,10 @@ const routes: Routes = [
     component: MoviesListDetailsComponent
   },
   {
+    path: 'add',
+    component: MoviesListDetailsComponent
+  },
+  {
     path: '',
     pathMatch: 'full',
     component: MoviesListsComponent
