@@ -1,6 +1,13 @@
+import { TMDBConfig } from './tmdb.config';
+
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
+
+const tmdbConfig: TMDBConfig = {
+  api_key: 'd7c178b732e89a3e82d70f43186af535',
+  apiUrl: 'https://api.themoviedb.org/3'
+};
 
 export const environment = {
   production: false,
@@ -10,8 +17,9 @@ export const environment = {
     databaseURL: 'https://keepadoo.firebaseio.com',
     projectId: 'keepadoo',
     storageBucket: '',
-    messagingSenderId: '516267612124',
-  }
+    messagingSenderId: '516267612124'
+  },
+  tmdbConfig
 };
 
 /*
