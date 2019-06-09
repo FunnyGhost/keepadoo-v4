@@ -30,6 +30,10 @@ describe('MovieSearchService', () => {
   });
 
   describe('searchMovies', () => {
+    beforeEach(() => {
+      jest.spyOn(movieSearchStore, 'set');
+    });
+
     it('should get movie search results from tmdb and put them in the store', inject(
       [MovieSearchService],
       (service: MovieSearchService) => {
@@ -38,16 +42,18 @@ describe('MovieSearchService', () => {
           results: [
             {
               title: 'Thor',
-              overview: 'Something about a greek god..'
+              overview: 'Something about a greek god..',
+              poster_path: 'poster-1-here'
             } as MovieSearchResult,
             {
               title: 'Iron man',
-              overview: 'Something about a dude with an iron suit..'
+              overview: 'Something about a dude with an iron suit..',
+              poster_path: 'poster-2-here'
             } as MovieSearchResult
           ]
         };
 
-        service.searchMovies(searchText).subscribe();
+        service.searchMovies(searchText);
 
         const req = httpTestingController.expectOne(
           (request: HttpRequest<any>) => {
@@ -65,11 +71,13 @@ describe('MovieSearchService', () => {
         expect(req.request.method).toEqual('GET');
 
         req.flush(dataToReturn);
+        expect(movieSearchStore.set).toHaveBeenCalledWith(dataToReturn.results);
+
         httpTestingController.verify();
       }
     ));
 
-    it('should filter movie search results without a poster from tmdb', (done: any) => {
+    it('should filter movie search results without a poster from tmdb', () => {
       inject([MovieSearchService], (service: MovieSearchService) => {
         const searchText = 'Thor';
         const dataToReturn = {
@@ -92,15 +100,7 @@ describe('MovieSearchService', () => {
           ]
         };
 
-        service
-          .searchMovies(searchText)
-          .subscribe((searchResults: MovieSearchResult[]) => {
-            expect(searchResults).toEqual([
-              dataToReturn.results[0],
-              dataToReturn.results[1]
-            ]);
-            done();
-          });
+        service.searchMovies(searchText);
 
         const req = httpTestingController.expectOne(
           (request: HttpRequest<any>) => {
@@ -118,6 +118,10 @@ describe('MovieSearchService', () => {
         expect(req.request.method).toEqual('GET');
 
         req.flush(dataToReturn);
+        expect(movieSearchStore.set).toHaveBeenCalledWith([
+          dataToReturn.results[0],
+          dataToReturn.results[1]
+        ]);
         httpTestingController.verify();
       })();
     });
