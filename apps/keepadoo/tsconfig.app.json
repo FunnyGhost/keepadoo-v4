@@ -1,7 +1,7 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "outDir": "../../dist/out-tsc/apps/keepadoo",
+    "outDir": "../../dist/out-tsc",
     "types": []
   },
   "exclude": ["src/test-setup.ts", "src/test-utilities/*.ts", "**/*.spec.ts"],

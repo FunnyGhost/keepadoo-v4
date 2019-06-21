@@ -27,9 +27,7 @@
               "apps/keepadoo/src/assets",
               "apps/keepadoo/src/manifest.json"
             ],
-            "styles": [
-              "apps/keepadoo/src/styles.scss"
-            ],
+            "styles": ["apps/keepadoo/src/styles.scss"],
             "scripts": [],
             "es5BrowserSupport": true
           },
@@ -85,13 +83,11 @@
               "apps/keepadoo/tsconfig.app.json",
               "apps/keepadoo/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         },
         "test": {
-          "builder": "@nrwl/builders:jest",
+          "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "apps/keepadoo/jest.config.js",
             "tsConfig": "apps/keepadoo/tsconfig.spec.json",
@@ -106,7 +102,7 @@
       "prefix": "",
       "architect": {
         "e2e": {
-          "builder": "@nrwl/builders:cypress",
+          "builder": "@nrwl/cypress:cypress",
           "options": {
             "cypressConfig": "apps/keepadoo-e2e/cypress.json",
             "tsConfig": "apps/keepadoo-e2e/tsconfig.e2e.json",
@@ -122,9 +118,7 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": "apps/keepadoo-e2e/tsconfig.e2e.json",
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         }
       }
@@ -135,14 +129,15 @@
       "typescriptMismatch": false,
       "versionMismatch": false
     },
-    "defaultCollection": "@nrwl/schematics"
+    "defaultCollection": "@nrwl/angular"
   },
   "schematics": {
     "@nrwl/schematics:application": {
       "style": "scss"
     },
     "@nrwl/schematics:library": {
-      "style": "scss"
+      "style": "scss",
+      "framework": "angular"
     },
     "@nrwl/schematics:component": {
       "styleext": "scss"
