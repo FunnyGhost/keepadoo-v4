@@ -1,5 +1,4 @@
-import { ChangeDetectionStrategy } from '@angular/compiler/src/core';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Movie } from '../movies/state/models/movie';

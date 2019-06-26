@@ -1,5 +1,9 @@
-import { ChangeDetectionStrategy } from '@angular/compiler/src/core';
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnInit
+} from '@angular/core';
 import { MovieSearchResult } from '../movie-search/state/models/movie-search-results';
 import { Movie } from '../movies/state/models/movie';
 
