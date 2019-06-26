@@ -1,3 +1,4 @@
+import { ChangeDetectionStrategy } from '@angular/compiler/src/core';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -11,7 +12,8 @@ import { MoviesListsService } from '../state/movies-lists.service';
 @Component({
   selector: 'keepadoo-movies-list-details',
   templateUrl: './movies-list-details.component.html',
-  styleUrls: ['./movies-list-details.component.scss']
+  styleUrls: ['./movies-list-details.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MoviesListDetailsComponent implements OnInit {
   movies$: Observable<Movie[]>;

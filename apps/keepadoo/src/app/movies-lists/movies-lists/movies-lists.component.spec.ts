@@ -1,3 +1,4 @@
+import { ChangeDetectionStrategy } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
@@ -36,7 +37,11 @@ describe('MoviesListsComponent', () => {
           useValue: moviesListsServiceMock
         }
       ]
-    }).compileComponents();
+    })
+      .overrideComponent(MoviesListsComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default }
+      })
+      .compileComponents();
   }));
 
   beforeEach(() => {
