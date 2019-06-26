@@ -1,19 +1,14 @@
 import { NgModule } from '@angular/core';
-import { AngularFireModule } from '@angular/fire';
-import { AngularFireAuthModule } from '@angular/fire/auth';
-import {
-  AngularFirestoreModule,
-  FirestoreSettingsToken
-} from '@angular/fire/firestore';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FirestoreSettingsToken } from '@angular/fire/firestore';
 import { BrowserModule } from '@angular/platform-browser';
 import { Route, RouterModule } from '@angular/router';
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { AkitaNgDevtools } from '@datorama/akita-ngdevtools';
 import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
+import { CoreModule } from './core/core.module';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
+import { SharedModule } from './shared/shared.module';
 import { AuthGuard } from './state/auth.guard';
 
 const routes: Route[] = [
@@ -43,16 +38,13 @@ const routes: Route[] = [
 @NgModule({
   declarations: [AppComponent, LoginComponent, HomeComponent],
   imports: [
+    CoreModule,
+    SharedModule,
     BrowserModule,
     RouterModule.forRoot(routes, { initialNavigation: 'enabled' }),
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production
-    }),
-    AngularFireModule.initializeApp(environment.firebase),
-    environment.production ? [] : AkitaNgDevtools.forRoot(),
-    AngularFireAuthModule,
-    AngularFirestoreModule,
-    ReactiveFormsModule
+    })
   ],
   providers: [{ provide: FirestoreSettingsToken, useValue: {} }],
   bootstrap: [AppComponent]
