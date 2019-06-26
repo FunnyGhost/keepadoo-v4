@@ -55,3 +55,8 @@ export const moviesStoreMock = {
 export const moviesQueryMock = {
   selectAll: jest.fn()
 };
+
+/* istanbul ignore next */
+export const movieSearchQueryMock = {
+  selectAll: jest.fn()
+};
