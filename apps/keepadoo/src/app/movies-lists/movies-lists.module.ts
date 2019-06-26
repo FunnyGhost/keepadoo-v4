@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { SharedModule } from '../shared/shared.module';
 import { MovieSearchComponent } from './movie-search/movie-search.component';
 import { MovieSearchQuery } from './movie-search/state/movie-search.query';
 import { MovieSearchService } from './movie-search/state/movie-search.service';
@@ -35,6 +36,6 @@ import { MoviesListsStore } from './state/movies-lists.store';
     MovieSearchQuery,
     MovieSearchService
   ],
-  imports: [CommonModule, MoviesListsRoutingModule]
+  imports: [CommonModule, SharedModule, MoviesListsRoutingModule]
 })
 export class MoviesListsModule {}
