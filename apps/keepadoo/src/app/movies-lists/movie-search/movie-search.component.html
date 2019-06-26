@@ -5,3 +5,10 @@
   placeholder="Movie title..."
   [formControl]="movieToSearchFor"
 />
+
+<section class="movies">
+  <keepadoo-movie
+    *ngFor="let movie of (movieResults$ | async)"
+    [movie]="movie"
+  ></keepadoo-movie>
+</section>
