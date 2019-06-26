@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { MovieSearchService } from './state/movie-search.service';
 
 @Component({
   selector: 'keepadoo-movie-search',
@@ -6,7 +8,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./movie-search.component.scss']
 })
 export class MovieSearchComponent implements OnInit {
-  constructor() {}
+  movieToSearchFor = new FormControl('');
 
-  ngOnInit() {}
+  constructor(private movieSearchService: MovieSearchService) {}
+
+  ngOnInit() {
+    this.movieToSearchFor.valueChanges.subscribe((movieName: string) => {
+      this.movieSearchService.searchMovies(movieName);
+    });
+  }
 }
