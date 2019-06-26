@@ -7,10 +7,11 @@ import { MoviesListsComponent } from './movies-lists/movies-lists.component';
 const routes: Routes = [
   {
     path: ':id',
+    pathMatch: 'full',
     component: MoviesListDetailsComponent
   },
   {
-    path: 'add',
+    path: ':id/add',
     component: MovieSearchComponent
   },
   {
