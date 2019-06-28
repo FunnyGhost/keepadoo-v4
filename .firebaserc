@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "keepadoo": {
+      "hosting": {
+        "keepadoo": [
+          "keepadoo"
+        ]
+      }
+    }
+  }
+}

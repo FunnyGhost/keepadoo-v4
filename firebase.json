@@ -1,0 +1,19 @@
+{
+  "hosting": [
+    {
+      "target": "keepadoo",
+      "public": "dist/apps/keepadoo",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
+    }
+  ]
+}
