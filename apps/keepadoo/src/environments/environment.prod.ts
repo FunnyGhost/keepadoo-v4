@@ -5,7 +5,17 @@ const tmdbConfig: TMDBConfig = {
   apiUrl: 'https://api.themoviedb.org/3'
 };
 
+const firebase = {
+  apiKey: 'AIzaSyCmdoGjhIkg5Xz2okqrX4dEZZZlCOPGAjA',
+  authDomain: 'keepadoo.firebaseapp.com',
+  databaseURL: 'https://keepadoo.firebaseio.com',
+  projectId: 'keepadoo',
+  storageBucket: '',
+  messagingSenderId: '516267612124'
+};
+
 export const environment = {
   production: true,
+  firebase,
   tmdbConfig
 };
