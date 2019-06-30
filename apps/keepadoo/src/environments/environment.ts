@@ -14,8 +14,9 @@ const firebase = {
   authDomain: 'keepadoo.firebaseapp.com',
   databaseURL: 'https://keepadoo.firebaseio.com',
   projectId: 'keepadoo',
-  storageBucket: '',
-  messagingSenderId: '516267612124'
+  storageBucket: 'keepadoo.appspot.com',
+  messagingSenderId: '516267612124',
+  appId: '1:516267612124:web:6dcff203983d3260'
 };
 export const environment = {
   production: false,
