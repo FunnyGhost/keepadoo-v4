@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { SharedModule } from '../shared/shared.module';
+import { MovieSearchResultComponent } from './movie-search-result/movie-search-result.component';
 import { MovieSearchComponent } from './movie-search/movie-search.component';
 import { MovieSearchQuery } from './movie-search/state/movie-search.query';
 import { MovieSearchService } from './movie-search/state/movie-search.service';
@@ -23,7 +24,8 @@ import { MoviesListsStore } from './state/movies-lists.store';
     MoviesListComponent,
     MoviesListDetailsComponent,
     MovieComponent,
-    MovieSearchComponent
+    MovieSearchComponent,
+    MovieSearchResultComponent
   ],
   providers: [
     MoviesListsStore,
