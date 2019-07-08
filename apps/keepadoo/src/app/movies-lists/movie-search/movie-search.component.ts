@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { MovieSearchResult } from './state/models/movie-search-results';
 import { MovieSearchQuery } from './state/movie-search.query';
 import { MovieSearchService } from './state/movie-search.service';
@@ -23,8 +24,13 @@ export class MovieSearchComponent implements OnInit {
   ngOnInit() {
     this.movieResults$ = this.movieSearchQuery.selectAll();
 
-    this.movieToSearchFor.valueChanges.subscribe((movieName: string) => {
-      this.movieSearchService.searchMovies(movieName);
-    });
+    this.movieToSearchFor.valueChanges
+      .pipe(
+        debounceTime(500),
+        distinctUntilChanged()
+      )
+      .subscribe((movieName: string) => {
+        this.movieSearchService.searchMovies(movieName);
+      });
   }
 }

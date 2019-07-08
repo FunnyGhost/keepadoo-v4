@@ -1,5 +1,11 @@
 import { ChangeDetectionStrategy } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+  async,
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick
+} from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { MockComponent } from 'ng-mocks';
@@ -47,7 +53,7 @@ describe('MovieSearchComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should search for movies when a user types something', () => {
+  it('should wait 500ms when a user types something and then search', fakeAsync(() => {
     const movieToSearchFor = 'Batman';
 
     const searchInput = fixture.debugElement.query(By.css('input'));
@@ -60,11 +66,16 @@ describe('MovieSearchComponent', () => {
 
     searchInput.nativeElement.value = movieToSearchFor;
     searchInput.nativeElement.dispatchEvent(new Event('input'));
+    expect(movieSearchService.searchMovies).not.toHaveBeenCalledWith(
+      movieToSearchFor
+    );
+
+    tick(500);
 
     expect(movieSearchService.searchMovies).toHaveBeenCalledWith(
       movieToSearchFor
     );
-  });
+  }));
 
   it('should display the movies from the search store', () => {
     movieSearchQueryMock.selectAll.mockReturnValue(of(testMovieSearchResults));
