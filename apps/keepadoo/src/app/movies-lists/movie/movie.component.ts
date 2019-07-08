@@ -4,7 +4,6 @@ import {
   Input,
   OnInit
 } from '@angular/core';
-import { MovieSearchResult } from '../movie-search/state/models/movie-search-results';
 import { Movie } from '../movies/state/models/movie';
 
 @Component({
@@ -14,7 +13,7 @@ import { Movie } from '../movies/state/models/movie';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MovieComponent implements OnInit {
-  @Input() movie: Movie | MovieSearchResult;
+  @Input() movie: Movie;
 
   constructor() {}
 
