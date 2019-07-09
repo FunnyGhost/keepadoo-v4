@@ -1,0 +1,62 @@
+@import '../../../variables';
+
+h1 {
+  font-family: $main-font;
+  font-weight: 700;
+  font-size: 1.75rem;
+  text-transform: uppercase;
+  margin: 28px auto;
+  text-align: center;
+  color: $color-primary-1;
+}
+
+.search-box {
+  margin: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+
+  input {
+    padding: 10px;
+    width: 330px;
+    border: 1px solid $color-primary-1;
+    border-radius: 3px;
+  }
+
+  ::-webkit-input-placeholder {
+    /* Chrome/Opera/Safari */
+    font-family: $secondary-font-light;
+    font-weight: 300;
+    font-style: italic;
+    color: $color-primary;
+    opacity: 0.4;
+  }
+  ::-moz-placeholder {
+    /* Firefox 19+ */
+    font-family: $secondary-font-light;
+    font-weight: 300;
+    font-style: italic;
+    color: $color-primary;
+    opacity: 0.4;
+  }
+  :-ms-input-placeholder {
+    /* IE 10+ */
+    font-family: $secondary-font-light;
+    font-weight: 300;
+    font-style: italic;
+    color: $color-primary;
+    opacity: 0.4;
+  }
+  :-moz-placeholder {
+    /* Firefox 18- */
+    font-family: $secondary-font-light;
+    font-weight: 300;
+    font-style: italic;
+    color: $color-primary;
+    opacity: 0.4;
+  }
+}
+
+.movies {
+  margin: 20px;
+}

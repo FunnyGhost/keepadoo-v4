@@ -1,10 +1,13 @@
-<input
-  type="text"
-  name="movie-name"
-  id="movieName"
-  placeholder="Movie title..."
-  [formControl]="movieToSearchFor"
-/>
+<h1>Search</h1>
+<section class="search-box">
+  <input
+    type="text"
+    name="movie-name"
+    id="movieName"
+    placeholder="Movie to search for..."
+    [formControl]="movieToSearchFor"
+  />
+</section>
 
 <section class="movies">
   <keepadoo-movie-search-result
