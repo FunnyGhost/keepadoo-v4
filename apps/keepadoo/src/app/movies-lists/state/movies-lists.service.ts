@@ -5,6 +5,7 @@ import {
 } from '@angular/fire/firestore';
 import { map, tap } from 'rxjs/operators';
 import { SessionQuery } from '../../state/session.query';
+import { MovieSearchResult } from '../movie-search/state/models/movie-search-results';
 import { Movie } from '../movies/state/models/movie';
 import { MoviesService } from '../movies/state/movies.service';
 import { MoviesList } from './models/movies-list';
@@ -98,6 +99,12 @@ export class MoviesListsService {
 
   removeActive(id: string): void {
     this.moviesListsStore.removeActive(id);
+  }
+
+  addMovieToCurrentList(movie: MovieSearchResult): void {
+    // get selected list
+    // add movie to firebase
+    // add to store
   }
 
   private addMoviesToList(listId: string, movies: Movie[]): void {

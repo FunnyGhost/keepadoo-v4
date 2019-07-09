@@ -7,8 +7,9 @@
 />
 
 <section class="movies">
-  <keepadoo-movie
+  <keepadoo-movie-search-result
     *ngFor="let movie of (movieResults$ | async)"
     [movie]="movie"
-  ></keepadoo-movie>
+    (selectedMovie)="addMovie($event)"
+  ></keepadoo-movie-search-result>
 </section>

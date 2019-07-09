@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { MoviesListsService } from '../state/movies-lists.service';
 import { MovieSearchResult } from './state/models/movie-search-results';
 import { MovieSearchQuery } from './state/movie-search.query';
 import { MovieSearchService } from './state/movie-search.service';
@@ -18,7 +19,8 @@ export class MovieSearchComponent implements OnInit {
 
   constructor(
     private movieSearchService: MovieSearchService,
-    private movieSearchQuery: MovieSearchQuery
+    private movieSearchQuery: MovieSearchQuery,
+    private moviesListsService: MoviesListsService
   ) {}
 
   ngOnInit() {
@@ -32,5 +34,9 @@ export class MovieSearchComponent implements OnInit {
       .subscribe((movieName: string) => {
         this.movieSearchService.searchMovies(movieName);
       });
+  }
+
+  addMovie(movie: MovieSearchResult): void {
+    this.moviesListsService.addMovieToCurrentList(movie);
   }
 }

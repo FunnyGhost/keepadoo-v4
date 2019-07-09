@@ -12,13 +12,18 @@ import { MockComponent } from 'ng-mocks';
 import { of } from 'rxjs';
 import { movieSearchQueryMock } from '../../../test-utilities/test-mocks';
 import { testMovieSearchResults } from '../../../test-utilities/test-objects';
-import { MovieComponent } from '../movie/movie.component';
+import { MovieSearchResultComponent } from '../movie-search-result/movie-search-result.component';
+import { MoviesListsService } from '../state/movies-lists.service';
 import { MovieSearchComponent } from './movie-search.component';
 import { MovieSearchQuery } from './state/movie-search.query';
 import { MovieSearchService } from './state/movie-search.service';
 
 const movieSearchServiceMock = {
   searchMovies: () => {}
+};
+
+const movieListServiceMock = {
+  addMovieToCurrentList: () => {}
 };
 
 describe('MovieSearchComponent', () => {
@@ -28,9 +33,13 @@ describe('MovieSearchComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [ReactiveFormsModule],
-      declarations: [MovieSearchComponent, MockComponent(MovieComponent)],
+      declarations: [
+        MovieSearchComponent,
+        MockComponent(MovieSearchResultComponent)
+      ],
       providers: [
         { provide: MovieSearchService, useValue: movieSearchServiceMock },
+        { provide: MoviesListsService, useValue: movieListServiceMock },
         {
           provide: MovieSearchQuery,
           useValue: movieSearchQueryMock
@@ -84,8 +93,28 @@ describe('MovieSearchComponent', () => {
     fixture.detectChanges();
 
     const movieElements = fixture.debugElement.queryAll(
-      By.directive(MovieComponent)
+      By.directive(MovieSearchResultComponent)
     );
     expect(movieElements.length).toBe(testMovieSearchResults.length);
+  });
+
+  it('should add a movie to the list when selected', () => {
+    const movieListService: MoviesListsService = TestBed.get(
+      MoviesListsService
+    );
+    jest.spyOn(movieListService, 'addMovieToCurrentList');
+
+    movieSearchQueryMock.selectAll.mockReturnValue(of(testMovieSearchResults));
+
+    component.ngOnInit();
+    fixture.detectChanges();
+
+    const movieElement = fixture.debugElement.queryAll(
+      By.directive(MovieSearchResultComponent)
+    )[0].componentInstance as MovieSearchResultComponent;
+    movieElement.selectedMovie.emit(testMovieSearchResults[0]);
+    expect(movieListService.addMovieToCurrentList).toHaveBeenCalledWith(
+      testMovieSearchResults[0]
+    );
   });
 });
