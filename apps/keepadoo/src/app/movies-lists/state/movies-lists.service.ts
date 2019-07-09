@@ -3,12 +3,14 @@ import {
   AngularFirestore,
   AngularFirestoreCollection
 } from '@angular/fire/firestore';
+import { from } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { SessionQuery } from '../../state/session.query';
 import { MovieSearchResult } from '../movie-search/state/models/movie-search-results';
 import { Movie } from '../movies/state/models/movie';
 import { MoviesService } from '../movies/state/movies.service';
 import { MoviesList } from './models/movies-list';
+import { MoviesListsQuery } from './movies-lists.query';
 import { MoviesListsStore } from './movies-lists.store';
 
 @Injectable()
@@ -17,6 +19,7 @@ export class MoviesListsService {
   private moviesListsCollection: AngularFirestoreCollection;
 
   constructor(
+    private moviesListsQuery: MoviesListsQuery,
     private moviesListsStore: MoviesListsStore,
     private firestoreService: AngularFirestore,
     private sessionQuery: SessionQuery,
@@ -102,9 +105,10 @@ export class MoviesListsService {
   }
 
   addMovieToCurrentList(movie: MovieSearchResult): void {
-    // get selected list
-    // add movie to firebase
-    // add to store
+    const activeList = this.moviesListsQuery.getActive() as MoviesList;
+    from(this.moviesService.addMovieToList(activeList.id, movie)).subscribe(
+      () => this.fetch()
+    );
   }
 
   private addMoviesToList(listId: string, movies: Movie[]): void {

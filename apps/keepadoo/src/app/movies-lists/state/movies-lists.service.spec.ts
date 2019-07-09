@@ -3,17 +3,20 @@ import { TestBed } from '@angular/core/testing';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { BehaviorSubject, of } from 'rxjs';
 import {
+  moviesListsQueryMock,
   moviesListsStoreMock,
   sessionQueryMock
 } from '../../../test-utilities/test-mocks';
 import {
   testMovies,
+  testMovieSearchResults,
   testMoviestLists,
   testUser
 } from '../../../test-utilities/test-objects';
 import { SessionQuery } from '../../state/session.query';
 import { MoviesService } from '../movies/state/movies.service';
 import { MoviesList } from './models/movies-list';
+import { MoviesListsQuery } from './movies-lists.query';
 import { MoviesListsService } from './movies-lists.service';
 import { MoviesListsStore } from './movies-lists.store';
 
@@ -31,31 +34,29 @@ const firestoreMockSpy = jest
   .spyOn(firestoreMock, 'collection')
   .mockReturnValue({
     auditTrail() {
-      {
-        return of([
-          {
-            payload: {
-              doc: {
-                id: testMoviestLists[0].id,
-                data: () => testMoviestLists[0]
-              }
-            }
-          },
-          {
-            payload: {
-              doc: {
-                id: testMoviestLists[1].id,
-                data: () => testMoviestLists[1]
-              }
+      return of([
+        {
+          payload: {
+            doc: {
+              id: testMoviestLists[0].id,
+              data: () => testMoviestLists[0]
             }
           }
-        ]);
-      }
+        },
+        {
+          payload: {
+            doc: {
+              id: testMoviestLists[1].id,
+              data: () => testMoviestLists[1]
+            }
+          }
+        }
+      ]);
     },
     doc() {
       return docObject;
     }
-  });
+  } as any);
 
 const sessionStoreQueryMock = {
   userId: () => testUser.userId,
@@ -65,7 +66,8 @@ const sessionStoreQueryMock = {
 const listSizeToUse = 54;
 const moviesServiceMock = {
   getMoviesInList: jest.fn().mockReturnValue(of(testMovies)),
-  getNumberOfMoviesInList: jest.fn().mockReturnValue(of(listSizeToUse))
+  getNumberOfMoviesInList: jest.fn().mockReturnValue(of(listSizeToUse)),
+  addMovieToList: jest.fn().mockReturnValue(of({}))
 };
 
 describe('MoviesListsService', () => {
@@ -78,6 +80,10 @@ describe('MoviesListsService', () => {
     TestBed.configureTestingModule({
       providers: [
         MoviesListsService,
+        {
+          provide: MoviesListsQuery,
+          useValue: moviesListsQueryMock
+        },
         {
           provide: MoviesListsStore,
           useValue: moviesListsStoreMock
@@ -227,6 +233,26 @@ describe('MoviesListsService', () => {
       moviesListsService.removeActive(idToUse);
 
       expect(moviesListsStoreMock.removeActive).toHaveBeenCalledWith(idToUse);
+    });
+  });
+
+  describe('addMovieToCurrentList', () => {
+    it('should add the movie to the current list', () => {
+      const moviesService: MoviesService = TestBed.get(MoviesService);
+      const selectedList = '123';
+      const movieToAdd = testMovieSearchResults[0];
+      moviesListsQueryMock.getActive.mockReturnValue({
+        id: selectedList
+      } as MoviesList);
+      jest.spyOn(moviesListsService, 'fetch');
+
+      moviesListsService.addMovieToCurrentList(movieToAdd);
+
+      expect(moviesService.addMovieToList).toHaveBeenCalledWith(
+        selectedList,
+        movieToAdd
+      );
+      expect(moviesListsService.fetch).toHaveBeenCalled();
     });
   });
 });
