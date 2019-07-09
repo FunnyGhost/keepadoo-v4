@@ -40,7 +40,8 @@ export const moviesListsStoreMock = {
 /* istanbul ignore next */
 export const moviesListsQueryMock = {
   selectAll: jest.fn(),
-  selectActive: jest.fn()
+  selectActive: jest.fn(),
+  getActive: jest.fn()
 };
 
 /* istanbul ignore next */
