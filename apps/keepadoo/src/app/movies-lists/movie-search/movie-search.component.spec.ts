@@ -8,6 +8,8 @@ import {
 } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
+import { Router } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
 import { MockComponent } from 'ng-mocks';
 import { of } from 'rxjs';
 import { movieSearchQueryMock } from '../../../test-utilities/test-mocks';
@@ -32,7 +34,7 @@ describe('MovieSearchComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule],
+      imports: [ReactiveFormsModule, RouterTestingModule],
       declarations: [
         MovieSearchComponent,
         MockComponent(MovieSearchResultComponent)
@@ -103,6 +105,8 @@ describe('MovieSearchComponent', () => {
       MoviesListsService
     );
     jest.spyOn(movieListService, 'addMovieToCurrentList');
+    const router: Router = TestBed.get(Router);
+    spyOn(router, 'navigate');
 
     movieSearchQueryMock.selectAll.mockReturnValue(of(testMovieSearchResults));
 
@@ -116,5 +120,21 @@ describe('MovieSearchComponent', () => {
     expect(movieListService.addMovieToCurrentList).toHaveBeenCalledWith(
       testMovieSearchResults[0]
     );
+  });
+
+  it('should go up one level when a movie is added', () => {
+    const router: Router = TestBed.get(Router);
+    spyOn(router, 'navigate').and.callFake(() => {});
+    movieSearchQueryMock.selectAll.mockReturnValue(of(testMovieSearchResults));
+
+    component.ngOnInit();
+    fixture.detectChanges();
+
+    const movieElement = fixture.debugElement.queryAll(
+      By.directive(MovieSearchResultComponent)
+    )[0].componentInstance as MovieSearchResultComponent;
+    movieElement.selectedMovie.emit(testMovieSearchResults[0]);
+
+    expect(router.navigate).toHaveBeenCalled();
   });
 });

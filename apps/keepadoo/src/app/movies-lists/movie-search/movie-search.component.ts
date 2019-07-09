@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { MoviesListsService } from '../state/movies-lists.service';
@@ -20,7 +21,9 @@ export class MovieSearchComponent implements OnInit {
   constructor(
     private movieSearchService: MovieSearchService,
     private movieSearchQuery: MovieSearchQuery,
-    private moviesListsService: MoviesListsService
+    private moviesListsService: MoviesListsService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute
   ) {}
 
   ngOnInit() {
@@ -38,5 +41,6 @@ export class MovieSearchComponent implements OnInit {
 
   addMovie(movie: MovieSearchResult): void {
     this.moviesListsService.addMovieToCurrentList(movie);
+    this.router.navigate(['../'], { relativeTo: this.activatedRoute });
   }
 }
