@@ -23,6 +23,6 @@ export class MovieSearchResultComponent implements OnInit {
   ngOnInit() {}
 
   selectMovie(): void {
-    this.selectedMovie.next(this.movie);
+    this.selectedMovie.emit(this.movie);
   }
 }

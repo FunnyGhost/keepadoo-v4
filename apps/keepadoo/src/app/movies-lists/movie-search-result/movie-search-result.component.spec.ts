@@ -71,14 +71,14 @@ describe('MovieSearchResultComponent', () => {
   });
 
   it('should emit when a movie is clicked', () => {
-    jest.spyOn(component.selectedMovie, 'next');
+    jest.spyOn(component.selectedMovie, 'emit');
     const movieElement = fixture.debugElement.query(
       By.css('.search-result-container')
     );
 
     movieElement.triggerEventHandler('click', null);
 
-    expect(component.selectedMovie.next).toHaveBeenCalledWith(
+    expect(component.selectedMovie.emit).toHaveBeenCalledWith(
       movieSearchResultToUse
     );
   });
