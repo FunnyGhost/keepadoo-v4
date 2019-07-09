@@ -1,0 +1,39 @@
+@import '../../../variables';
+
+.search-result-container {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 25px;
+
+  img {
+    margin-right: 16px;
+    width: 100px;
+    box-shadow: 0 3px 6px #000000;
+  }
+
+  h4 {
+    font-family: $main-font;
+    font-weight: bold;
+    font-size: 18px;
+    color: $dark;
+  }
+
+  .year {
+    font-family: $secondary-font-light;
+    font-weight: 300;
+    font-style: italic;
+    font-size: 12px;
+    margin-top: 9px;
+    margin-bottom: 9px;
+    color: $dark;
+  }
+
+  .movie-overview {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-height: 110px;
+    font-family: $secondary-font;
+    line-height: 1.185rem;
+    color: $dark;
+  }
+}

@@ -4,7 +4,9 @@
     alt=""
     class="movie-poster"
   />
-  <h4>{{ movie.title }}</h4>
-  <div class="year">{{ movie.release_date | date: 'yyyy' }}</div>
-  <section class="movie-overview">{{ movie.overview }}</section>
+  <div class="movie-details">
+    <h4>{{ movie.title }}</h4>
+    <div class="year">{{ movie.release_date | date: 'yyyy' }}</div>
+    <section class="movie-overview">{{ movie.overview }}</section>
+  </div>
 </article>
