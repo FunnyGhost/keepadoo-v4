@@ -4,6 +4,7 @@ import { of, Subject } from 'rxjs';
 import { moviesStoreMock } from '../../../../test-utilities/test-mocks';
 import {
   testMovies,
+  testMovieSearchResults,
   testMoviestLists,
   testUser
 } from '../../../../test-utilities/test-objects';
@@ -19,6 +20,7 @@ const firestoreMock = {
 };
 
 const listSizeToUse = 34;
+const addSpy = jest.fn();
 
 jest.spyOn(firestoreMock, 'collection').mockReturnValue({
   snapshotChanges() {
@@ -45,8 +47,9 @@ jest.spyOn(firestoreMock, 'collection').mockReturnValue({
   },
   get() {
     return of({ size: listSizeToUse });
-  }
-});
+  },
+  add: addSpy
+} as any);
 
 const sessionQueryMock = {
   userId: () => testUser.userId,
@@ -142,6 +145,16 @@ describe('MoviesService', () => {
         expect(data).toBe(listSizeToUse);
         done();
       });
+    });
+  });
+
+  describe('addMovieToList', () => {
+    it('should add the movie to the list', async () => {
+      const listId = '123';
+      const movieToAdd = testMovieSearchResults[0];
+
+      await service.addMovieToList(listId, movieToAdd);
+      expect(addSpy).toHaveBeenCalledWith({ ...movieToAdd, listId });
     });
   });
 

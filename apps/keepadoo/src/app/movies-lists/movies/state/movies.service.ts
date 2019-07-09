@@ -3,6 +3,7 @@ import { AngularFirestore, QuerySnapshot } from '@angular/fire/firestore';
 import { combineLatest, Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 import { SessionQuery } from '../../../state/session.query';
+import { MovieSearchResult } from '../../movie-search/state/models/movie-search-results';
 import { MoviesList } from '../../state/models/movies-list';
 import { MoviesListsQuery } from '../../state/movies-lists.query';
 import { Movie } from './models/movie';
@@ -82,5 +83,9 @@ export class MoviesService {
         }),
         take(1)
       );
+  }
+
+  public async addMovieToList(listId: string, movie: MovieSearchResult) {
+    return this.firestoreService.collection(`movies`).add({ ...movie, listId });
   }
 }
