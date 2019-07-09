@@ -16,10 +16,10 @@ export class MoviesService {
     moviesListsQuery: MoviesListsQuery,
     moviesStore: MoviesStore
   ) {
-    combineLatest(
+    combineLatest([
       sessionQuery.userId$,
       moviesListsQuery.selectActive()
-    ).subscribe(([userId, moviesList]: [string, MoviesList]) => {
+    ]).subscribe(([userId, moviesList]: [string, MoviesList]) => {
       if (!userId || !moviesList) {
         moviesStore.set([]);
       } else {
