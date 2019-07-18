@@ -10,9 +10,25 @@ footer {
   background-color: $color-primary;
 
   .navigation-button {
-    margin: 1.375rem 2rem;
+    margin: 1.1rem 2rem;
 
-    .active svg {
+    a {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-decoration: none;
+    }
+
+    span {
+      font-family: $main-font;
+      font-weight: 700;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      color: $white;
+      margin-top: 8px;
+    }
+    .active span {
       color: $active;
     }
 
@@ -20,6 +36,9 @@ footer {
       color: $white;
       width: 30px;
       height: 30px;
+    }
+    .active svg {
+      color: $active;
     }
   }
 }
