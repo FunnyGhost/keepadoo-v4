@@ -41,6 +41,10 @@ export class MovieSearchComponent implements OnInit {
 
   addMovie(movie: MovieSearchResult): void {
     this.moviesListsService.addMovieToCurrentList(movie);
+    this.goBack();
+  }
+
+  goBack(): void {
     this.router.navigate(['../'], { relativeTo: this.activatedRoute });
   }
 }

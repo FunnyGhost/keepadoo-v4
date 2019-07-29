@@ -137,4 +137,16 @@ describe('MovieSearchComponent', () => {
 
     expect(router.navigate).toHaveBeenCalled();
   });
+
+  it('should go up one level when the cancel button is hit', () => {
+    const router: Router = TestBed.get(Router);
+    spyOn(router, 'navigate').and.callFake(() => {});
+    const cancelButton = fixture.debugElement.query(
+      By.css('button.cancel-button')
+    );
+
+    cancelButton.triggerEventHandler('click', null);
+
+    expect(router.navigate).toHaveBeenCalled();
+  });
 });
