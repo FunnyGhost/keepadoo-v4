@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Movie } from '../movies/state/models/movie';
 import { MoviesQuery } from '../movies/state/movies.query';
 import { MoviesService } from '../movies/state/movies.service';
@@ -17,6 +18,7 @@ import { MoviesListsService } from '../state/movies-lists.service';
 export class MoviesListDetailsComponent implements OnInit {
   movies$: Observable<Movie[]>;
   selectedList$: Observable<MoviesList>;
+  editMode$: Observable<boolean>;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -36,5 +38,8 @@ export class MoviesListDetailsComponent implements OnInit {
     this.selectedList$ = this.moviesListQuery.selectActive() as Observable<
       MoviesList
     >;
+    this.editMode$ = this.moviesQuery
+      .select()
+      .pipe(map(state => state.editMode));
   }
 }

@@ -72,6 +72,7 @@ describe('MoviesListDetailsComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(MoviesListDetailsComponent);
     component = fixture.componentInstance;
+    moviesQueryMock.select.mockReturnValue(of({ editMode: false }));
     fixture.detectChanges();
   });
 
@@ -100,6 +101,44 @@ describe('MoviesListDetailsComponent', () => {
         movieComponent => movieComponent.movie.id === movie.id
       );
       expect(element).toBeTruthy();
+    });
+  });
+
+  it('should show the movies in edit mode when the edit mode is enabled', () => {
+    moviesQueryMock.selectAll.mockReturnValue(of(testMovies));
+    moviesQueryMock.select.mockReturnValue(of({ editMode: true }));
+
+    component.ngOnInit();
+    fixture.detectChanges();
+
+    expect(moviesQueryMock.selectAll).toHaveBeenCalled();
+    const movieComponents = childComponents<MovieComponent>(
+      fixture,
+      MovieComponent
+    );
+    movieComponents.forEach(movieComponent => {
+      expect(movieComponent.editMode).toBe(true);
+    });
+  });
+
+  it('should not show the movies in edit mode when the edit mode is disabled', () => {
+    moviesQueryMock.selectAll.mockReturnValue(of(testMovies));
+    moviesQueryMock.select.mockReturnValue(
+      of({
+        editMode: false
+      })
+    );
+
+    component.ngOnInit();
+    fixture.detectChanges();
+
+    expect(moviesQueryMock.selectAll).toHaveBeenCalled();
+    const movieComponents = childComponents<MovieComponent>(
+      fixture,
+      MovieComponent
+    );
+    movieComponents.forEach(movieComponent => {
+      expect(movieComponent.editMode).toBe(false);
     });
   });
 

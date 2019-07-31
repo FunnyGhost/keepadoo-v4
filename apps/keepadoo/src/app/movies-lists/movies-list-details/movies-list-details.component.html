@@ -4,5 +4,6 @@
   <keepadoo-movie
     *ngFor="let movie of (movies$ | async)"
     [movie]="movie"
+    [editMode]="editMode$ | async"
   ></keepadoo-movie>
 </section>
