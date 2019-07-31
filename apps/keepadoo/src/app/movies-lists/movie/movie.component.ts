@@ -1,8 +1,10 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  EventEmitter,
   Input,
-  OnInit
+  OnInit,
+  Output
 } from '@angular/core';
 import { Movie } from '../movies/state/models/movie';
 
@@ -13,9 +15,15 @@ import { Movie } from '../movies/state/models/movie';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MovieComponent implements OnInit {
+  @Input() editMode = false;
   @Input() movie: Movie;
+  @Output() delete = new EventEmitter<Movie>();
 
   constructor() {}
 
   ngOnInit() {}
+
+  onDelete(): void {
+    this.delete.emit(this.movie);
+  }
 }
