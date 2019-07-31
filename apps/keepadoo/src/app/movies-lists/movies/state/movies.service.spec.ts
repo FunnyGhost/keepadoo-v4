@@ -21,6 +21,7 @@ const firestoreMock = {
 
 const listSizeToUse = 34;
 const addSpy = jest.fn();
+const deleteSpy = jest.fn();
 
 jest.spyOn(firestoreMock, 'collection').mockReturnValue({
   snapshotChanges() {
@@ -48,7 +49,12 @@ jest.spyOn(firestoreMock, 'collection').mockReturnValue({
   get() {
     return of({ size: listSizeToUse });
   },
-  add: addSpy
+  add: addSpy,
+  doc() {
+    return {
+      delete: deleteSpy
+    };
+  }
 } as any);
 
 const sessionQueryMock = {
@@ -155,6 +161,19 @@ describe('MoviesService', () => {
 
       await service.addMovieToList(listId, movieToAdd);
       expect(addSpy).toHaveBeenCalledWith({ ...movieToAdd, listId });
+    });
+  });
+
+  afterEach(() => {
+    moviesStoreMock.set.mockClear();
+  });
+
+  describe('deleteMovieFromList', () => {
+    it('should delete the movie', async () => {
+      const movieToDelete = testMovies[0];
+
+      await service.deleteMovie(movieToDelete);
+      expect(deleteSpy).toHaveBeenCalled();
     });
   });
 

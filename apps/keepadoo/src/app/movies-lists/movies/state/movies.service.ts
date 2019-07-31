@@ -88,4 +88,11 @@ export class MoviesService {
   public async addMovieToList(listId: string, movie: MovieSearchResult) {
     return this.firestoreService.collection(`movies`).add({ ...movie, listId });
   }
+
+  public async deleteMovie(movie: Movie) {
+    return this.firestoreService
+      .collection(`movies`)
+      .doc(movie.listId)
+      .delete();
+  }
 }
