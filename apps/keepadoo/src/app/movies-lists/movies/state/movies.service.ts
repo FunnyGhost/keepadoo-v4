@@ -93,7 +93,8 @@ export class MoviesService {
     const movieToDelete = this.firestoreService
       .collection(`movies`)
       .doc(movie.key);
-    return await movieToDelete.delete();
+    await movieToDelete.delete();
+    this.moviesStore.remove(movie.id);
   }
 
   public enableEditMode(): void {

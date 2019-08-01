@@ -170,6 +170,7 @@ describe('MoviesService', () => {
 
       await service.deleteMovie(movieToDelete);
       expect(deleteSpy).toHaveBeenCalled();
+      expect(moviesStoreMock.remove).toHaveBeenCalledWith(movieToDelete.id);
     });
   });
 
