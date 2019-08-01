@@ -42,4 +42,12 @@ export class MoviesListDetailsComponent implements OnInit {
       .select()
       .pipe(map(state => state.editMode));
   }
+
+  edit(): void {
+    this.moviesService.enableEditMode();
+  }
+
+  done(): void {
+    this.moviesService.disableEditMode();
+  }
 }

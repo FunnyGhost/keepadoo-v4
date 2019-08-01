@@ -24,7 +24,10 @@ const moviesListsServiceMock = {
   setActive: jest.fn()
 };
 
-const moviesServiceMock = {};
+const moviesServiceMock = {
+  enableEditMode: jest.fn(),
+  disableEditMode: jest.fn()
+};
 
 const listIdToUse = 'dc-movies';
 const activatedRouteMock = {
@@ -84,73 +87,115 @@ describe('MoviesListDetailsComponent', () => {
     expect(moviesListsServiceMock.setActive).toHaveBeenCalledWith(listIdToUse);
   });
 
-  it('should show the movies in in store', () => {
-    moviesQueryMock.selectAll.mockReturnValue(of(testMovies));
+  describe('Render', () => {
+    it('should show the movies in in store', () => {
+      moviesQueryMock.selectAll.mockReturnValue(of(testMovies));
 
-    component.ngOnInit();
-    fixture.detectChanges();
+      component.ngOnInit();
+      fixture.detectChanges();
 
-    expect(moviesQueryMock.selectAll).toHaveBeenCalled();
-    const movieComponents = childComponents<MovieComponent>(
-      fixture,
-      MovieComponent
-    );
-    expect(movieComponents.length).toBe(testMovies.length);
-    testMovies.forEach(movie => {
-      const element = movieComponents.find(
-        movieComponent => movieComponent.movie.id === movie.id
+      expect(moviesQueryMock.selectAll).toHaveBeenCalled();
+      const movieComponents = childComponents<MovieComponent>(
+        fixture,
+        MovieComponent
       );
-      expect(element).toBeTruthy();
+      expect(movieComponents.length).toBe(testMovies.length);
+      testMovies.forEach(movie => {
+        const element = movieComponents.find(
+          movieComponent => movieComponent.movie.id === movie.id
+        );
+        expect(element).toBeTruthy();
+      });
+    });
+
+    it('should show the selected list title', () => {
+      const moviesListToUse = testMoviestLists[0];
+      moviesListsQueryMock.selectActive.mockReturnValue(of(moviesListToUse));
+
+      component.ngOnInit();
+      fixture.detectChanges();
+
+      const title = fixture.debugElement.query(By.css('h1'));
+      expect(title.nativeElement.textContent.trim()).toBe(moviesListToUse.name);
     });
   });
 
-  it('should show the movies in edit mode when the edit mode is enabled', () => {
-    moviesQueryMock.selectAll.mockReturnValue(of(testMovies));
-    moviesQueryMock.select.mockReturnValue(of({ editMode: true }));
+  describe('EditMode is on', () => {
+    beforeEach(() => {
+      moviesQueryMock.selectAll.mockReturnValue(of(testMovies));
+      moviesQueryMock.select.mockReturnValue(of({ editMode: true }));
 
-    component.ngOnInit();
-    fixture.detectChanges();
+      component.ngOnInit();
+      fixture.detectChanges();
+    });
 
-    expect(moviesQueryMock.selectAll).toHaveBeenCalled();
-    const movieComponents = childComponents<MovieComponent>(
-      fixture,
-      MovieComponent
-    );
-    movieComponents.forEach(movieComponent => {
-      expect(movieComponent.editMode).toBe(true);
+    it('should show the movies in edit mode', () => {
+      const movieComponents = childComponents<MovieComponent>(
+        fixture,
+        MovieComponent
+      );
+      movieComponents.forEach(movieComponent => {
+        expect(movieComponent.editMode).toBe(true);
+      });
+    });
+
+    it('should not show the edit button', () => {
+      const editButtons = fixture.debugElement.queryAll(
+        By.css('button.edit-button')
+      );
+
+      expect(editButtons.length).toBe(0);
+    });
+
+    it('should disable edit mode when done button is clicked', () => {
+      const doneButton = fixture.debugElement.query(
+        By.css('button.done-button')
+      );
+      const moviesService: MoviesService = TestBed.get(MoviesService);
+
+      doneButton.triggerEventHandler('click', null);
+
+      expect(moviesService.disableEditMode).toHaveBeenCalled();
     });
   });
 
-  it('should not show the movies in edit mode when the edit mode is disabled', () => {
-    moviesQueryMock.selectAll.mockReturnValue(of(testMovies));
-    moviesQueryMock.select.mockReturnValue(
-      of({
-        editMode: false
-      })
-    );
+  describe('EditMode is off', () => {
+    beforeEach(() => {
+      moviesQueryMock.selectAll.mockReturnValue(of(testMovies));
+      moviesQueryMock.select.mockReturnValue(of({ editMode: false }));
 
-    component.ngOnInit();
-    fixture.detectChanges();
-
-    expect(moviesQueryMock.selectAll).toHaveBeenCalled();
-    const movieComponents = childComponents<MovieComponent>(
-      fixture,
-      MovieComponent
-    );
-    movieComponents.forEach(movieComponent => {
-      expect(movieComponent.editMode).toBe(false);
+      component.ngOnInit();
+      fixture.detectChanges();
     });
-  });
 
-  it('should show the selected list title', () => {
-    const moviesListToUse = testMoviestLists[0];
-    moviesListsQueryMock.selectActive.mockReturnValue(of(moviesListToUse));
+    it('should not show the movies in edit mode', () => {
+      const movieComponents = childComponents<MovieComponent>(
+        fixture,
+        MovieComponent
+      );
+      movieComponents.forEach(movieComponent => {
+        expect(movieComponent.editMode).toBe(false);
+      });
+    });
 
-    component.ngOnInit();
-    fixture.detectChanges();
+    it('should not show the done button', () => {
+      const doneButtons = fixture.debugElement.queryAll(
+        By.css('button.done-button')
+      );
 
-    const title = fixture.debugElement.query(By.css('h1'));
-    expect(title.nativeElement.textContent).toBe(moviesListToUse.name);
+      expect(doneButtons.length).toBe(0);
+    });
+
+    it('should enable edit mode when edit button is clicked', () => {
+      const editButton = fixture.debugElement.query(
+        By.css('button.edit-button')
+      );
+      const moviesService: MoviesService = TestBed.get(MoviesService);
+
+      editButton.triggerEventHandler('click', null);
+
+      expect(moviesService.enableEditMode).toHaveBeenCalled();
+    });
   });
 
   afterEach(() => {

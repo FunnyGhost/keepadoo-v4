@@ -1,5 +1,29 @@
 @import '../../../variables';
 
+.container {
+  padding-bottom: 90px;
+}
+
+.top-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+
+  .edit-button,
+  .done-button {
+    margin: 14px;
+    margin-bottom: 0;
+    cursor: pointer;
+    font-family: $main-font;
+    font-size: 0.625rem;
+    text-transform: uppercase;
+    color: $color-primary-1;
+    border: none;
+    background: $white;
+    box-shadow: none;
+  }
+}
+
 h1 {
   font-family: $main-font;
   font-weight: 700;
@@ -10,7 +34,7 @@ h1 {
   color: $color-primary-1;
 }
 
-section {
+.movies {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;

@@ -1,9 +1,29 @@
-<h1 *ngIf="(selectedList$ | async) as selectedList">{{ selectedList.name }}</h1>
+<div class="container">
+  <section class="top-buttons">
+    <button
+      class="edit-button"
+      (click)="edit()"
+      *ngIf="(editMode$ | async) === false"
+    >
+      Edit
+    </button>
+    <button
+      class="done-button"
+      (click)="done()"
+      *ngIf="(editMode$ | async) === true"
+    >
+      Done
+    </button>
+  </section>
+  <h1 *ngIf="(selectedList$ | async) as selectedList">
+    {{ selectedList.name }}
+  </h1>
 
-<section class="movies">
-  <keepadoo-movie
-    *ngFor="let movie of (movies$ | async)"
-    [movie]="movie"
-    [editMode]="editMode$ | async"
-  ></keepadoo-movie>
-</section>
+  <section class="movies">
+    <keepadoo-movie
+      *ngFor="let movie of (movies$ | async)"
+      [movie]="movie"
+      [editMode]="editMode$ | async"
+    ></keepadoo-movie>
+  </section>
+</div>
