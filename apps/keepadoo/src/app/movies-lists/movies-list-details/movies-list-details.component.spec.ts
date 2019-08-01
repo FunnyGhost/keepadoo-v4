@@ -26,7 +26,8 @@ const moviesListsServiceMock = {
 
 const moviesServiceMock = {
   enableEditMode: jest.fn(),
-  disableEditMode: jest.fn()
+  disableEditMode: jest.fn(),
+  deleteMovie: jest.fn()
 };
 
 const listIdToUse = 'dc-movies';
@@ -88,7 +89,7 @@ describe('MoviesListDetailsComponent', () => {
   });
 
   describe('Render', () => {
-    it('should show the movies in in store', () => {
+    it('should show the movies in store', () => {
       moviesQueryMock.selectAll.mockReturnValue(of(testMovies));
 
       component.ngOnInit();
@@ -145,6 +146,19 @@ describe('MoviesListDetailsComponent', () => {
       );
 
       expect(editButtons.length).toBe(0);
+    });
+
+    it('should delete a movie when the delete event is triggered', () => {
+      const moviesService: MoviesService = TestBed.get(MoviesService);
+      const movieComponents = childComponents<MovieComponent>(
+        fixture,
+        MovieComponent
+      );
+      const movieToDelete = testMovies[0];
+
+      movieComponents[0].delete.emit(movieToDelete);
+
+      expect(moviesService.deleteMovie).toHaveBeenCalledWith(movieToDelete);
     });
 
     it('should disable edit mode when done button is clicked', () => {

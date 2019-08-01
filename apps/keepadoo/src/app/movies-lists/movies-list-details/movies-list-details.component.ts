@@ -50,4 +50,8 @@ export class MoviesListDetailsComponent implements OnInit {
   done(): void {
     this.moviesService.disableEditMode();
   }
+
+  async deleteMovie(movie: Movie) {
+    this.moviesService.deleteMovie(movie);
+  }
 }

@@ -24,6 +24,7 @@
       *ngFor="let movie of (movies$ | async)"
       [movie]="movie"
       [editMode]="editMode$ | async"
+      (delete)="deleteMovie($event)"
     ></keepadoo-movie>
   </section>
 </div>
