@@ -164,10 +164,6 @@ describe('MoviesService', () => {
     });
   });
 
-  afterEach(() => {
-    moviesStoreMock.set.mockClear();
-  });
-
   describe('deleteMovieFromList', () => {
     it('should delete the movie', async () => {
       const movieToDelete = testMovies[0];
@@ -177,7 +173,24 @@ describe('MoviesService', () => {
     });
   });
 
+  describe('enableEditMode', () => {
+    it('should set editMode to true', () => {
+      service.enableEditMode();
+      expect(moviesStoreMock.update).toHaveBeenCalledWith({ editMode: true });
+    });
+  });
+
+  describe('disableEditMode', () => {
+    it('should set editMode to false', () => {
+      service.disableEditMode();
+      expect(moviesStoreMock.update).toHaveBeenCalledWith({
+        editMode: false
+      });
+    });
+  });
+
   afterEach(() => {
     moviesStoreMock.set.mockClear();
+    moviesStoreMock.update.mockClear();
   });
 });

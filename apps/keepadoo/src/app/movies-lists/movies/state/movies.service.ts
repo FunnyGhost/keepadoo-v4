@@ -15,7 +15,7 @@ export class MoviesService {
     private firestoreService: AngularFirestore,
     sessionQuery: SessionQuery,
     moviesListsQuery: MoviesListsQuery,
-    moviesStore: MoviesStore
+    private moviesStore: MoviesStore
   ) {
     combineLatest([
       sessionQuery.userId$,
@@ -94,5 +94,13 @@ export class MoviesService {
       .collection(`movies`)
       .doc(movie.listId)
       .delete();
+  }
+
+  public enableEditMode(): void {
+    this.moviesStore.update({ editMode: true });
+  }
+
+  public disableEditMode(): void {
+    this.moviesStore.update({ editMode: false });
   }
 }
