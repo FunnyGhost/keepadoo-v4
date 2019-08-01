@@ -30,7 +30,7 @@ jest.spyOn(firestoreMock, 'collection').mockReturnValue({
         {
           payload: {
             doc: {
-              id: testMovies[0].id,
+              key: testMovies[0].id,
               data: () => testMovies[0]
             }
           }
@@ -38,7 +38,7 @@ jest.spyOn(firestoreMock, 'collection').mockReturnValue({
         {
           payload: {
             doc: {
-              id: testMovies[1].id,
+              key: testMovies[1].id,
               data: () => testMovies[1]
             }
           }

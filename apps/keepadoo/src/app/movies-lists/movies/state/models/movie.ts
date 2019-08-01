@@ -1,4 +1,5 @@
 export interface Movie {
+  key: string;
   id: string;
   genre_ids: number[];
   listId: string;

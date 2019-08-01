@@ -52,7 +52,7 @@ export class MoviesService {
         map(changes => {
           const movies = changes.map(data => {
             const movie = {
-              id: data.payload.doc.id,
+              key: data.payload.doc.id,
               ...data.payload.doc.data()
             } as Movie;
             return movie;
@@ -90,10 +90,10 @@ export class MoviesService {
   }
 
   public async deleteMovie(movie: Movie) {
-    return this.firestoreService
+    const movieToDelete = this.firestoreService
       .collection(`movies`)
-      .doc(movie.listId)
-      .delete();
+      .doc(movie.key);
+    return await movieToDelete.delete();
   }
 
   public enableEditMode(): void {
