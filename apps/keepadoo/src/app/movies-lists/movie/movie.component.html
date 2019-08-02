@@ -1,4 +1,11 @@
-<article>
+<article
+  [class.wiggle]="editMode"
+  [ngClass]="[wiggleStyle]"
+  [ngStyle]="{
+    'animation-delay': animationDelay,
+    'animation-duration': animationDuration
+  }"
+>
   <button class="delete-button" *ngIf="editMode" (click)="onDelete()">
     <svg
       xmlns="http://www.w3.org/2000/svg"

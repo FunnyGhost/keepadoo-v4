@@ -32,3 +32,38 @@ svg {
     fill: $remove;
   }
 }
+
+.wiggle.wiggle1 {
+  animation-name: wiggle1;
+  animation-iteration-count: infinite;
+  transform-origin: 50% 10%;
+}
+
+.wiggle.wiggle2 {
+  animation-name: wiggle2;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  transform-origin: 30% 5%;
+}
+
+@keyframes wiggle1 {
+  0% {
+    transform: rotate(-1deg);
+    animation-timing-function: ease-in;
+  }
+  50% {
+    transform: rotate(1.5deg);
+    animation-timing-function: ease-out;
+  }
+}
+
+@keyframes wiggle2 {
+  0% {
+    transform: rotate(1deg);
+    animation-timing-function: ease-in;
+  }
+  50% {
+    transform: rotate(-1.5deg);
+    animation-timing-function: ease-out;
+  }
+}
