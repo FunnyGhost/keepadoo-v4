@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 import { SharedModule } from './shared/shared.module';
 import { AuthGuard } from './state/auth.guard';
 
@@ -20,6 +21,10 @@ const routes: Route[] = [
   {
     path: 'login',
     component: LoginComponent
+  },
+  {
+    path: 'register',
+    component: RegisterComponent
   },
   {
     path: 'home',
@@ -36,7 +41,12 @@ const routes: Route[] = [
 ];
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, HomeComponent],
+  declarations: [
+    AppComponent,
+    LoginComponent,
+    RegisterComponent,
+    HomeComponent
+  ],
   imports: [
     CoreModule,
     SharedModule,
