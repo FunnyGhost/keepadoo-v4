@@ -63,7 +63,7 @@
     "akita-schematics": "2.0.1",
     "codelyzer": "~4.5.0",
     "cypress": "3.1.0",
-    "dotenv": "6.2.0",
+    "dotenv": "8.0.0",
     "jest": "24.1.0",
     "jest-preset-angular": "7.0.0",
     "prettier": "1.15.2",
