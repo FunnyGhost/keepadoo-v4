@@ -61,6 +61,22 @@ export class AuthService {
     return response;
   }
 
+  async signUp(email, password) {
+    this.sessionStore.setLoading(true);
+    let response;
+
+    try {
+      response = await this.afAuth.auth.createUserWithEmailAndPassword(
+        email,
+        password
+      );
+    } catch (error) {
+      this.sessionStore.setError(error.message);
+    }
+
+    this.sessionStore.setLoading(false);
+  }
+
   async signOut() {
     await this.afAuth.auth.signOut();
     return this.router.navigate(['/']);
