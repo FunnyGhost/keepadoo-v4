@@ -24,7 +24,8 @@ export const sessionStoreMock = {
 /* istanbul ignore next */
 export const authServiceMock = {
   signIn: jest.fn(),
-  signOut: jest.fn()
+  signOut: jest.fn(),
+  signUp: jest.fn()
 };
 
 /* istanbul ignore next */
