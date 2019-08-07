@@ -25,6 +25,7 @@ export const testMoviestLists: MoviesList[] = [
     lastMovies: [
       {
         id: '1',
+        key: 'key-3',
         genre_ids: [1],
         listId: '1',
         overview: 'I am batman',
@@ -44,6 +45,7 @@ export const testMoviestLists: MoviesList[] = [
     lastMovies: [
       {
         id: '2',
+        key: 'key-1',
         genre_ids: [1],
         listId: '1',
         overview: 'I am batman again',
@@ -55,6 +57,7 @@ export const testMoviestLists: MoviesList[] = [
       },
       {
         id: '3',
+        key: 'key-1',
         genre_ids: [1],
         listId: '2',
         overview: 'I am joker',
@@ -71,6 +74,7 @@ export const testMoviestLists: MoviesList[] = [
 export const testMovies: Movie[] = [
   {
     id: '1',
+    key: 'key-2',
     genre_ids: [1],
     listId: '1',
     overview: 'I am batman',
@@ -82,6 +86,7 @@ export const testMovies: Movie[] = [
   },
   {
     id: '2',
+    key: 'key-1',
     genre_ids: [1],
     listId: '1',
     overview: 'I am batman again',
@@ -93,6 +98,7 @@ export const testMovies: Movie[] = [
   },
   {
     id: '3',
+    key: 'key-3',
     genre_ids: [1],
     listId: '2',
     overview: 'I am joker',
