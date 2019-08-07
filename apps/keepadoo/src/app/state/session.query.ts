@@ -7,7 +7,7 @@ import { SessionStore } from './session.store';
 @Injectable({ providedIn: 'root' })
 export class SessionQuery extends Query<SessionState> {
   isLoggedIn$ = this.select(({ user }) => toBoolean(user));
-  userId$ = this.select(({ user }) => user.userId);
+  userId$ = this.select(({ user }) => user && user.userId);
 
   loggedInUser$ = this.select().pipe(
     filter(({ user }) => toBoolean(user)),
