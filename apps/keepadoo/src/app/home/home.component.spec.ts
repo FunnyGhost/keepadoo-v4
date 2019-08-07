@@ -2,6 +2,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+import { authServiceMock } from '../../test-utilities/test-mocks';
+import { AuthService } from '../state/auth.service';
 import { HomeComponent } from './home.component';
 
 describe('HomeComponent', () => {
@@ -11,7 +13,12 @@ describe('HomeComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule],
-      providers: [],
+      providers: [
+        {
+          provide: AuthService,
+          useValue: authServiceMock
+        }
+      ],
       declarations: [HomeComponent]
     }).compileComponents();
   }));
@@ -28,12 +35,23 @@ describe('HomeComponent', () => {
 
   it('should navigate to the add route when the + button is clicked', () => {
     const router: Router = TestBed.get(Router);
-    jest.spyOn(router, 'navigateByUrl').mockImplementation(() => {});
+    jest.spyOn(router, 'navigateByUrl').mockImplementation();
 
     const addButton = fixture.debugElement.query(By.css('.add-button'));
     addButton.triggerEventHandler('click', null);
 
     expect(router.navigateByUrl).toHaveBeenCalledWith(`${router.url}/add`);
+  });
+
+  it('should navigate to the add route when the + button is clicked', () => {
+    const authService: AuthService = TestBed.get(AuthService);
+    jest.spyOn(authService, 'signOut');
+    const signOutButton = fixture.debugElement.query(
+      By.css('.sign-out-button')
+    );
+    signOutButton.triggerEventHandler('click', null);
+
+    expect(authService.signOut).toHaveBeenCalled();
   });
 
   describe('Render', () => {
