@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AbstractControl, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
+import { RouterTestingModule } from '@angular/router/testing';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { authServiceMock } from '../../test-utilities/test-mocks';
 import { AuthService } from '../state/auth.service';
@@ -26,7 +27,7 @@ describe('RegisterComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule],
+      imports: [ReactiveFormsModule, RouterTestingModule],
       declarations: [RegisterComponent],
       providers: [
         {
@@ -233,5 +234,13 @@ describe('RegisterComponent', () => {
         expect(registerButtonText.length).toBe(0);
       });
     });
+  });
+
+  it('should have a button to go to the login page', () => {
+    const loginButton = fixture.debugElement.query(By.css('.login-button'))
+      .nativeElement;
+
+    expect(loginButton.href).toContain('login');
+    expect(loginButton.text).toContain('login');
   });
 });

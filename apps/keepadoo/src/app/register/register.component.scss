@@ -103,7 +103,7 @@
 
     .button-container {
       margin-top: 100px;
-      margin-bottom: 40px;
+      margin-bottom: 20px;
       text-align: center;
 
       button {
@@ -152,6 +152,20 @@
       color: $error;
       font-family: $secondary-font-light;
     }
+  }
+}
+
+.login-area {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+
+  .login-button {
+    cursor: pointer;
+    font-family: $main-font;
+    font-size: 0.75rem;
+    color: $color-primary-1;
+    text-decoration: none;
   }
 }
 
