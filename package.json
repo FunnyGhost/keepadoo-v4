@@ -65,7 +65,7 @@
     "cypress": "3.1.0",
     "dotenv": "8.0.0",
     "jest": "24.1.0",
-    "jest-preset-angular": "7.0.0",
+    "jest-preset-angular": "7.1.1",
     "prettier": "1.15.2",
     "ts-node": "~8.3.0",
     "tslint": "~5.18.0",
