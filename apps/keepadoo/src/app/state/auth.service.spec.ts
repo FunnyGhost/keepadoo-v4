@@ -219,10 +219,10 @@ describe('AuthService', () => {
       expect(angularFireAuthMock.auth.signOut).toHaveBeenCalled();
     });
 
-    it('should navigate to the empty route', async () => {
+    it('should navigate to the login route', async () => {
       await service.signOut();
 
-      expect(routerMock.navigate).toHaveBeenCalledWith(['/']);
+      expect(routerMock.navigate).toHaveBeenCalledWith(['/login']);
     });
   });
 
