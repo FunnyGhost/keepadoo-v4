@@ -159,8 +159,9 @@ describe('MoviesService', () => {
       const listId = '123';
       const movieToAdd = testMovieSearchResults[0];
 
+      const added_on = new Date().toISOString();
       await service.addMovieToList(listId, movieToAdd);
-      expect(addSpy).toHaveBeenCalledWith({ ...movieToAdd, listId });
+      expect(addSpy).toHaveBeenCalledWith({ ...movieToAdd, listId, added_on });
     });
   });
 
