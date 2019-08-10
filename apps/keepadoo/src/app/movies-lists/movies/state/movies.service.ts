@@ -36,13 +36,7 @@ export class MoviesService {
       .collection<Movie[]>(
         `movies`,
         /* istanbul ignore next */
-        ref => {
-          let query:
-            | firebase.firestore.CollectionReference
-            | firebase.firestore.Query = ref;
-          query = query.where('listId', '==', listId);
-          return query;
-        }
+        ref => ref.where('listId', '==', listId)
       )
       .valueChanges({ idField: 'key' })
       .pipe(take(1)) as Observable<Movie[]>;

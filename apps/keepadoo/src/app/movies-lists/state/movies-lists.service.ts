@@ -86,13 +86,7 @@ export class MoviesListsService {
     this.moviesListsCollection = firestoreService.collection(
       `movies-lists`,
       /* istanbul ignore next */
-      ref => {
-        let query:
-          | firebase.firestore.CollectionReference
-          | firebase.firestore.Query = ref;
-        query = query.where('userId', '==', userId);
-        return query;
-      }
+      ref => ref.where('userId', '==', userId)
     );
   }
 }
