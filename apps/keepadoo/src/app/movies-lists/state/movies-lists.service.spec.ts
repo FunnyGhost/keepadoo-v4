@@ -32,25 +32,8 @@ const firestoreMock = {
 const firestoreMockSpy = jest
   .spyOn(firestoreMock, 'collection')
   .mockReturnValue({
-    auditTrail() {
-      return of([
-        {
-          payload: {
-            doc: {
-              id: testMoviestLists[0].id,
-              data: () => testMoviestLists[0]
-            }
-          }
-        },
-        {
-          payload: {
-            doc: {
-              id: testMoviestLists[1].id,
-              data: () => testMoviestLists[1]
-            }
-          }
-        }
-      ]);
+    valueChanges() {
+      return of(testMoviestLists);
     },
     doc() {
       return docObject;

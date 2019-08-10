@@ -4,7 +4,6 @@ import {
   AngularFirestoreCollection
 } from '@angular/fire/firestore';
 import { from } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { SessionQuery } from '../../state/session.query';
 import { MovieSearchResult } from '../movie-search/state/models/movie-search-results';
 import { MoviesService } from '../movies/state/movies.service';
@@ -36,19 +35,7 @@ export class MoviesListsService {
 
   fetch(): void {
     this.moviesListsCollection
-      .auditTrail()
-      .pipe(
-        map((changes: any[]) => {
-          const list = changes.map(
-            data =>
-              ({
-                id: data.payload.doc.id,
-                ...data.payload.doc.data()
-              } as MoviesList)
-          );
-          return list;
-        })
-      )
+      .valueChanges({ idField: 'id' })
       .subscribe((moviesLists: MoviesList[]) => {
         this.moviesListsStore.set(moviesLists);
       });

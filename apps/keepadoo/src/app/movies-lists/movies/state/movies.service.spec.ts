@@ -23,26 +23,9 @@ const addSpy = jest.fn();
 const deleteSpy = jest.fn();
 
 jest.spyOn(firestoreMock, 'collection').mockReturnValue({
-  snapshotChanges() {
+  valueChanges() {
     {
-      return of([
-        {
-          payload: {
-            doc: {
-              key: testMovies[0].id,
-              data: () => testMovies[0]
-            }
-          }
-        },
-        {
-          payload: {
-            doc: {
-              key: testMovies[1].id,
-              data: () => testMovies[1]
-            }
-          }
-        }
-      ]);
+      return of(testMovies);
     }
   },
   add: addSpy,
@@ -132,10 +115,8 @@ describe('MoviesService', () => {
 
   describe('getMoviesInList', () => {
     it('should get movies in list', done => {
-      service.getMoviesInList('1', 2).subscribe((data: Movie[]) => {
-        expect(data.length).toBe(2);
-        expect(data[0]).toEqual(testMovies[0]);
-        expect(data[1]).toEqual(testMovies[1]);
+      service.getMoviesInList('1').subscribe((data: Movie[]) => {
+        expect(data).toEqual(testMovies);
         done();
       });
     });

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { combineLatest, Observable } from 'rxjs';
-import { map, take } from 'rxjs/operators';
+import { take } from 'rxjs/operators';
 import { SessionQuery } from '../../../state/session.query';
 import { MovieSearchResult } from '../../movie-search/state/models/movie-search-results';
 import { MoviesList } from '../../state/models/movies-list';
@@ -31,9 +31,9 @@ export class MoviesService {
     });
   }
 
-  public getMoviesInList(listId: string, limit = 0): Observable<Movie[]> {
+  public getMoviesInList(listId: string): Observable<Movie[]> {
     return this.firestoreService
-      .collection(
+      .collection<Movie[]>(
         `movies`,
         /* istanbul ignore next */
         ref => {
@@ -41,26 +41,11 @@ export class MoviesService {
             | firebase.firestore.CollectionReference
             | firebase.firestore.Query = ref;
           query = query.where('listId', '==', listId);
-          if (limit) {
-            query = query.limit(limit);
-          }
           return query;
         }
       )
-      .snapshotChanges()
-      .pipe(
-        map(changes => {
-          const movies = changes.map(data => {
-            const movie = {
-              key: data.payload.doc.id,
-              ...data.payload.doc.data()
-            } as Movie;
-            return movie;
-          });
-          return movies;
-        }),
-        take(1)
-      );
+      .valueChanges({ idField: 'key' })
+      .pipe(take(1)) as Observable<Movie[]>;
   }
 
   public async addMovieToList(listId: string, movie: MovieSearchResult) {
