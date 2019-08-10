@@ -38,7 +38,7 @@ describe('MoviesListComponent', () => {
       const sizeElement = fixture.debugElement.query(By.css('.list-size'));
 
       expect(sizeElement.nativeElement.innerHTML).toContain(
-        listToUse.numberOfMovies
+        listToUse.moviesCount
       );
     });
 
@@ -46,9 +46,9 @@ describe('MoviesListComponent', () => {
       const imgTags = fixture.debugElement
         .queryAll(By.css('img'))
         .map((element: DebugElement) => element.nativeElement.outerHTML);
-      expect(imgTags.length).toBe(listToUse.lastMovies.length);
+      expect(imgTags.length).toBe(listToUse.recentMovies.length);
 
-      listToUse.lastMovies.forEach((movie: Movie, index: number) => {
+      listToUse.recentMovies.forEach((movie: Movie, index: number) => {
         expect(imgTags[index]).toContain(movie.poster_path);
       });
     });

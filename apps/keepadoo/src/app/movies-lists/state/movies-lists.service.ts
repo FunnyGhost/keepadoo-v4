@@ -4,10 +4,9 @@ import {
   AngularFirestoreCollection
 } from '@angular/fire/firestore';
 import { from } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { SessionQuery } from '../../state/session.query';
 import { MovieSearchResult } from '../movie-search/state/models/movie-search-results';
-import { Movie } from '../movies/state/models/movie';
 import { MoviesService } from '../movies/state/movies.service';
 import { MoviesList } from './models/movies-list';
 import { MoviesListsQuery } from './movies-lists.query';
@@ -48,24 +47,6 @@ export class MoviesListsService {
               } as MoviesList)
           );
           return list;
-        }),
-        tap((moviesLists: MoviesList[]) => {
-          moviesLists.forEach((list: MoviesList) => {
-            this.moviesService
-              .getMoviesInList(list.id, this.MOST_RECENT_MOVIES_LIMIT)
-              .subscribe((movies: Movie[]) => {
-                this.addMoviesToList(list.id, movies);
-              });
-          });
-        }),
-        tap((moviesLists: MoviesList[]) => {
-          moviesLists.forEach((list: MoviesList) => {
-            this.moviesService
-              .getNumberOfMoviesInList(list.id)
-              .subscribe((itemsCount: number) => {
-                this.setListSize(list.id, itemsCount);
-              });
-          });
         })
       )
       .subscribe((moviesLists: MoviesList[]) => {
@@ -76,12 +57,12 @@ export class MoviesListsService {
   async add(moviesList: Partial<MoviesList>): Promise<void> {
     const userId = this.sessionQuery.userId();
     const id = this.firestoreService.createId();
-    const list: MoviesList = {
+    const list = {
       ...moviesList,
       id: id,
       userId: userId,
-      numberOfMovies: 0
-    };
+      moviesCount: 0
+    } as MoviesList;
     await this.moviesListsCollection.doc(id).set(list);
     this.moviesListsStore.add(list);
   }
@@ -109,14 +90,6 @@ export class MoviesListsService {
     from(this.moviesService.addMovieToList(activeList.id, movie)).subscribe(
       () => this.fetch()
     );
-  }
-
-  private addMoviesToList(listId: string, movies: Movie[]): void {
-    this.moviesListsStore.update(listId, { lastMovies: movies });
-  }
-
-  private setListSize(listId: string, size: number): void {
-    this.moviesListsStore.update(listId, { numberOfMovies: size });
   }
 
   private setupMoviesListsCollection(

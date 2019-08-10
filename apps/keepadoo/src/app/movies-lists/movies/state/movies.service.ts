@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, QuerySnapshot } from '@angular/fire/firestore';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { combineLatest, Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 import { SessionQuery } from '../../../state/session.query';
@@ -58,28 +58,6 @@ export class MoviesService {
             return movie;
           });
           return movies;
-        }),
-        take(1)
-      );
-  }
-
-  public getNumberOfMoviesInList(listId: string): Observable<number> {
-    return this.firestoreService
-      .collection(
-        `movies`,
-        /* istanbul ignore next */
-        ref => {
-          let query:
-            | firebase.firestore.CollectionReference
-            | firebase.firestore.Query = ref;
-          query = query.where('listId', '==', listId);
-          return query;
-        }
-      )
-      .get()
-      .pipe(
-        map((data: QuerySnapshot<{}>) => {
-          return data.size;
         }),
         take(1)
       );

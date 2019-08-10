@@ -8,7 +8,6 @@ import {
   sessionQueryMock
 } from '../../../test-utilities/test-mocks';
 import {
-  testMovies,
   testMovieSearchResults,
   testMoviestLists,
   testUser
@@ -63,10 +62,7 @@ const sessionStoreQueryMock = {
   userId$: new BehaviorSubject<string>(testUser.userId)
 };
 
-const listSizeToUse = 54;
 const moviesServiceMock = {
-  getMoviesInList: jest.fn().mockReturnValue(of(testMovies)),
-  getNumberOfMoviesInList: jest.fn().mockReturnValue(of(listSizeToUse)),
   addMovieToList: jest.fn().mockReturnValue(of({}))
 };
 
@@ -118,28 +114,12 @@ describe('MoviesListsService', () => {
 
   describe('fetch', () => {
     it('should get all the movies lists for the logged in user', () => {
-      const expectedLimit = 4;
       sessionStoreQueryMock.userId$.next('batman');
       expect(firestoreMockSpy).toHaveBeenCalledWith(
         'movies-lists',
         expect.any(Function)
       );
       expect(moviesListsStoreMock.set).toHaveBeenCalledWith(testMoviestLists);
-      testMoviestLists.forEach((list: MoviesList) => {
-        expect(moviesServiceMock.getMoviesInList).toHaveBeenCalledWith(
-          list.id,
-          expectedLimit
-        );
-        expect(moviesListsStoreMock.update).toHaveBeenCalledWith(list.id, {
-          lastMovies: testMovies
-        });
-        expect(moviesServiceMock.getNumberOfMoviesInList).toHaveBeenCalledWith(
-          list.id
-        );
-        expect(moviesListsStoreMock.update).toHaveBeenCalledWith(list.id, {
-          numberOfMovies: listSizeToUse
-        });
-      });
     });
 
     it('should clear the store if the user logs out', () => {
@@ -163,12 +143,12 @@ describe('MoviesListsService', () => {
       const moviesListToAdd: Partial<MoviesList> = {
         name: 'awesome movies'
       };
-      const expectedMoviesList: MoviesList = {
+      const expectedMoviesList = {
         id: idToUse,
         name: 'awesome movies',
         userId: testUser.userId,
-        numberOfMovies: 0
-      };
+        moviesCount: 0
+      } as MoviesList;
 
       await moviesListsService.add(moviesListToAdd);
       expect(docObject.set).toHaveBeenCalledWith(expectedMoviesList);
@@ -182,12 +162,12 @@ describe('MoviesListsService', () => {
       sessionQueryMock.userId.mockReturnValue(testUser.userId);
       const idToUse = '52';
 
-      const moviesListToUpdate: MoviesList = {
+      const moviesListToUpdate = {
         id: idToUse,
         name: 'awesome movies',
         userId: testUser.userId,
-        numberOfMovies: 0
-      };
+        moviesCount: 0
+      } as MoviesList;
 
       await moviesListsService.update(idToUse, moviesListToUpdate);
 
