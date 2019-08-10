@@ -25,7 +25,7 @@ export const testMoviestLists: MoviesList[] = [
     recentMovies: [
       {
         id: '1',
-        added_on: new Date().toISOString(),
+        added_on: '2019-08-10T22:24:07.722Z',
         key: 'key-3',
         genre_ids: [1],
         listId: '1',
@@ -46,7 +46,7 @@ export const testMoviestLists: MoviesList[] = [
     recentMovies: [
       {
         id: '2',
-        added_on: new Date().toISOString(),
+        added_on: '2019-08-10T22:24:07.722Z',
         key: 'key-1',
         genre_ids: [1],
         listId: '1',
@@ -59,7 +59,7 @@ export const testMoviestLists: MoviesList[] = [
       },
       {
         id: '3',
-        added_on: new Date().toISOString(),
+        added_on: '2019-08-10T22:24:07.722Z',
         key: 'key-1',
         genre_ids: [1],
         listId: '2',
@@ -77,7 +77,7 @@ export const testMoviestLists: MoviesList[] = [
 export const testMovies: Movie[] = [
   {
     id: '1',
-    added_on: new Date().toISOString(),
+    added_on: '2019-08-10T22:24:07.722Z',
     key: 'key-2',
     genre_ids: [1],
     listId: '1',
@@ -90,7 +90,7 @@ export const testMovies: Movie[] = [
   },
   {
     id: '2',
-    added_on: new Date().toISOString(),
+    added_on: '2019-08-10T22:24:07.722Z',
     key: 'key-1',
     genre_ids: [1],
     listId: '1',
@@ -103,7 +103,7 @@ export const testMovies: Movie[] = [
   },
   {
     id: '3',
-    added_on: new Date().toISOString(),
+    added_on: '2019-08-10T22:24:07.722Z',
     key: 'key-3',
     genre_ids: [1],
     listId: '2',
