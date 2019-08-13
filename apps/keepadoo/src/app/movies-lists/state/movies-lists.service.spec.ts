@@ -130,7 +130,8 @@ describe('MoviesListsService', () => {
         id: idToUse,
         name: 'awesome movies',
         userId: testUser.userId,
-        moviesCount: 0
+        moviesCount: 0,
+        recentMovies: []
       } as MoviesList;
 
       await moviesListsService.add(moviesListToAdd);

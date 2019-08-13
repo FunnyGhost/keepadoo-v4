@@ -48,7 +48,8 @@ export class MoviesListsService {
       ...moviesList,
       id: id,
       userId: userId,
-      moviesCount: 0
+      moviesCount: 0,
+      recentMovies: []
     } as MoviesList;
     await this.moviesListsCollection.doc(id).set(list);
     this.moviesListsStore.add(list);
