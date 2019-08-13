@@ -136,7 +136,32 @@ describe('MoviesListsService', () => {
 
       await moviesListsService.add(moviesListToAdd);
       expect(docObject.set).toHaveBeenCalledWith(expectedMoviesList);
+      expect(moviesListsStoreMock.setLoading).toHaveBeenCalledWith(true);
       expect(moviesListsStoreMock.add).toHaveBeenCalledWith(expectedMoviesList);
+      expect(moviesListsStoreMock.setLoading).toHaveBeenLastCalledWith(false);
+      expect(moviesListsStoreMock.setError).not.toHaveBeenCalled();
+    });
+
+    it('should handle errors if adding a movies list fails', async () => {
+      sessionStoreQueryMock.userId$.next('batman');
+      sessionQueryMock.userId.mockReturnValue(testUser.userId);
+      const idToUse = '52';
+      jest.spyOn(firestoreService, 'createId').mockReturnValue(idToUse);
+      const errorToUse = new Error('HahhahahaHahAHhAh!');
+      docObject.set.mockImplementationOnce(() => {
+        throw errorToUse;
+      });
+      const moviesListToAdd: Partial<MoviesList> = {
+        name: 'awesome movies'
+      };
+
+      await moviesListsService.add(moviesListToAdd);
+
+      expect(moviesListsStoreMock.setLoading).toHaveBeenCalledWith(true);
+      expect(moviesListsStoreMock.setLoading).toHaveBeenLastCalledWith(false);
+      expect(moviesListsStoreMock.setError).toHaveBeenLastCalledWith(
+        errorToUse
+      );
     });
   });
 

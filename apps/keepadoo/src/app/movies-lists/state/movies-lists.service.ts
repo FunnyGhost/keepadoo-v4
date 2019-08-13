@@ -42,17 +42,24 @@ export class MoviesListsService {
   }
 
   async add(moviesList: Partial<MoviesList>): Promise<void> {
-    const userId = this.sessionQuery.userId();
-    const id = this.firestoreService.createId();
-    const list = {
-      ...moviesList,
-      id: id,
-      userId: userId,
-      moviesCount: 0,
-      recentMovies: []
-    } as MoviesList;
-    await this.moviesListsCollection.doc(id).set(list);
-    this.moviesListsStore.add(list);
+    this.moviesListsStore.setLoading(true);
+    try {
+      const userId = this.sessionQuery.userId();
+      const id = this.firestoreService.createId();
+      const list = {
+        ...moviesList,
+        id: id,
+        userId: userId,
+        moviesCount: 0,
+        recentMovies: []
+      } as MoviesList;
+      await this.moviesListsCollection.doc(id).set(list);
+      this.moviesListsStore.add(list);
+    } catch (err) {
+      this.moviesListsStore.setError(err);
+    }
+
+    this.moviesListsStore.setLoading(false);
   }
 
   async update(id, moviesList: Partial<MoviesList>): Promise<void> {
