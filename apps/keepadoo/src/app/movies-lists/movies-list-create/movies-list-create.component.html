@@ -1,0 +1,37 @@
+<div class="container">
+  <section class="top-buttons">
+    <button class="cancel-button" (click)="goBack()">Cancel</button>
+  </section>
+  <h1>New movies list</h1>
+  <form class="movies-list-edit" [formGroup]="moviesListForm">
+    <label for="listName">Name:</label>
+    <input
+      type="text"
+      name="list-name"
+      id="listName"
+      placeholder="Name of the new list..."
+      formControlName="name"
+    />
+  </form>
+
+  <div class="button-container">
+    <button
+      class="create-button"
+      type="button"
+      (click)="onSubmit()"
+      [disabled]="!moviesListForm.valid"
+      [class.loading]="loading$ | async"
+    >
+      <img
+        *ngIf="loading$ | async"
+        class="loading-image"
+        src="/assets/spinner.svg"
+        alt=""
+      />
+
+      <span class="create-button-text" *ngIf="!(loading$ | async)">Create</span>
+    </button>
+
+    <div class="error" *ngIf="error$ | async; let error">{{ error }}</div>
+  </div>
+</div>

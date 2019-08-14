@@ -1,0 +1,161 @@
+@import '../../../variables';
+
+.container {
+  padding-bottom: 90px;
+}
+
+.top-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+
+  .cancel-button {
+    margin: 14px;
+    margin-bottom: 0;
+    cursor: pointer;
+    font-family: $main-font;
+    font-size: 0.625rem;
+    text-transform: uppercase;
+    color: $color-primary-1;
+    border: none;
+    background: $white;
+    box-shadow: none;
+  }
+}
+
+h1 {
+  font-family: $main-font;
+  font-weight: 700;
+  font-size: 1.75rem;
+  text-transform: uppercase;
+  margin: 28px auto;
+  text-align: center;
+  color: $color-primary-1;
+}
+
+.movies-list-edit {
+  margin: 40px 20px 40px 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+
+  label {
+    margin: auto 0 auto 0;
+    width: 50px;
+    font-family: $main-font;
+    font-size: 0.75rem;
+    color: $color-primary-1;
+  }
+  input {
+    padding: 10px;
+    width: 330px;
+    border: 1px solid $color-primary-1;
+    border-radius: 3px;
+    font-size: 1rem;
+    &:focus {
+      outline: none;
+    }
+  }
+
+  ::-webkit-input-placeholder {
+    /* Chrome/Opera/Safari */
+    font-family: $secondary-font-light;
+    font-weight: 300;
+    font-style: italic;
+    color: $color-primary;
+    opacity: 0.4;
+  }
+  ::-moz-placeholder {
+    /* Firefox 19+ */
+    font-family: $secondary-font-light;
+    font-weight: 300;
+    font-style: italic;
+    color: $color-primary;
+    opacity: 0.4;
+  }
+  :-ms-input-placeholder {
+    /* IE 10+ */
+    font-family: $secondary-font-light;
+    font-weight: 300;
+    font-style: italic;
+    color: $color-primary;
+    opacity: 0.4;
+  }
+  :-moz-placeholder {
+    /* Firefox 18- */
+    font-family: $secondary-font-light;
+    font-weight: 300;
+    font-style: italic;
+    color: $color-primary;
+    opacity: 0.4;
+  }
+}
+
+.button-container {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+
+  button {
+    width: 180px;
+    height: 40px;
+    padding: 0;
+    color: $white;
+    background-color: #190534;
+    border: none;
+    border-radius: 3px;
+    font-family: $main-font;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+
+    &:focus {
+      outline: none;
+    }
+
+    &:disabled {
+      border: 1px solid $disabled;
+      background-color: $white;
+      color: $disabled;
+      cursor: default;
+    }
+
+    &.loading {
+      border: 1px solid $disabled;
+      background-color: $white;
+      color: $disabled;
+      cursor: default;
+    }
+
+    img {
+      width: 20px;
+      height: 20px;
+      -webkit-animation: spin 4s linear infinite;
+      -moz-animation: spin 4s linear infinite;
+      animation: spin 4s linear infinite;
+    }
+  }
+}
+
+.error {
+  margin: 20px;
+  color: $error;
+  font-family: $secondary-font-light;
+}
+
+@-moz-keyframes spin {
+  100% {
+    -moz-transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes spin {
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+@keyframes spin {
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}

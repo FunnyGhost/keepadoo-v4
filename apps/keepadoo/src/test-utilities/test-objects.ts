@@ -21,10 +21,11 @@ export const testMoviestLists: MoviesList[] = [
     id: '1',
     name: 'to see',
     userId: 'batman',
-    numberOfMovies: 34,
-    lastMovies: [
+    moviesCount: 34,
+    recentMovies: [
       {
         id: '1',
+        added_on: '2019-08-10T22:24:07.722Z',
         key: 'key-3',
         genre_ids: [1],
         listId: '1',
@@ -41,10 +42,11 @@ export const testMoviestLists: MoviesList[] = [
     id: '2',
     name: 'seen',
     userId: 'joker',
-    numberOfMovies: 3,
-    lastMovies: [
+    moviesCount: 3,
+    recentMovies: [
       {
         id: '2',
+        added_on: '2019-08-10T22:24:07.722Z',
         key: 'key-1',
         genre_ids: [1],
         listId: '1',
@@ -57,6 +59,7 @@ export const testMoviestLists: MoviesList[] = [
       },
       {
         id: '3',
+        added_on: '2019-08-10T22:24:07.722Z',
         key: 'key-1',
         genre_ids: [1],
         listId: '2',
@@ -74,6 +77,7 @@ export const testMoviestLists: MoviesList[] = [
 export const testMovies: Movie[] = [
   {
     id: '1',
+    added_on: '2019-08-10T22:24:07.722Z',
     key: 'key-2',
     genre_ids: [1],
     listId: '1',
@@ -86,6 +90,7 @@ export const testMovies: Movie[] = [
   },
   {
     id: '2',
+    added_on: '2019-08-10T22:24:07.722Z',
     key: 'key-1',
     genre_ids: [1],
     listId: '1',
@@ -98,6 +103,7 @@ export const testMovies: Movie[] = [
   },
   {
     id: '3',
+    added_on: '2019-08-10T22:24:07.722Z',
     key: 'key-3',
     genre_ids: [1],
     listId: '2',
