@@ -17,6 +17,7 @@ import { MoviesStore } from './movies/state/movies.store';
 import { MoviesListsQuery } from './state/movies-lists.query';
 import { MoviesListsService } from './state/movies-lists.service';
 import { MoviesListsStore } from './state/movies-lists.store';
+import { MoviesListCreateComponent } from './movies-list-create/movies-list-create.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { MoviesListsStore } from './state/movies-lists.store';
     MoviesListDetailsComponent,
     MovieComponent,
     MovieSearchComponent,
-    MovieSearchResultComponent
+    MovieSearchResultComponent,
+    MoviesListCreateComponent
   ],
   providers: [
     MoviesListsStore,

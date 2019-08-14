@@ -35,7 +35,9 @@ export const moviesListsStoreMock = {
   update: jest.fn(),
   remove: jest.fn(),
   setActive: jest.fn(),
-  removeActive: jest.fn()
+  removeActive: jest.fn(),
+  setLoading: jest.fn(),
+  setError: jest.fn()
 };
 
 /* istanbul ignore next */

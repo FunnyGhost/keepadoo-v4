@@ -4,10 +4,8 @@ import {
   AngularFirestoreCollection
 } from '@angular/fire/firestore';
 import { from } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
 import { SessionQuery } from '../../state/session.query';
 import { MovieSearchResult } from '../movie-search/state/models/movie-search-results';
-import { Movie } from '../movies/state/models/movie';
 import { MoviesService } from '../movies/state/movies.service';
 import { MoviesList } from './models/movies-list';
 import { MoviesListsQuery } from './movies-lists.query';
@@ -37,53 +35,31 @@ export class MoviesListsService {
 
   fetch(): void {
     this.moviesListsCollection
-      .auditTrail()
-      .pipe(
-        map((changes: any[]) => {
-          const list = changes.map(
-            data =>
-              ({
-                id: data.payload.doc.id,
-                ...data.payload.doc.data()
-              } as MoviesList)
-          );
-          return list;
-        }),
-        tap((moviesLists: MoviesList[]) => {
-          moviesLists.forEach((list: MoviesList) => {
-            this.moviesService
-              .getMoviesInList(list.id, this.MOST_RECENT_MOVIES_LIMIT)
-              .subscribe((movies: Movie[]) => {
-                this.addMoviesToList(list.id, movies);
-              });
-          });
-        }),
-        tap((moviesLists: MoviesList[]) => {
-          moviesLists.forEach((list: MoviesList) => {
-            this.moviesService
-              .getNumberOfMoviesInList(list.id)
-              .subscribe((itemsCount: number) => {
-                this.setListSize(list.id, itemsCount);
-              });
-          });
-        })
-      )
+      .valueChanges({ idField: 'id' })
       .subscribe((moviesLists: MoviesList[]) => {
         this.moviesListsStore.set(moviesLists);
       });
   }
 
   async add(moviesList: Partial<MoviesList>): Promise<void> {
-    const userId = this.sessionQuery.userId();
-    const id = this.firestoreService.createId();
-    const list: MoviesList = {
-      ...moviesList,
-      id: id,
-      userId: userId,
-      numberOfMovies: 0
-    };
-    await this.moviesListsCollection.doc(id).set(list);
-    this.moviesListsStore.add(list);
+    this.moviesListsStore.setLoading(true);
+    try {
+      const userId = this.sessionQuery.userId();
+      const id = this.firestoreService.createId();
+      const list = {
+        ...moviesList,
+        id: id,
+        userId: userId,
+        moviesCount: 0,
+        recentMovies: []
+      } as MoviesList;
+      await this.moviesListsCollection.doc(id).set(list);
+      this.moviesListsStore.add(list);
+    } catch (err) {
+      this.moviesListsStore.setError(err);
+    }
+
+    this.moviesListsStore.setLoading(false);
   }
 
   async update(id, moviesList: Partial<MoviesList>): Promise<void> {
@@ -111,14 +87,6 @@ export class MoviesListsService {
     );
   }
 
-  private addMoviesToList(listId: string, movies: Movie[]): void {
-    this.moviesListsStore.update(listId, { lastMovies: movies });
-  }
-
-  private setListSize(listId: string, size: number): void {
-    this.moviesListsStore.update(listId, { numberOfMovies: size });
-  }
-
   private setupMoviesListsCollection(
     firestoreService: AngularFirestore,
     userId: string
@@ -126,13 +94,7 @@ export class MoviesListsService {
     this.moviesListsCollection = firestoreService.collection(
       `movies-lists`,
       /* istanbul ignore next */
-      ref => {
-        let query:
-          | firebase.firestore.CollectionReference
-          | firebase.firestore.Query = ref;
-        query = query.where('userId', '==', userId);
-        return query;
-      }
+      ref => ref.where('userId', '==', userId)
     );
   }
 }

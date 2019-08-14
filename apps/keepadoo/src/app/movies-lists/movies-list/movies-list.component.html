@@ -17,12 +17,12 @@
       ></path>
     </svg>
   </span>
-  <span class="list-size">{{ moviesList.numberOfMovies }} movies</span>
+  <span class="list-size">{{ moviesList.moviesCount }} movies</span>
 </section>
 <section class="movies">
   <img
-    *ngFor="let movie of moviesList.lastMovies"
-    src="https://image.tmdb.org/t/p/w92/{{movie.poster_path}}"
+    *ngFor="let movie of moviesList.recentMovies"
+    src="https://image.tmdb.org/t/p/w92/{{ movie.poster_path }}"
     alt=""
   />
 </section>

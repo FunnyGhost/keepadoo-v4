@@ -19,35 +19,14 @@ const firestoreMock = {
   collection() {}
 };
 
-const listSizeToUse = 34;
 const addSpy = jest.fn();
 const deleteSpy = jest.fn();
 
 jest.spyOn(firestoreMock, 'collection').mockReturnValue({
-  snapshotChanges() {
+  valueChanges() {
     {
-      return of([
-        {
-          payload: {
-            doc: {
-              key: testMovies[0].id,
-              data: () => testMovies[0]
-            }
-          }
-        },
-        {
-          payload: {
-            doc: {
-              key: testMovies[1].id,
-              data: () => testMovies[1]
-            }
-          }
-        }
-      ]);
+      return of(testMovies);
     }
-  },
-  get() {
-    return of({ size: listSizeToUse });
   },
   add: addSpy,
   doc() {
@@ -136,19 +115,8 @@ describe('MoviesService', () => {
 
   describe('getMoviesInList', () => {
     it('should get movies in list', done => {
-      service.getMoviesInList('1', 2).subscribe((data: Movie[]) => {
-        expect(data.length).toBe(2);
-        expect(data[0]).toEqual(testMovies[0]);
-        expect(data[1]).toEqual(testMovies[1]);
-        done();
-      });
-    });
-  });
-
-  describe('getNumberOfMoviesInList', () => {
-    it('should return the number of movies in list', done => {
-      service.getNumberOfMoviesInList('1').subscribe((data: number) => {
-        expect(data).toBe(listSizeToUse);
+      service.getMoviesInList('1').subscribe((data: Movie[]) => {
+        expect(data).toEqual(testMovies);
         done();
       });
     });
@@ -159,9 +127,12 @@ describe('MoviesService', () => {
       const listId = '123';
       const movieToAdd = testMovieSearchResults[0];
 
-      const added_on = new Date().toISOString();
       await service.addMovieToList(listId, movieToAdd);
-      expect(addSpy).toHaveBeenCalledWith({ ...movieToAdd, listId, added_on });
+      expect(addSpy).toHaveBeenCalledWith({
+        ...movieToAdd,
+        listId,
+        added_on: expect.any(String)
+      });
     });
   });
 
