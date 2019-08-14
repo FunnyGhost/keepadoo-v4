@@ -7593,10 +7593,10 @@ next-tick@1, next-tick@^1.0.0:
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.0.0.tgz#ca86d1fe8828169b0120208e3dc8424b9db8342c"
   integrity sha1-yobR/ogoFpsBICCOPchCS524NCw=
 
-ng-mocks@7.7.0:
-  version "7.7.0"
-  resolved "https://registry.yarnpkg.com/ng-mocks/-/ng-mocks-7.7.0.tgz#1304393abbbf8ccbd9104403cab33dfe78ca0651"
-  integrity sha512-ACPS1VgNQpp+B7Mld6CS8I5ylSgU5f/t7EEO7UqHb3YtN810+m87EJO42gUa3pCCeRFE4qMIBEWrSk5DqvuMlA==
+ng-mocks@8.1.0:
+  version "8.1.0"
+  resolved "https://registry.yarnpkg.com/ng-mocks/-/ng-mocks-8.1.0.tgz#d00a5e53ae53587f35c68147826590fab71a1658"
+  integrity sha512-/314nyU6UrONCUKfvFRuJPLpNBxqocwJmQBlPy4he5Vueu6gObXjy+KLUlbbENuA7zTeBjp//RA6w/Fa1yQ4Fw==
 
 nice-try@^1.0.4:
   version "1.0.5"
