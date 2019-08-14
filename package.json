@@ -42,8 +42,8 @@
     "@angular/service-worker": "^8.0.0",
     "@datorama/akita": "4.9.1",
     "@nrwl/angular": "8.4.4",
+    "firebase": "6.3.5",
     "core-js": "^3.2.1",
-    "firebase": "6.2.4",
     "ng-mocks": "7.7.0",
     "rxjs": "6.5.2",
     "zone.js": "^0.9.1"
