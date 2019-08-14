@@ -18,13 +18,20 @@
     "@angular-devkit/core" "8.1.1"
     rxjs "6.4.0"
 
-"@angular-devkit/architect@0.802.0", "@angular-devkit/architect@<0.900 || ^0.900.0-0 || ^9.0.0-0":
 "@angular-devkit/architect@0.802.0":
   version "0.802.0"
   resolved "https://registry.yarnpkg.com/@angular-devkit/architect/-/architect-0.802.0.tgz#5e346e5f7192a95a7270b8c713f9fe9d127f5602"
   integrity sha512-Zd/ao7uE8ctV4n6drKl35cK5xrRsmgva7lsiBRc4J09vDWaRrCsxTKr6nw1gkFBDuSGZc9OmvtEFFPg2I/YHwQ==
   dependencies:
     "@angular-devkit/core" "8.2.0"
+    rxjs "6.4.0"
+
+"@angular-devkit/architect@0.802.1", "@angular-devkit/architect@<0.900 || ^0.900.0-0 || ^9.0.0-0":
+  version "0.802.1"
+  resolved "https://registry.yarnpkg.com/@angular-devkit/architect/-/architect-0.802.1.tgz#7ccb714ff9d064ccf5194057200cee3dbc6932c6"
+  integrity sha512-gTQ1mrGkt8eloqQOhivTz94e1ccQlncydVbnFrCxVaMn3wCr8V2GEeahwJQCm3Xl2Qv77R9QVzadXHt1J0ps8A==
+  dependencies:
+    "@angular-devkit/core" "8.2.1"
     rxjs "6.4.0"
 
 "@angular-devkit/build-angular@0.802.0":
@@ -7625,10 +7632,10 @@ next-tick@1, next-tick@^1.0.0:
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.0.0.tgz#ca86d1fe8828169b0120208e3dc8424b9db8342c"
   integrity sha1-yobR/ogoFpsBICCOPchCS524NCw=
 
-ng-mocks@7.7.0:
-  version "7.7.0"
-  resolved "https://registry.yarnpkg.com/ng-mocks/-/ng-mocks-7.7.0.tgz#1304393abbbf8ccbd9104403cab33dfe78ca0651"
-  integrity sha512-ACPS1VgNQpp+B7Mld6CS8I5ylSgU5f/t7EEO7UqHb3YtN810+m87EJO42gUa3pCCeRFE4qMIBEWrSk5DqvuMlA==
+ng-mocks@8.1.0:
+  version "8.1.0"
+  resolved "https://registry.yarnpkg.com/ng-mocks/-/ng-mocks-8.1.0.tgz#d00a5e53ae53587f35c68147826590fab71a1658"
+  integrity sha512-/314nyU6UrONCUKfvFRuJPLpNBxqocwJmQBlPy4he5Vueu6gObXjy+KLUlbbENuA7zTeBjp//RA6w/Fa1yQ4Fw==
 
 nice-try@^1.0.4:
   version "1.0.5"
