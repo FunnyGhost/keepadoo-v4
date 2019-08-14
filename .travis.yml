@@ -11,10 +11,12 @@ script:
   - npm install --prefix ./functions
   - npm run lint
   - npm run test
-  - npm run build
+  - npm run build --prod
 deploy:
   skip_cleanup: true
   provider: firebase
   token:
     secure: $FIREBASE_TOKEN
   project: 'keepadoo'
+after_deploy:
+  - npm run lh --perf=93 --pwa=95 --bp=90 -- https://keepadoo.com

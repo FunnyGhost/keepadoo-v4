@@ -1392,7 +1392,6 @@
     tree-kill "1.2.1"
     webpack-sources "1.3.0"
 
-
 "@nrwl/angular@8.4.8":
   version "8.4.8"
   resolved "https://registry.yarnpkg.com/@nrwl/angular/-/angular-8.4.8.tgz#3dc021862a30bd87ff528cbaed0aecba0bf79dde"
@@ -1413,7 +1412,7 @@
     tmp "0.0.33"
     yargs "^11.0.0"
     yargs-parser "10.0.0"
-    
+
 "@nrwl/cypress@8.4.8":
   version "8.4.8"
   resolved "https://registry.yarnpkg.com/@nrwl/cypress/-/cypress-8.4.8.tgz#972247fa0f7b0f79d384346b8bdb327abd005b71"
@@ -6841,6 +6840,13 @@ license-webpack-plugin@2.1.1:
     "@types/webpack-sources" "^0.1.5"
     webpack-sources "^1.2.0"
 
+"lighthousebot@https://github.com/ebidel/lighthousebot":
+  version "0.2.0"
+  resolved "https://github.com/ebidel/lighthousebot#350d70440116928c6dd25c4daa83ca3dcc1c3dfc"
+  dependencies:
+    minimist "^1.2.0"
+    node-fetch "^2.2.0"
+
 listr-silent-renderer@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/listr-silent-renderer/-/listr-silent-renderer-1.1.1.tgz#924b5a3757153770bf1a8e3fbf74b8bbf3f9242e"
@@ -7658,6 +7664,11 @@ node-fetch@^1.0.1:
   dependencies:
     encoding "^0.1.11"
     is-stream "^1.0.1"
+
+node-fetch@^2.2.0:
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.0.tgz#e633456386d4aa55863f676a7ab0daa8fdecb0fd"
+  integrity sha512-8dG4H5ujfvFiqDmVu9fQ5bOHUC15JMjMY/Zumv26oOvvVJjM67KF8koCWIabKQ1GJIa9r2mMZscBq/TbdOcmNA==
 
 node-forge@0.7.5:
   version "0.7.5"
