@@ -50,7 +50,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "0.802.0",
-    "@angular/cli": "8.0.3",
+    "@angular/cli": "8.2.1",
     "@angular/compiler-cli": "^8.0.0",
     "@angular/language-service": "^8.2.0",
     "@datorama/akita-ngdevtools": "3.0.2",
