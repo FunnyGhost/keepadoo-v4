@@ -1083,10 +1083,10 @@
   dependencies:
     tslib "^1.9.0"
 
-"@datorama/akita@4.9.1":
-  version "4.9.1"
-  resolved "https://registry.yarnpkg.com/@datorama/akita/-/akita-4.9.1.tgz#8a62a2496c2684adf811b0926574ca25a675ac86"
-  integrity sha512-HPVZo1FIBWeqf4enYt8+3Z/n/j+eqj6Q1lg6eK/Qz0/k9XvMlhdIKbcriV+xODU3TvmaW9h2ajYgNmmTEGd78w==
+"@datorama/akita@4.9.4":
+  version "4.9.4"
+  resolved "https://registry.yarnpkg.com/@datorama/akita/-/akita-4.9.4.tgz#7ccf58f944c691989c1a1993e4b888f0f7926609"
+  integrity sha512-lwvsOKwcJzx2/WSlnW+uU4sMoRSgHWuof50XZXaszim6wpUEdz5TzQ0PlVqq9PiJyJknsuknWjG/t5JyIORYdw==
   dependencies:
     schematics-utilities "^1.1.1"
     tslib "^1.9.0"
@@ -10611,15 +10611,10 @@ tsconfig-paths@^3.4.0:
     minimist "^1.2.0"
     strip-bom "^3.0.0"
 
-tslib@1.10.0:
+tslib@1.10.0, tslib@^1.8.0, tslib@^1.8.1, tslib@^1.9.0:
   version "1.10.0"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.10.0.tgz#c3c19f95973fb0a62973fb09d90d961ee43e5c8a"
   integrity sha512-qOebF53frne81cf0S9B41ByenJ3/IuH8yJKngAX35CmiZySA0khhkovshKK+jGCaMnVomla7gVlIcc3EvKPbTQ==
-
-tslib@^1.8.0, tslib@^1.8.1, tslib@^1.9.0:
-  version "1.9.3"
-  resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.9.3.tgz#d7e4dd79245d85428c4d7e4822a79917954ca286"
-  integrity sha512-4krF8scpejhaOgqzBEcGM7yDIEfi0/8+8zDRZhNZZ2kjmHJ4hv3zCbQWxoJGz1iw5U0Jl0nma13xzHXcncMavQ==
 
 tslint@~5.18.0:
   version "5.18.0"
