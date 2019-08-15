@@ -178,14 +178,6 @@
     "@angular-devkit/core" "8.1.1"
     rxjs "6.4.0"
 
-"@angular-devkit/schematics@8.2.1":
-  version "8.2.1"
-  resolved "https://registry.yarnpkg.com/@angular-devkit/schematics/-/schematics-8.2.1.tgz#7d8ebbb11024c4c1d25e80483929c31bb8c38f1b"
-  integrity sha512-tyXp1Fl0ZjLjjbnP+4lf3xW1KvBwSjZFGVTEyfTgXXo1zJhZsL+xE5Th588R6t0tdhNkdrCMi0CVzf7PBKQyHg==
-  dependencies:
-    "@angular-devkit/core" "8.2.1"
-    rxjs "6.4.0"
-
 "@angular-devkit/schematics@8.2.2":
   version "8.2.2"
   resolved "https://registry.yarnpkg.com/@angular-devkit/schematics/-/schematics-8.2.2.tgz#45699cf3df6b3330f22e657390fe3a0e5ac1f9dc"
@@ -303,13 +295,13 @@
     tslib "^1.9.0"
 
 "@angular/pwa@0.802":
-  version "0.802.1"
-  resolved "https://registry.yarnpkg.com/@angular/pwa/-/pwa-0.802.1.tgz#33d07f6d2e0928c6fb03976bb263e64f1866d6cf"
-  integrity sha512-i+P4Q1P+SftBgfmQ67OkJr3LfrKmUI6Uk3mjsvfce36URgwq3sfzz+lt/u6sQ7wsRb2P7HgJ1F4088yphya0eA==
+  version "0.802.2"
+  resolved "https://registry.yarnpkg.com/@angular/pwa/-/pwa-0.802.2.tgz#0f5866e335f526ab27e3337ddd75b115236f3de5"
+  integrity sha512-PUudQvKhimjCWScjhyNLj9A20J1q2CW6QQg5rSbwRL/CehUH1j4q/wCg0JL1cBtPAQP2goHCcZJbNXS+WIWDOQ==
   dependencies:
-    "@angular-devkit/core" "8.2.1"
-    "@angular-devkit/schematics" "8.2.1"
-    "@schematics/angular" "8.2.1"
+    "@angular-devkit/core" "8.2.2"
+    "@angular-devkit/schematics" "8.2.2"
+    "@schematics/angular" "8.2.2"
     parse5-html-rewriting-stream "5.1.0"
 
 "@angular/router@^8.0.0":
@@ -1557,14 +1549,6 @@
   dependencies:
     "@angular-devkit/core" "8.1.1"
     "@angular-devkit/schematics" "8.1.1"
-
-"@schematics/angular@8.2.1":
-  version "8.2.1"
-  resolved "https://registry.yarnpkg.com/@schematics/angular/-/angular-8.2.1.tgz#e795542451891405e0b28971d4bddad0bf96abb3"
-  integrity sha512-5B8FBsfFdm+FbzzhLox9Mmq083ftSCgOwA7WIpqJqwIag9ocnhBK/k5tdZ85g3DaNITcCno1acIsM9k5C0PpDQ==
-  dependencies:
-    "@angular-devkit/core" "8.2.1"
-    "@angular-devkit/schematics" "8.2.1"
 
 "@schematics/angular@8.2.2":
   version "8.2.2"
