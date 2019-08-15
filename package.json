@@ -40,7 +40,7 @@
     "@angular/pwa": "0.802",
     "@angular/router": "^8.0.0",
     "@angular/service-worker": "^8.0.0",
-    "@datorama/akita": "4.9.1",
+    "@datorama/akita": "4.9.5",
     "@nrwl/angular": "8.4.8",
     "firebase": "6.3.5",
     "core-js": "^3.2.1",
