@@ -133,17 +133,6 @@
     rxjs "6.4.0"
     source-map "0.7.3"
 
-"@angular-devkit/core@8.2.1":
-  version "8.2.1"
-  resolved "https://registry.yarnpkg.com/@angular-devkit/core/-/core-8.2.1.tgz#f389365e57e93ede2452eaf97aa48999afffe0ef"
-  integrity sha512-d/PNSZYtJ10tY/TILe3TiB9wLjuxMja/oR0PhdrfuadTF/blZ6Qjg8aVzImkwnvsm+0TgDkIXwcMKnoNa2LDxQ==
-  dependencies:
-    ajv "6.10.2"
-    fast-json-stable-stringify "2.0.0"
-    magic-string "0.25.3"
-    rxjs "6.4.0"
-    source-map "0.7.3"
-
 "@angular-devkit/core@8.2.2":
   version "8.2.2"
   resolved "https://registry.yarnpkg.com/@angular-devkit/core/-/core-8.2.2.tgz#f7239b6fca785c5a85fbe7684f807b8fa41311d4"
@@ -1067,11 +1056,11 @@
   integrity sha512-0pXxI1/4/avsM7KoIuNvkgvrvbbA0HBobCYR9aq3BhnyTo+v+Sle6iVzzqcD8keNB69+GobVeiJWIXF5sLaFhQ==
   dependencies:
     tslib "^1.9.0"
-    
-"@datorama/akita@4.9.5":
-  version "4.9.5"
-  resolved "https://registry.yarnpkg.com/@datorama/akita/-/akita-4.9.5.tgz#d9b90704b9e3eb6a261b5221035cdf66bdab8a33"
-  integrity sha512-K79vApIIYlLMrviAM7MrzE0OwHgl+w9oEn3OEhOmOaIEmMDlA3t8HXvNpNisyyyuPckVAHGN8joykTE1UbndoQ==
+
+"@datorama/akita@4.9.6":
+  version "4.9.6"
+  resolved "https://registry.yarnpkg.com/@datorama/akita/-/akita-4.9.6.tgz#e4f8ddfd1d7f65f3712dd0ee18340448660227fb"
+  integrity sha512-Iwjwa8CapJpRO0DzFt1uX+H/jj59mickTonEU04sFH/bZLccaDQ6t/WOrywSAf/NlUowsirqGozJqYKzWYZOSA==
   dependencies:
     schematics-utilities "^1.1.1"
     tslib "^1.9.0"
