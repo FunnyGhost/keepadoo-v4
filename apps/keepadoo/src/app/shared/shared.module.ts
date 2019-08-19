@@ -6,6 +6,6 @@ import { DialogComponent } from './dialog/dialog.component';
 @NgModule({
   declarations: [DialogComponent],
   imports: [CommonModule, ReactiveFormsModule],
-  exports: [ReactiveFormsModule]
+  exports: [ReactiveFormsModule, DialogComponent]
 })
 export class SharedModule {}
