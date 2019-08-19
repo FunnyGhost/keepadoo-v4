@@ -20,6 +20,8 @@ export class MoviesListDetailsComponent implements OnInit {
   selectedList$: Observable<MoviesList>;
   editMode$: Observable<boolean>;
 
+  showConfirmationDialog: boolean;
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private moviesListsService: MoviesListsService,
@@ -49,6 +51,18 @@ export class MoviesListDetailsComponent implements OnInit {
 
   done(): void {
     this.moviesService.disableEditMode();
+  }
+
+  askForDeleteConfirmation(): void {
+    this.showConfirmationDialog = true;
+  }
+
+  deleteList(): void {
+    this.showConfirmationDialog = false;
+  }
+
+  cancelListDeletion(): void {
+    this.showConfirmationDialog = false;
   }
 
   async deleteMovie(movie: Movie) {
