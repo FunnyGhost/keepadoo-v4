@@ -22,10 +22,25 @@ const firestoreMock = {
 const addSpy = jest.fn();
 const deleteSpy = jest.fn();
 
+const deleteMovieInListSpy = jest.fn();
 jest.spyOn(firestoreMock, 'collection').mockReturnValue({
   valueChanges() {
     {
       return of(testMovies);
+    }
+  },
+  snapshotChanges() {
+    {
+      return of([
+        {
+          payload: {
+            doc: testMovies[0],
+            ref: {
+              delete: deleteMovieInListSpy
+            }
+          }
+        }
+      ]);
     }
   },
   add: addSpy,
@@ -143,6 +158,15 @@ describe('MoviesService', () => {
       await service.deleteMovie(movieToDelete);
       expect(deleteSpy).toHaveBeenCalled();
       expect(moviesStoreMock.remove).toHaveBeenCalledWith(movieToDelete.id);
+    });
+  });
+
+  describe('deleteMoviesInList', () => {
+    it('should delete the movies in the list', async () => {
+      const listId = 'list-id-here';
+
+      await service.deleteMoviesInList(listId);
+      expect(deleteMovieInListSpy).toHaveBeenCalled();
     });
   });
 
