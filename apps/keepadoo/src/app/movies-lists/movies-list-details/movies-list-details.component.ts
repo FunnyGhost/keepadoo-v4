@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 import { Movie } from '../movies/state/models/movie';
 import { MoviesQuery } from '../movies/state/movies.query';
 import { MoviesService } from '../movies/state/movies.service';
@@ -27,7 +27,8 @@ export class MoviesListDetailsComponent implements OnInit {
     private moviesListsService: MoviesListsService,
     private moviesService: MoviesService,
     private moviesQuery: MoviesQuery,
-    private moviesListQuery: MoviesListsQuery
+    private moviesListQuery: MoviesListsQuery,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -58,7 +59,11 @@ export class MoviesListDetailsComponent implements OnInit {
   }
 
   deleteList(): void {
-    this.showConfirmationDialog = false;
+    this.selectedList$.pipe(take(1)).subscribe(data => {
+      this.moviesListsService.remove(data.id);
+      this.showConfirmationDialog = false;
+      this.goBack();
+    });
   }
 
   cancelListDeletion(): void {
@@ -67,5 +72,9 @@ export class MoviesListDetailsComponent implements OnInit {
 
   async deleteMovie(movie: Movie) {
     this.moviesService.deleteMovie(movie);
+  }
+
+  goBack(): void {
+    this.router.navigate(['../'], { relativeTo: this.activatedRoute });
   }
 }

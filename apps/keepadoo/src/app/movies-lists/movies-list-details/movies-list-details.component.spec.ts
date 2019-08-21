@@ -1,18 +1,20 @@
 import { ChangeDetectionStrategy } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MockComponent } from 'ng-mocks';
 import { of } from 'rxjs';
 import { childComponents } from '../../../test-utilities/test-functions';
 import {
   moviesListsQueryMock,
-  moviesQueryMock
+  moviesQueryMock,
+  routerMock
 } from '../../../test-utilities/test-mocks';
 import {
   testMovies,
   testMoviestLists
 } from '../../../test-utilities/test-objects';
+import { DialogComponent } from '../../shared/dialog/dialog.component';
 import { MovieComponent } from '../movie/movie.component';
 import { MoviesQuery } from '../movies/state/movies.query';
 import { MoviesService } from '../movies/state/movies.service';
@@ -21,7 +23,8 @@ import { MoviesListsService } from '../state/movies-lists.service';
 import { MoviesListDetailsComponent } from './movies-list-details.component';
 
 const moviesListsServiceMock = {
-  setActive: jest.fn()
+  setActive: jest.fn(),
+  remove: jest.fn()
 };
 
 const moviesServiceMock = {
@@ -43,7 +46,11 @@ describe('MoviesListDetailsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [MoviesListDetailsComponent, MockComponent(MovieComponent)],
+      declarations: [
+        MoviesListDetailsComponent,
+        MockComponent(MovieComponent),
+        MockComponent(DialogComponent)
+      ],
       providers: [
         {
           provide: MoviesQuery,
@@ -64,6 +71,10 @@ describe('MoviesListDetailsComponent', () => {
         {
           provide: ActivatedRoute,
           useValue: activatedRouteMock
+        },
+        {
+          provide: Router,
+          useValue: routerMock
         }
       ]
     })
@@ -146,6 +157,58 @@ describe('MoviesListDetailsComponent', () => {
       );
 
       expect(editButtons.length).toBe(0);
+    });
+
+    it('should show the delete list button', () => {
+      const deleteButtons = fixture.debugElement.queryAll(
+        By.css('button.delete-button')
+      );
+
+      expect(deleteButtons.length).toBe(1);
+    });
+
+    it('should ask for confirmation when the delete button is clicked', () => {
+      expect(component.showConfirmationDialog).toBeFalsy();
+      const deleteButton = fixture.debugElement.query(
+        By.css('button.delete-button')
+      );
+
+      deleteButton.triggerEventHandler('click', null);
+
+      expect(component.showConfirmationDialog).toBeTruthy();
+    });
+
+    it('should hide the confirmation dialog when the user does not want to delete the list', () => {
+      expect(component.showConfirmationDialog).toBeFalsy();
+      const deleteButton = fixture.debugElement.query(
+        By.css('button.delete-button')
+      );
+      const noButton = fixture.debugElement.query(By.css('button.button-no'));
+
+      deleteButton.triggerEventHandler('click', null);
+      expect(component.showConfirmationDialog).toBeTruthy();
+
+      noButton.triggerEventHandler('click', null);
+      expect(component.showConfirmationDialog).toBeFalsy();
+    });
+
+    it('should delete the list when the user clicks the confirmation button', () => {
+      const moviesListToUse = testMoviestLists[0];
+      moviesListsQueryMock.selectActive.mockReturnValue(of(moviesListToUse));
+
+      const deleteButton = fixture.debugElement.query(
+        By.css('button.delete-button')
+      );
+      const yesButton = fixture.debugElement.query(By.css('button.button-yes'));
+
+      deleteButton.triggerEventHandler('click', null);
+
+      yesButton.triggerEventHandler('click', null);
+      expect(moviesListsServiceMock.remove).toHaveBeenCalledWith(
+        moviesListToUse.id
+      );
+      expect(component.showConfirmationDialog).toBeFalsy();
+      expect(routerMock.navigate).toHaveBeenCalled();
     });
 
     it('should delete a movie when the delete event is triggered', () => {

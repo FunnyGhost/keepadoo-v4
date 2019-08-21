@@ -36,8 +36,8 @@
     <keepadoo-dialog [(visible)]="showConfirmationDialog">
       <h4>Are you sure you want to delete this list?</h4>
       <section class="buttons">
-        <button (click)="deleteList()">Yes</button>
-        <button (click)="cancelListDeletion()">No</button>
+        <button class="button-yes" (click)="deleteList()">Yes</button>
+        <button class="button-no" (click)="cancelListDeletion()">No</button>
       </section>
     </keepadoo-dialog>
   </section>
