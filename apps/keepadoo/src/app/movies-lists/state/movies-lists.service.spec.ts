@@ -196,7 +196,6 @@ describe('MoviesListsService', () => {
       await moviesListsService.remove(idToUse);
 
       expect(docObject.delete).toHaveBeenCalled();
-      expect(moviesListsStoreMock.remove).toHaveBeenCalledWith(idToUse);
     });
 
     it('should remove the movies in the list', async () => {
