@@ -22,7 +22,7 @@ const firestoreMock = {
 const addSpy = jest.fn();
 const deleteSpy = jest.fn();
 
-const deleteMovieInListSpy = jest.fn();
+const deleteMovieInListSpy = jest.fn().mockReturnValue(of());
 jest.spyOn(firestoreMock, 'collection').mockReturnValue({
   valueChanges() {
     {
@@ -34,9 +34,10 @@ jest.spyOn(firestoreMock, 'collection').mockReturnValue({
       return of([
         {
           payload: {
-            doc: testMovies[0],
-            ref: {
-              delete: deleteMovieInListSpy
+            doc: {
+              ref: {
+                delete: deleteMovieInListSpy
+              }
             }
           }
         }

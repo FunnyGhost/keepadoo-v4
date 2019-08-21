@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { combineLatest, from, Observable } from 'rxjs';
-import { switchMap, take, tap } from 'rxjs/operators';
+import { switchMap, take } from 'rxjs/operators';
 import { SessionQuery } from '../../../state/session.query';
 import { MovieSearchResult } from '../../movie-search/state/models/movie-search-results';
 import { MoviesList } from '../../state/models/movies-list';
@@ -64,7 +64,6 @@ export class MoviesService {
       .pipe(
         take(1),
         switchMap(data => from(data)),
-        tap(data => console.log('remove movie', data.payload.doc.id)),
         switchMap(item => item.payload.doc.ref.delete())
       )
       .toPromise();
