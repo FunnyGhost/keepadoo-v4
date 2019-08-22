@@ -68,8 +68,8 @@ export class MoviesListsService {
   }
 
   async remove(id: string): Promise<void> {
+    await this.moviesService.deleteMoviesInList(id);
     await this.moviesListsCollection.doc(id).delete();
-    this.moviesListsStore.remove(id);
   }
 
   setActive(id: string): void {

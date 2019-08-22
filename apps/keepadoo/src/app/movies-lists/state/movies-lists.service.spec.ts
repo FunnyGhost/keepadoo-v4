@@ -46,7 +46,8 @@ const sessionStoreQueryMock = {
 };
 
 const moviesServiceMock = {
-  addMovieToList: jest.fn().mockReturnValue(of({}))
+  addMovieToList: jest.fn().mockReturnValue(of({})),
+  deleteMoviesInList: () => {}
 };
 
 describe('MoviesListsService', () => {
@@ -190,14 +191,21 @@ describe('MoviesListsService', () => {
 
   describe('remove', () => {
     it('should remove the movies list', async () => {
-      sessionStoreQueryMock.userId$.next('batman');
-      sessionQueryMock.userId.mockReturnValue(testUser.userId);
       const idToUse = '52';
 
       await moviesListsService.remove(idToUse);
 
       expect(docObject.delete).toHaveBeenCalled();
-      expect(moviesListsStoreMock.remove).toHaveBeenCalledWith(idToUse);
+    });
+
+    it('should remove the movies in the list', async () => {
+      const moviesService: MoviesService = TestBed.get(MoviesService);
+      jest.spyOn(moviesService, 'deleteMoviesInList');
+      const idToUse = '52';
+
+      await moviesListsService.remove(idToUse);
+
+      expect(moviesService.deleteMoviesInList).toHaveBeenCalledWith(idToUse);
     });
   });
 

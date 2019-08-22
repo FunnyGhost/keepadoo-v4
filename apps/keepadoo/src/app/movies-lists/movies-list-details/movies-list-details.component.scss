@@ -41,3 +41,59 @@ h1 {
   margin: 0 17px 75px 17px;
   justify-content: space-around;
 }
+
+h4 {
+  font-family: $main-font;
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  text-transform: uppercase;
+  margin: 28px 10px;
+  text-align: center;
+  color: $color-primary-1;
+}
+
+.delete-area {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+
+  .delete-button {
+    width: 100%;
+    margin: 0 70px;
+    padding: 10px 80px;
+    font-family: $main-font;
+    font-weight: 700;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    border: 1px solid $error-light;
+    color: $remove;
+  }
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin: 10px;
+
+  button {
+    margin: 14px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-family: $main-font;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: $color-primary-1;
+    border: 1px solid $dark;
+    background: $white;
+    box-shadow: none;
+    transition: all 0.2s;
+
+    &:hover {
+      cursor: pointer;
+      color: $white;
+      background-color: $color-primary-1;
+    }
+  }
+}

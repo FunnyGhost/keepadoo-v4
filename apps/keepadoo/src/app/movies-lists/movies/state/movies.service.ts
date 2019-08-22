@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { combineLatest, Observable } from 'rxjs';
-import { take } from 'rxjs/operators';
+import { combineLatest, from, Observable } from 'rxjs';
+import { switchMap, take } from 'rxjs/operators';
 import { SessionQuery } from '../../../state/session.query';
 import { MovieSearchResult } from '../../movie-search/state/models/movie-search-results';
 import { MoviesList } from '../../state/models/movies-list';
@@ -55,6 +55,18 @@ export class MoviesService {
       .doc(movie.key);
     await movieToDelete.delete();
     this.moviesStore.remove(movie.id);
+  }
+
+  public async deleteMoviesInList(listId: string): Promise<void> {
+    return this.firestoreService
+      .collection(`movies`, ref => ref.where('listId', '==', listId))
+      .snapshotChanges()
+      .pipe(
+        take(1),
+        switchMap(data => from(data)),
+        switchMap(item => item.payload.doc.ref.delete())
+      )
+      .toPromise();
   }
 
   public enableEditMode(): void {
