@@ -118,6 +118,20 @@ describe('MoviesListDetailsComponent', () => {
         );
         expect(element).toBeTruthy();
       });
+      const helperText = fixture.debugElement.query(By.css('.helper-text'));
+
+      expect(helperText).toBeFalsy();
+    });
+
+    it('should show a helper text if the list has no movies', () => {
+      moviesQueryMock.selectAll.mockReturnValue(of([]));
+
+      component.ngOnInit();
+      fixture.detectChanges();
+
+      const helperText = fixture.debugElement.query(By.css('.helper-text'));
+
+      expect(helperText).toBeTruthy();
     });
 
     it('should show the selected list title', () => {

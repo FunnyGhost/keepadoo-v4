@@ -53,6 +53,30 @@ h4 {
   color: $color-primary-1;
 }
 
+.helper-section {
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 2rem;
+
+  .helper-text {
+    text-align: center;
+    font-family: $secondary-font-light;
+    font-weight: 300;
+    font-style: italic;
+    color: $color-primary;
+    opacity: 0.6;
+    line-height: 1.5rem;
+
+    svg {
+      height: 1.4rem;
+      margin: 3px;
+      margin-bottom: -4px;
+    }
+  }
+}
+
 .delete-area {
   display: flex;
   flex-direction: row;
@@ -72,7 +96,7 @@ h4 {
   }
 }
 
-.buttons {
+.dialog-buttons {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
