@@ -13,3 +13,27 @@ h1 {
   text-align: center;
   color: $color-primary-1;
 }
+
+section {
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 2rem;
+
+  .helper-text {
+    text-align: center;
+    font-family: $secondary-font-light;
+    font-weight: 300;
+    font-style: italic;
+    color: $color-primary;
+    opacity: 0.6;
+    line-height: 1.5rem;
+
+    svg {
+      height: 1.4rem;
+      margin: 3px;
+      margin-bottom: -4px;
+    }
+  }
+}

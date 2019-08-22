@@ -64,6 +64,19 @@ describe('MoviesListsComponent', () => {
       By.directive(MoviesListComponent)
     );
     expect(moviesListsElements.length).toBe(testMoviestLists.length);
+    const helperText = fixture.debugElement.query(By.css('.helper-text'));
+    expect(helperText).toBeFalsy();
+  });
+
+  it('should show a helper text if the user has no lists', () => {
+    moviesListsQueryMock.selectAll.mockReturnValue(of([]));
+
+    component.ngOnInit();
+    fixture.detectChanges();
+
+    const helperText = fixture.debugElement.query(By.css('.helper-text'));
+
+    expect(helperText).toBeTruthy();
   });
 
   it('should navigate to the list details', () => {
