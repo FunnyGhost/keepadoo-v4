@@ -6977,7 +6977,8 @@ license-webpack-plugin@2.1.1:
 
 "lighthousebot@https://github.com/ebidel/lighthousebot":
   version "0.2.0"
-  resolved "https://github.com/ebidel/lighthousebot#350d70440116928c6dd25c4daa83ca3dcc1c3dfc"
+  uid "7f87bcaeb221009354d90ab706379ed21eed0d39"
+  resolved "https://github.com/ebidel/lighthousebot#7f87bcaeb221009354d90ab706379ed21eed0d39"
   dependencies:
     minimist "^1.2.0"
     node-fetch "^2.2.0"
