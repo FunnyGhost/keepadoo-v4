@@ -29,7 +29,7 @@ describe('AuthGuard', () => {
     store = TestBed.get(SessionStore);
   });
 
-  it('should return true if the user is logged in', () => {
+ test('should return true if the user is logged in', () => {
     jest.spyOn(query, 'isLoggedIn').mockReturnValue(true);
 
     const result = guard.canActivate(null, {
@@ -43,14 +43,14 @@ describe('AuthGuard', () => {
       jest.spyOn(query, 'isLoggedIn').mockReturnValue(false);
     });
 
-    it('should return false if the user is not logged in', () => {
+   test('should return false if the user is not logged in', () => {
       const result = guard.canActivate(null, {
         url: 'some-url-here'
       } as RouterStateSnapshot);
       expect(result).toBe(false);
     });
 
-    it('should redirect to login if the user is not logged in', () => {
+   test('should redirect to login if the user is not logged in', () => {
       const router: Router = TestBed.get(Router);
 
       guard.canActivate(null, { url: 'some-url-here' } as RouterStateSnapshot);
@@ -58,7 +58,7 @@ describe('AuthGuard', () => {
       expect(router.navigateByUrl).toHaveBeenCalledWith('/login');
     });
 
-    it('should set the redirectUrl in the store', () => {
+   test('should set the redirectUrl in the store', () => {
       const urlToUse = 'some-url-here';
       guard.canActivate(null, { url: urlToUse } as RouterStateSnapshot);
 

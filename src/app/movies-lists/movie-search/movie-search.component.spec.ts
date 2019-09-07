@@ -1,11 +1,5 @@
 import { ChangeDetectionStrategy } from '@angular/core';
-import {
-  async,
-  ComponentFixture,
-  fakeAsync,
-  TestBed,
-  tick
-} from '@angular/core/testing';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
@@ -35,10 +29,7 @@ describe('MovieSearchComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [ReactiveFormsModule, RouterTestingModule],
-      declarations: [
-        MovieSearchComponent,
-        MockComponent(MovieSearchResultComponent)
-      ],
+      declarations: [MovieSearchComponent, MockComponent(MovieSearchResultComponent)],
       providers: [
         { provide: MovieSearchService, useValue: movieSearchServiceMock },
         { provide: MoviesListsService, useValue: movieListServiceMock },
@@ -60,50 +51,40 @@ describe('MovieSearchComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  test('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should wait 500ms when a user types something and then search', fakeAsync(() => {
+  test('should wait 500ms when a user types something and then search', fakeAsync(() => {
     const movieToSearchFor = 'Batman';
 
     const searchInput = fixture.debugElement.query(By.css('input'));
     expect(searchInput).toBeTruthy();
 
-    const movieSearchService: MovieSearchService = TestBed.get(
-      MovieSearchService
-    );
+    const movieSearchService: MovieSearchService = TestBed.get(MovieSearchService);
     jest.spyOn(movieSearchService, 'searchMovies');
 
     searchInput.nativeElement.value = movieToSearchFor;
     searchInput.nativeElement.dispatchEvent(new Event('input'));
-    expect(movieSearchService.searchMovies).not.toHaveBeenCalledWith(
-      movieToSearchFor
-    );
+    expect(movieSearchService.searchMovies).not.toHaveBeenCalledWith(movieToSearchFor);
 
     tick(500);
 
-    expect(movieSearchService.searchMovies).toHaveBeenCalledWith(
-      movieToSearchFor
-    );
+    expect(movieSearchService.searchMovies).toHaveBeenCalledWith(movieToSearchFor);
   }));
 
-  it('should display the movies from the search store', () => {
+  test('should display the movies from the search store', () => {
     movieSearchQueryMock.selectAll.mockReturnValue(of(testMovieSearchResults));
 
     component.ngOnInit();
     fixture.detectChanges();
 
-    const movieElements = fixture.debugElement.queryAll(
-      By.directive(MovieSearchResultComponent)
-    );
+    const movieElements = fixture.debugElement.queryAll(By.directive(MovieSearchResultComponent));
     expect(movieElements.length).toBe(testMovieSearchResults.length);
   });
 
-  it('should add a movie to the list when selected', () => {
-    const movieListService: MoviesListsService = TestBed.get(
-      MoviesListsService
-    );
+  test('should add a movie to the list when selected', () => {
+    const movieListService: MoviesListsService = TestBed.get(MoviesListsService);
     jest.spyOn(movieListService, 'addMovieToCurrentList');
     const router: Router = TestBed.get(Router);
     spyOn(router, 'navigate');
@@ -113,16 +94,13 @@ describe('MovieSearchComponent', () => {
     component.ngOnInit();
     fixture.detectChanges();
 
-    const movieElement = fixture.debugElement.queryAll(
-      By.directive(MovieSearchResultComponent)
-    )[0].componentInstance as MovieSearchResultComponent;
+    const movieElement = fixture.debugElement.queryAll(By.directive(MovieSearchResultComponent))[0]
+      .componentInstance as MovieSearchResultComponent;
     movieElement.selectedMovie.emit(testMovieSearchResults[0]);
-    expect(movieListService.addMovieToCurrentList).toHaveBeenCalledWith(
-      testMovieSearchResults[0]
-    );
+    expect(movieListService.addMovieToCurrentList).toHaveBeenCalledWith(testMovieSearchResults[0]);
   });
 
-  it('should go up one level when a movie is added', () => {
+  test('should go up one level when a movie is added', () => {
     const router: Router = TestBed.get(Router);
     spyOn(router, 'navigate').and.callFake(() => {});
     movieSearchQueryMock.selectAll.mockReturnValue(of(testMovieSearchResults));
@@ -130,20 +108,17 @@ describe('MovieSearchComponent', () => {
     component.ngOnInit();
     fixture.detectChanges();
 
-    const movieElement = fixture.debugElement.queryAll(
-      By.directive(MovieSearchResultComponent)
-    )[0].componentInstance as MovieSearchResultComponent;
+    const movieElement = fixture.debugElement.queryAll(By.directive(MovieSearchResultComponent))[0]
+      .componentInstance as MovieSearchResultComponent;
     movieElement.selectedMovie.emit(testMovieSearchResults[0]);
 
     expect(router.navigate).toHaveBeenCalled();
   });
 
-  it('should go up one level when the cancel button is hit', () => {
+  test('should go up one level when the cancel button is hit', () => {
     const router: Router = TestBed.get(Router);
     spyOn(router, 'navigate').and.callFake(() => {});
-    const cancelButton = fixture.debugElement.query(
-      By.css('button.cancel-button')
-    );
+    const cancelButton = fixture.debugElement.query(By.css('button.cancel-button'));
 
     cancelButton.triggerEventHandler('click', null);
 

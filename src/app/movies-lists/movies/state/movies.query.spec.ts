@@ -8,7 +8,7 @@ describe('MoviesQuery', () => {
     query = new MoviesQuery(new MoviesStore());
   });
 
-  it('should create an instance', () => {
+  test('should create an instance', () => {
     expect(query).toBeTruthy();
   });
 });

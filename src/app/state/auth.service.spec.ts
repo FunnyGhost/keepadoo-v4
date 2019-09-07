@@ -2,11 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
-import {
-  routerMock,
-  sessionQueryMock,
-  sessionStoreMock
-} from '../../test-utilities/test-mocks';
+import { routerMock, sessionQueryMock, sessionStoreMock } from '../../test-utilities/test-mocks';
 import { testFirebaseUser, testUser } from '../../test-utilities/test-objects';
 import { AuthService } from './auth.service';
 import { SessionQuery } from './session.query';
@@ -55,18 +51,18 @@ describe('AuthService', () => {
     router = TestBed.get(Router);
   });
 
-  it('should be created', () => {
+  test('should be created', () => {
     expect(service).toBeTruthy();
   });
 
   describe('Listening for the current user', () => {
-    it('should login when a new user is emited by firestore', () => {
+    test('should login when a new user is emited by firestore', () => {
       angularFireAuthMock.authState.next(testFirebaseUser);
 
       expect(store.login).toHaveBeenCalledWith(testUser);
     });
 
-    it('should redirect to the storedRedirectURL when the user logs in', () => {
+    test('should redirect to the storedRedirectURL when the user logs in', () => {
       const redirectUrl = 'i-am-batman';
       jest.spyOn(query, 'redirectUrl').mockReturnValue(redirectUrl);
       angularFireAuthMock.authState.next(testFirebaseUser);
@@ -75,7 +71,7 @@ describe('AuthService', () => {
       expect(router.navigateByUrl).toHaveBeenCalledWith(redirectUrl);
     });
 
-    it('should not redirect to the storedRedirectURL when the user logs out', () => {
+    test('should not redirect to the storedRedirectURL when the user logs out', () => {
       const redirectUrl = 'i-am-batman';
       jest.spyOn(query, 'redirectUrl').mockReturnValue(redirectUrl);
       angularFireAuthMock.authState.next(null);
@@ -83,7 +79,7 @@ describe('AuthService', () => {
       expect(router.navigateByUrl).not.toHaveBeenCalledWith(redirectUrl);
     });
 
-    it('should logout when the firebase user is not there', () => {
+    test('should logout when the firebase user is not there', () => {
       angularFireAuthMock.authState.next(null);
 
       expect(store.logout).toHaveBeenCalled();
@@ -91,39 +87,38 @@ describe('AuthService', () => {
   });
 
   describe('signIn', () => {
-    it('should sign in with email and password', async () => {
+    test('should sign in with email and password', async () => {
       const inputEmail = 'test@test.com';
       const inputPassword = 'password';
 
       await service.signIn(inputEmail, inputPassword);
-      expect(
-        angularFireAuthMock.auth.signInWithEmailAndPassword
-      ).toHaveBeenCalledWith(inputEmail, inputPassword);
+      expect(angularFireAuthMock.auth.signInWithEmailAndPassword).toHaveBeenCalledWith(
+        inputEmail,
+        inputPassword
+      );
     });
 
-    it('should set loading when waiting for authentication', async () => {
+    test('should set loading when waiting for authentication', async () => {
       const inputEmail = 'test@test.com';
       const inputPassword = 'password';
 
       await service.signIn(inputEmail, inputPassword);
 
       expect(store.setLoading).toHaveBeenCalledWith(true);
-      expect(store.setLoading).toHaveBeenLastCalledWith(false);
+      expect(store.setLoading).toHaveBeenCalledWith(false);
     });
 
-    it('should not set error when authentication is ok', async () => {
+    test('should not set error when authentication is ok', async () => {
       const inputEmail = 'test@test.com';
       const inputPassword = 'password';
 
-      angularFireAuthMock.auth.signInWithEmailAndPassword.mockReturnValueOnce(
-        {}
-      );
+      angularFireAuthMock.auth.signInWithEmailAndPassword.mockReturnValueOnce({});
       await service.signIn(inputEmail, inputPassword);
 
       expect(store.setError).not.toHaveBeenCalled();
     });
 
-    it('should set error when authentication fails', async () => {
+    test('should set error when authentication fails', async () => {
       const errorToUse = 'Invalid username/password';
       const inputEmail = 'test@test.com';
       const inputPassword = 'password';
@@ -136,90 +131,83 @@ describe('AuthService', () => {
       expect(store.setError).toHaveBeenCalledWith(errorToUse);
     });
 
-    it('should unset loading when there is an error', async () => {
+    test('should unset loading when there is an error', async () => {
       const errorToUse = 'Invalid username/password';
       const inputEmail = 'test@test.com';
       const inputPassword = 'password';
-      angularFireAuthMock.auth.signInWithEmailAndPassword.mockRejectedValue(
-        errorToUse
-      );
+      angularFireAuthMock.auth.signInWithEmailAndPassword.mockRejectedValue(errorToUse);
 
       await service.signIn(inputEmail, inputPassword);
 
-      expect(store.setLoading).toHaveBeenLastCalledWith(false);
+      expect(store.setLoading).toHaveBeenCalledWith(false);
     });
   });
 
   describe('signUp', () => {
-    it('should sign up with email and password', async () => {
+    test('should sign up with email and password', async () => {
       const inputEmail = 'test@test.com';
       const inputPassword = 'password';
 
       await service.signUp(inputEmail, inputPassword);
-      expect(
-        angularFireAuthMock.auth.createUserWithEmailAndPassword
-      ).toHaveBeenCalledWith(inputEmail, inputPassword);
+      expect(angularFireAuthMock.auth.createUserWithEmailAndPassword).toHaveBeenCalledWith(
+        inputEmail,
+        inputPassword
+      );
     });
 
-    it('should set loading when waiting for user creation', async () => {
+    test('should set loading when waiting for user creation', async () => {
       const inputEmail = 'test@test.com';
       const inputPassword = 'password';
 
       await service.signUp(inputEmail, inputPassword);
 
       expect(store.setLoading).toHaveBeenCalledWith(true);
-      expect(store.setLoading).toHaveBeenLastCalledWith(false);
+      expect(store.setLoading).toHaveBeenCalledWith(false);
     });
 
-    it('should not set error when user creation is ok', async () => {
+    test('should not set error when user creation is ok', async () => {
       const inputEmail = 'test@test.com';
       const inputPassword = 'password';
 
-      angularFireAuthMock.auth.createUserWithEmailAndPassword.mockReturnValueOnce(
-        {}
-      );
+      angularFireAuthMock.auth.createUserWithEmailAndPassword.mockReturnValueOnce({});
       await service.signUp(inputEmail, inputPassword);
 
       expect(store.setError).not.toHaveBeenCalled();
     });
 
-    it('should set error when user creation fails', async () => {
+    test('should set error when user creation fails', async () => {
       const errorToUse = 'Invalid username/password';
       const inputEmail = 'test@test.com';
       const inputPassword = 'password';
-      angularFireAuthMock.auth.createUserWithEmailAndPassword.mockRejectedValue(
-        {
-          message: errorToUse
-        }
-      );
+      angularFireAuthMock.auth.createUserWithEmailAndPassword.mockRejectedValue({
+        message: errorToUse
+      });
 
       await service.signUp(inputEmail, inputPassword);
 
       expect(store.setError).toHaveBeenCalledWith(errorToUse);
     });
 
-    it('should unset loading when there is an error', async () => {
+    test('should unset loading when there is an error', async () => {
       const errorToUse = 'Invalid username/password';
       const inputEmail = 'test@test.com';
       const inputPassword = 'password';
-      angularFireAuthMock.auth.createUserWithEmailAndPassword.mockRejectedValue(
-        errorToUse
-      );
+      angularFireAuthMock.auth.createUserWithEmailAndPassword.mockRejectedValue(errorToUse);
 
       await service.signUp(inputEmail, inputPassword);
 
-      expect(store.setLoading).toHaveBeenLastCalledWith(false);
+      expect(store.setLoading).toHaveBeenCalledWith(false);
     });
   });
 
   describe('signOut', () => {
-    it('should sign out', async () => {
+    test('should sign out', async () => {
       await service.signOut();
 
       expect(angularFireAuthMock.auth.signOut).toHaveBeenCalled();
     });
 
-    it('should navigate to the login route', async () => {
+    test('should navigate to the login route', async () => {
       await service.signOut();
 
       expect(routerMock.navigate).toHaveBeenCalledWith(['/login']);

@@ -58,11 +58,11 @@ describe('MoviesListCreateComponent', () => {
     moviesListService = TestBed.get(MoviesListsService);
   });
 
-  it('should create', () => {
+  test('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should create the movies list', () => {
+  test('should create the movies list', () => {
     const router: Router = TestBed.get(Router);
     spyOn(router, 'navigate');
 
@@ -76,7 +76,7 @@ describe('MoviesListCreateComponent', () => {
 
     createButton.triggerEventHandler('click', null);
 
-    expect(moviesListService.add).toHaveBeenLastCalledWith({
+    expect(moviesListService.add).toHaveBeenCalledWith({
       name: listNameToUse
     });
   });
@@ -90,14 +90,14 @@ describe('MoviesListCreateComponent', () => {
       listName = component.moviesListForm.controls['name'];
     });
 
-    it('should be invalid if empty', () => {
+    test('should be invalid if empty', () => {
       expect(listName.valid).toBeFalsy();
 
       errors = listName.errors || {};
       expect(errors['required']).toBeTruthy();
     });
 
-    it('should be invalid if value is less than 2 characters long', () => {
+    test('should be invalid if value is less than 2 characters long', () => {
       listName.setValue('t');
       errors = listName.errors || {};
 
@@ -105,7 +105,7 @@ describe('MoviesListCreateComponent', () => {
       expect(errors['minlength']).toBeTruthy();
     });
 
-    it('should be valid if value is longer than 2 characters', () => {
+    test('should be valid if value is longer than 2 characters', () => {
       listName.setValue('somelongpassword');
       errors = listName.errors || {};
 
@@ -115,7 +115,7 @@ describe('MoviesListCreateComponent', () => {
   });
 
   describe('CreateButton', () => {
-    it('should be enabled if the form is valid', () => {
+    test('should be enabled if the form is valid', () => {
       const email = component.moviesListForm.controls['name'];
       email.setValue('batman stuff');
 
@@ -125,7 +125,7 @@ describe('MoviesListCreateComponent', () => {
       expect(createButton.nativeElement.disabled).toBeFalsy();
     });
 
-    it('should be disabled if the form is invalid', () => {
+    test('should be disabled if the form is invalid', () => {
       const email = component.moviesListForm.controls['name'];
       email.setValue('');
 
@@ -137,7 +137,7 @@ describe('MoviesListCreateComponent', () => {
   });
 
   describe('Error', () => {
-    it('should not be visible if there is no error', () => {
+    test('should not be visible if there is no error', () => {
       queryMock.error.next(null);
 
       const errorElements = fixture.debugElement.queryAll(By.css('.error'));
@@ -145,7 +145,7 @@ describe('MoviesListCreateComponent', () => {
       expect(errorElements.length).toBe(0);
     });
 
-    it('should be visible if there is an error', () => {
+    test('should be visible if there is an error', () => {
       const errorToUse = 'Invalid username/password';
       queryMock.error.next(errorToUse);
       fixture.detectChanges();
@@ -159,43 +159,35 @@ describe('MoviesListCreateComponent', () => {
 
   describe('Loading', () => {
     describe('isNotLoading', () => {
-      beforeEach(function() {
+      beforeEach(() => {
         queryMock.loading.next(false);
         fixture.detectChanges();
       });
 
-      it('should not show the loading image', () => {
-        const loadingImage = fixture.debugElement.queryAll(
-          By.css('.loading-image')
-        );
+      test('should not show the loading image', () => {
+        const loadingImage = fixture.debugElement.queryAll(By.css('.loading-image'));
         expect(loadingImage.length).toBe(0);
       });
 
-      it('should show the create button text', () => {
-        const createButtonText = fixture.debugElement.queryAll(
-          By.css('.create-button-text')
-        );
+      test('should show the create button text', () => {
+        const createButtonText = fixture.debugElement.queryAll(By.css('.create-button-text'));
         expect(createButtonText.length).toBe(1);
       });
     });
 
     describe('isLoading', () => {
-      beforeEach(function() {
+      beforeEach(() => {
         queryMock.loading.next(true);
         fixture.detectChanges();
       });
 
-      it('should show the loading image', () => {
-        const loadingImage = fixture.debugElement.queryAll(
-          By.css('.loading-image')
-        );
+      test('should show the loading image', () => {
+        const loadingImage = fixture.debugElement.queryAll(By.css('.loading-image'));
         expect(loadingImage.length).toBe(1);
       });
 
-      it('should not show the create button text', () => {
-        const createButtonText = fixture.debugElement.queryAll(
-          By.css('.create-button-text')
-        );
+      test('should not show the create button text', () => {
+        const createButtonText = fixture.debugElement.queryAll(By.css('.create-button-text'));
         expect(createButtonText.length).toBe(0);
       });
     });

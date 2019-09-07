@@ -22,24 +22,20 @@ describe('MovieSearchResultComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  test('should create', () => {
     expect(component).toBeTruthy();
   });
 
   describe('Render', () => {
-    it('should show the movie title', () => {
+    test('should show the movie title', () => {
       const movieTitleElements = fixture.debugElement.queryAll(By.css('h4'));
 
       expect(movieTitleElements.length).toBe(1);
-      expect(movieTitleElements[0].nativeElement.innerHTML).toContain(
-        movieSearchResultToUse.title
-      );
+      expect(movieTitleElements[0].nativeElement.innerHTML).toContain(movieSearchResultToUse.title);
     });
 
-    it('should show the movie year', () => {
-      const movieYearElements = fixture.debugElement.queryAll(
-        By.css('div.year')
-      );
+    test('should show the movie year', () => {
+      const movieYearElements = fixture.debugElement.queryAll(By.css('div.year'));
 
       expect(movieYearElements.length).toBe(1);
       expect(movieYearElements[0].nativeElement.innerHTML).toContain(
@@ -47,21 +43,15 @@ describe('MovieSearchResultComponent', () => {
       );
     });
 
-    it('should show the movie poster', () => {
-      const moviePosters = fixture.debugElement.queryAll(
-        By.css('img.movie-poster')
-      );
+    test('should show the movie poster', () => {
+      const moviePosters = fixture.debugElement.queryAll(By.css('img.movie-poster'));
 
       expect(moviePosters.length).toBe(1);
-      expect(moviePosters[0].nativeElement.src).toContain(
-        movieSearchResultToUse.poster_path
-      );
+      expect(moviePosters[0].nativeElement.src).toContain(movieSearchResultToUse.poster_path);
     });
 
-    it('should show the movie overview', () => {
-      const movieOverviewElements = fixture.debugElement.queryAll(
-        By.css('section.movie-overview')
-      );
+    test('should show the movie overview', () => {
+      const movieOverviewElements = fixture.debugElement.queryAll(By.css('section.movie-overview'));
 
       expect(movieOverviewElements.length).toBe(1);
       expect(movieOverviewElements[0].nativeElement.innerHTML).toContain(
@@ -70,16 +60,12 @@ describe('MovieSearchResultComponent', () => {
     });
   });
 
-  it('should emit when a movie is clicked', () => {
+  test('should emit when a movie is clicked', () => {
     jest.spyOn(component.selectedMovie, 'emit');
-    const movieElement = fixture.debugElement.query(
-      By.css('.search-result-container')
-    );
+    const movieElement = fixture.debugElement.query(By.css('.search-result-container'));
 
     movieElement.triggerEventHandler('click', null);
 
-    expect(component.selectedMovie.emit).toHaveBeenCalledWith(
-      movieSearchResultToUse
-    );
+    expect(component.selectedMovie.emit).toHaveBeenCalledWith(movieSearchResultToUse);
   });
 });

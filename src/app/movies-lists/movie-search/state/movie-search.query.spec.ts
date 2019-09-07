@@ -8,7 +8,7 @@ describe('MovieSearchQuery', () => {
     query = new MovieSearchQuery(new MovieSearchStore());
   });
 
-  it('should create an instance', () => {
+  test('should create an instance', () => {
     expect(query).toBeTruthy();
   });
 });

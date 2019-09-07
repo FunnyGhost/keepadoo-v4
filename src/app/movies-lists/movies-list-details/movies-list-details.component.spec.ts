@@ -10,10 +10,7 @@ import {
   moviesQueryMock,
   routerMock
 } from '../../../test-utilities/test-mocks';
-import {
-  testMovies,
-  testMoviestLists
-} from '../../../test-utilities/test-objects';
+import { testMovies, testMoviestLists } from '../../../test-utilities/test-objects';
 import { DialogComponent } from '../../shared/dialog/dialog.component';
 import { MovieComponent } from '../movie/movie.component';
 import { MoviesQuery } from '../movies/state/movies.query';
@@ -91,26 +88,23 @@ describe('MoviesListDetailsComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  test('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should set the active movies list', () => {
+  test('should set the active movies list', () => {
     expect(moviesListsServiceMock.setActive).toHaveBeenCalledWith(listIdToUse);
   });
 
   describe('Render', () => {
-    it('should show the movies in store', () => {
+    test('should show the movies in store', () => {
       moviesQueryMock.selectAll.mockReturnValue(of(testMovies));
 
       component.ngOnInit();
       fixture.detectChanges();
 
       expect(moviesQueryMock.selectAll).toHaveBeenCalled();
-      const movieComponents = childComponents<MovieComponent>(
-        fixture,
-        MovieComponent
-      );
+      const movieComponents = childComponents<MovieComponent>(fixture, MovieComponent);
       expect(movieComponents.length).toBe(testMovies.length);
       testMovies.forEach(movie => {
         const element = movieComponents.find(
@@ -123,7 +117,7 @@ describe('MoviesListDetailsComponent', () => {
       expect(helperText).toBeFalsy();
     });
 
-    it('should show a helper text if the list has no movies', () => {
+    test('should show a helper text if the list has no movies', () => {
       moviesQueryMock.selectAll.mockReturnValue(of([]));
 
       component.ngOnInit();
@@ -134,7 +128,7 @@ describe('MoviesListDetailsComponent', () => {
       expect(helperText).toBeTruthy();
     });
 
-    it('should show the selected list title', () => {
+    test('should show the selected list title', () => {
       const moviesListToUse = testMoviestLists[0];
       moviesListsQueryMock.selectActive.mockReturnValue(of(moviesListToUse));
 
@@ -155,48 +149,37 @@ describe('MoviesListDetailsComponent', () => {
       fixture.detectChanges();
     });
 
-    it('should show the movies in edit mode', () => {
-      const movieComponents = childComponents<MovieComponent>(
-        fixture,
-        MovieComponent
-      );
+    test('should show the movies in edit mode', () => {
+      const movieComponents = childComponents<MovieComponent>(fixture, MovieComponent);
       movieComponents.forEach(movieComponent => {
         expect(movieComponent.editMode).toBe(true);
       });
     });
 
-    it('should not show the edit button', () => {
-      const editButtons = fixture.debugElement.queryAll(
-        By.css('button.edit-button')
-      );
+    test('should not show the edit button', () => {
+      const editButtons = fixture.debugElement.queryAll(By.css('button.edit-button'));
 
       expect(editButtons.length).toBe(0);
     });
 
-    it('should show the delete list button', () => {
-      const deleteButtons = fixture.debugElement.queryAll(
-        By.css('button.delete-button')
-      );
+    test('should show the delete list button', () => {
+      const deleteButtons = fixture.debugElement.queryAll(By.css('button.delete-button'));
 
       expect(deleteButtons.length).toBe(1);
     });
 
-    it('should ask for confirmation when the delete button is clicked', () => {
+    test('should ask for confirmation when the delete button is clicked', () => {
       expect(component.showConfirmationDialog).toBeFalsy();
-      const deleteButton = fixture.debugElement.query(
-        By.css('button.delete-button')
-      );
+      const deleteButton = fixture.debugElement.query(By.css('button.delete-button'));
 
       deleteButton.triggerEventHandler('click', null);
 
       expect(component.showConfirmationDialog).toBeTruthy();
     });
 
-    it('should hide the confirmation dialog when the user does not want to delete the list', () => {
+    test('should hide the confirmation dialog when the user does not want to delete the list', () => {
       expect(component.showConfirmationDialog).toBeFalsy();
-      const deleteButton = fixture.debugElement.query(
-        By.css('button.delete-button')
-      );
+      const deleteButton = fixture.debugElement.query(By.css('button.delete-button'));
       const noButton = fixture.debugElement.query(By.css('button.button-no'));
 
       deleteButton.triggerEventHandler('click', null);
@@ -206,31 +189,24 @@ describe('MoviesListDetailsComponent', () => {
       expect(component.showConfirmationDialog).toBeFalsy();
     });
 
-    it('should delete the list when the user clicks the confirmation button', () => {
+    test('should delete the list when the user clicks the confirmation button', () => {
       const moviesListToUse = testMoviestLists[0];
       moviesListsQueryMock.selectActive.mockReturnValue(of(moviesListToUse));
 
-      const deleteButton = fixture.debugElement.query(
-        By.css('button.delete-button')
-      );
+      const deleteButton = fixture.debugElement.query(By.css('button.delete-button'));
       const yesButton = fixture.debugElement.query(By.css('button.button-yes'));
 
       deleteButton.triggerEventHandler('click', null);
 
       yesButton.triggerEventHandler('click', null);
-      expect(moviesListsServiceMock.remove).toHaveBeenCalledWith(
-        moviesListToUse.id
-      );
+      expect(moviesListsServiceMock.remove).toHaveBeenCalledWith(moviesListToUse.id);
       expect(component.showConfirmationDialog).toBeFalsy();
       expect(routerMock.navigate).toHaveBeenCalled();
     });
 
-    it('should delete a movie when the delete event is triggered', () => {
+    test('should delete a movie when the delete event is triggered', () => {
       const moviesService: MoviesService = TestBed.get(MoviesService);
-      const movieComponents = childComponents<MovieComponent>(
-        fixture,
-        MovieComponent
-      );
+      const movieComponents = childComponents<MovieComponent>(fixture, MovieComponent);
       const movieToDelete = testMovies[0];
 
       movieComponents[0].delete.emit(movieToDelete);
@@ -238,10 +214,8 @@ describe('MoviesListDetailsComponent', () => {
       expect(moviesService.deleteMovie).toHaveBeenCalledWith(movieToDelete);
     });
 
-    it('should disable edit mode when done button is clicked', () => {
-      const doneButton = fixture.debugElement.query(
-        By.css('button.done-button')
-      );
+    test('should disable edit mode when done button is clicked', () => {
+      const doneButton = fixture.debugElement.query(By.css('button.done-button'));
       const moviesService: MoviesService = TestBed.get(MoviesService);
 
       doneButton.triggerEventHandler('click', null);
@@ -259,28 +233,21 @@ describe('MoviesListDetailsComponent', () => {
       fixture.detectChanges();
     });
 
-    it('should not show the movies in edit mode', () => {
-      const movieComponents = childComponents<MovieComponent>(
-        fixture,
-        MovieComponent
-      );
+    test('should not show the movies in edit mode', () => {
+      const movieComponents = childComponents<MovieComponent>(fixture, MovieComponent);
       movieComponents.forEach(movieComponent => {
         expect(movieComponent.editMode).toBe(false);
       });
     });
 
-    it('should not show the done button', () => {
-      const doneButtons = fixture.debugElement.queryAll(
-        By.css('button.done-button')
-      );
+    test('should not show the done button', () => {
+      const doneButtons = fixture.debugElement.queryAll(By.css('button.done-button'));
 
       expect(doneButtons.length).toBe(0);
     });
 
-    it('should enable edit mode when edit button is clicked', () => {
-      const editButton = fixture.debugElement.query(
-        By.css('button.edit-button')
-      );
+    test('should enable edit mode when edit button is clicked', () => {
+      const editButton = fixture.debugElement.query(By.css('button.edit-button'));
       const moviesService: MoviesService = TestBed.get(MoviesService);
 
       editButton.triggerEventHandler('click', null);

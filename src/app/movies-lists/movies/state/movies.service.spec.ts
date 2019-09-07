@@ -93,7 +93,7 @@ describe('MoviesService', () => {
     moviesStore = TestBed.get(MoviesStore);
   });
 
-  it('should be created', () => {
+  test('should be created', () => {
     expect(service).toBeTruthy();
   });
 
@@ -104,18 +104,16 @@ describe('MoviesService', () => {
         jest.spyOn(service, 'getMoviesInList').mockReturnValue(of(testMovies));
       });
 
-      it('should populate the store with the movies in the currently selected list', () => {
+      test('should populate the store with the movies in the currently selected list', () => {
         activeList.next(testMoviestLists[0]);
         expect(moviesStore.set).toHaveBeenCalledWith(testMovies);
-        expect(service.getMoviesInList).toHaveBeenCalledWith(
-          testMoviestLists[0].id
-        );
+        expect(service.getMoviesInList).toHaveBeenCalledWith(testMoviestLists[0].id);
       });
 
-      it('should clear the store if there is no selected list', () => {
+      test('should clear the store if there is no selected list', () => {
         activeList.next(undefined);
 
-        expect(moviesStore.set).toHaveBeenLastCalledWith([]);
+        expect(moviesStore.set).toHaveBeenCalledWith([]);
       });
     });
 
@@ -123,14 +121,14 @@ describe('MoviesService', () => {
       beforeEach(() => {
         sessionQueryMock.userId$.next(undefined);
       });
-      it('should clear the store', () => {
-        expect(moviesStore.set).toHaveBeenLastCalledWith([]);
+      test('should clear the store', () => {
+        expect(moviesStore.set).toHaveBeenCalledWith([]);
       });
     });
   });
 
   describe('getMoviesInList', () => {
-    it('should get movies in list', done => {
+    test('should get movies in list', done => {
       service.getMoviesInList('1').subscribe((data: Movie[]) => {
         expect(data).toEqual(testMovies);
         done();
@@ -139,7 +137,7 @@ describe('MoviesService', () => {
   });
 
   describe('addMovieToList', () => {
-    it('should add the movie to the list', async () => {
+    test('should add the movie to the list', async () => {
       const listId = '123';
       const movieToAdd = testMovieSearchResults[0];
 
@@ -153,7 +151,7 @@ describe('MoviesService', () => {
   });
 
   describe('deleteMovieFromList', () => {
-    it('should delete the movie', async () => {
+    test('should delete the movie', async () => {
       const movieToDelete = testMovies[0];
 
       await service.deleteMovie(movieToDelete);
@@ -163,7 +161,7 @@ describe('MoviesService', () => {
   });
 
   describe('deleteMoviesInList', () => {
-    it('should delete the movies in the list', async () => {
+    test('should delete the movies in the list', async () => {
       const listId = 'list-id-here';
 
       await service.deleteMoviesInList(listId);
@@ -172,14 +170,14 @@ describe('MoviesService', () => {
   });
 
   describe('enableEditMode', () => {
-    it('should set editMode to true', () => {
+    test('should set editMode to true', () => {
       service.enableEditMode();
       expect(moviesStoreMock.update).toHaveBeenCalledWith({ editMode: true });
     });
   });
 
   describe('disableEditMode', () => {
-    it('should set editMode to false', () => {
+    test('should set editMode to false', () => {
       service.disableEditMode();
       expect(moviesStoreMock.update).toHaveBeenCalledWith({
         editMode: false

@@ -23,26 +23,24 @@ describe('MoviesListComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  test('should create', () => {
     expect(component).toBeTruthy();
   });
 
   describe('Render', () => {
-    it('should show the list name', () => {
+    test('should show the list name', () => {
       const titleElement = fixture.debugElement.query(By.css('.title'));
 
       expect(titleElement.nativeElement.innerHTML).toBe(listToUse.name);
     });
 
-    it('should show the list size', () => {
+    test('should show the list size', () => {
       const sizeElement = fixture.debugElement.query(By.css('.list-size'));
 
-      expect(sizeElement.nativeElement.innerHTML).toContain(
-        listToUse.moviesCount
-      );
+      expect(sizeElement.nativeElement.innerHTML).toContain(listToUse.moviesCount);
     });
 
-    it('should show the last movies in list', () => {
+    test('should show the last movies in list', () => {
       const imgTags = fixture.debugElement
         .queryAll(By.css('img'))
         .map((element: DebugElement) => element.nativeElement.outerHTML);
@@ -54,7 +52,7 @@ describe('MoviesListComponent', () => {
     });
   });
 
-  it('should emit when the list is clicked', done => {
+  test('should emit when the list is clicked', done => {
     const title = fixture.debugElement.query(By.css('.heading'));
     component.listClick.subscribe(listId => {
       expect(listId).toEqual(listToUse.id);

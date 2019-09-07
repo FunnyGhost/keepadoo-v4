@@ -7,7 +7,7 @@ describe('MovieSearchStore', () => {
     store = new MovieSearchStore();
   });
 
-  it('should create an instance', () => {
+  test('should create an instance', () => {
     expect(store).toBeTruthy();
   });
 });

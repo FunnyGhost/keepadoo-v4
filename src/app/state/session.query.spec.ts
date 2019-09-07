@@ -11,12 +11,12 @@ describe('SessionQuery', () => {
     query = new SessionQuery(store);
   });
 
-  it('should create an instance', () => {
+  test('should create an instance', () => {
     expect(query).toBeTruthy();
   });
 
   describe('isLoggedIn$', () => {
-    it('should return true if there is a user', done => {
+    test('should return true if there is a user', done => {
       store.update({ user: testUser });
 
       query.isLoggedIn$.subscribe((data: boolean) => {
@@ -25,7 +25,7 @@ describe('SessionQuery', () => {
       });
     });
 
-    it('should return false if there is no user', done => {
+    test('should return false if there is no user', done => {
       store.update({ user: null });
 
       query.isLoggedIn$.subscribe((data: boolean) => {
@@ -36,7 +36,7 @@ describe('SessionQuery', () => {
   });
 
   describe('loggedInUser$', () => {
-    it('should return the logged in user display name', done => {
+    test('should return the logged in user display name', done => {
       store.update({ user: testUser });
 
       query.loggedInUser$.subscribe((data: string) => {
@@ -47,7 +47,7 @@ describe('SessionQuery', () => {
   });
 
   describe('userId$', () => {
-    it('should return the logged in userId', done => {
+    test('should return the logged in userId', done => {
       store.update({ user: testUser });
 
       query.userId$.subscribe((data: string) => {
@@ -58,14 +58,14 @@ describe('SessionQuery', () => {
   });
 
   describe('isLoggedIn', () => {
-    it('should return true if the user is logged in', () => {
+    test('should return true if the user is logged in', () => {
       store.update({ user: testUser });
 
       const result = query.isLoggedIn();
       expect(result).toBe(true);
     });
 
-    it('should return false if the user is not logged in', () => {
+    test('should return false if the user is not logged in', () => {
       store.update({ user: null });
 
       const result = query.isLoggedIn();
@@ -74,7 +74,7 @@ describe('SessionQuery', () => {
   });
 
   describe('redirectUrl', () => {
-    it('should return the redirectUrl', () => {
+    test('should return the redirectUrl', () => {
       const inputRedirectUrl = 'home';
       store.update({ redirectUrl: inputRedirectUrl });
 
@@ -82,7 +82,7 @@ describe('SessionQuery', () => {
       expect(result).toBe(inputRedirectUrl);
     });
 
-    it('should return empty string if the redirectUrl was not set', () => {
+    test('should return empty string if the redirectUrl was not set', () => {
       store.update(createInitialState());
 
       const result = query.redirectUrl();
@@ -91,14 +91,14 @@ describe('SessionQuery', () => {
   });
 
   describe('userId', () => {
-    it('should return the current user id', () => {
+    test('should return the current user id', () => {
       store.update({ user: testUser });
 
       const result = query.userId();
       expect(result).toBe(testUser.userId);
     });
 
-    it('should throw if the user is not logged in', () => {
+    test('should throw if the user is not logged in', () => {
       store.update(createInitialState());
 
       expect(() => query.userId()).toThrow();

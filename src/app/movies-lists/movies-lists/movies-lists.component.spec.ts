@@ -4,10 +4,7 @@ import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { MockComponent } from 'ng-mocks';
 import { of } from 'rxjs';
-import {
-  moviesListsQueryMock,
-  routerMock
-} from '../../../test-utilities/test-mocks';
+import { moviesListsQueryMock, routerMock } from '../../../test-utilities/test-mocks';
 import { testMoviestLists } from '../../../test-utilities/test-objects';
 import { MoviesListComponent } from '../movies-list/movies-list.component';
 import { MoviesListsQuery } from '../state/movies-lists.query';
@@ -50,25 +47,23 @@ describe('MoviesListsComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  test('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should show all lists', () => {
+  test('should show all lists', () => {
     moviesListsQueryMock.selectAll.mockReturnValue(of(testMoviestLists));
 
     component.ngOnInit();
     fixture.detectChanges();
 
-    const moviesListsElements = fixture.debugElement.queryAll(
-      By.directive(MoviesListComponent)
-    );
+    const moviesListsElements = fixture.debugElement.queryAll(By.directive(MoviesListComponent));
     expect(moviesListsElements.length).toBe(testMoviestLists.length);
     const helperText = fixture.debugElement.query(By.css('.helper-text'));
     expect(helperText).toBeFalsy();
   });
 
-  it('should show a helper text if the user has no lists', () => {
+  test('should show a helper text if the user has no lists', () => {
     moviesListsQueryMock.selectAll.mockReturnValue(of([]));
 
     component.ngOnInit();
@@ -79,7 +74,7 @@ describe('MoviesListsComponent', () => {
     expect(helperText).toBeTruthy();
   });
 
-  it('should navigate to the list details', () => {
+  test('should navigate to the list details', () => {
     moviesListsQueryMock.selectAll.mockReturnValue(of(testMoviestLists));
 
     component.ngOnInit();
@@ -91,8 +86,6 @@ describe('MoviesListsComponent', () => {
       .map(el => el.componentInstance);
     (moviesListsElements[0] as MoviesListComponent).listClick.emit(listId);
 
-    expect(routerMock.navigate).toHaveBeenCalledWith([
-      `/home/movies-lists/${listId}`
-    ]);
+    expect(routerMock.navigate).toHaveBeenCalledWith([`/home/movies-lists/${listId}`]);
   });
 });

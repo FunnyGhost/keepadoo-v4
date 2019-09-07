@@ -9,11 +9,11 @@ describe('SessionStore', () => {
     store = new SessionStore();
   });
 
-  it('should create an instance', () => {
+  test('should create an instance', () => {
     expect(store).toBeTruthy();
   });
 
-  it('should update the store on login', () => {
+  test('should update the store on login', () => {
     jest.spyOn(store, 'update');
 
     const inputUser = testUser;
@@ -23,7 +23,7 @@ describe('SessionStore', () => {
   });
 
   describe('logout', () => {
-    it('should reset the session state', () => {
+    test('should reset the session state', () => {
       jest.spyOn(store, 'update');
 
       store.logout();

@@ -29,11 +29,11 @@ describe('HomeComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  test('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should navigate to the add route when the + button is clicked', () => {
+  test('should navigate to the add route when the + button is clicked', () => {
     const router: Router = TestBed.get(Router);
     jest.spyOn(router, 'navigateByUrl').mockImplementation();
 
@@ -43,38 +43,30 @@ describe('HomeComponent', () => {
     expect(router.navigateByUrl).toHaveBeenCalledWith(`${router.url}/add`);
   });
 
-  it('should navigate to the add route when the + button is clicked', () => {
+  test('should navigate to the add route when the + button is clicked', () => {
     const authService: AuthService = TestBed.get(AuthService);
     jest.spyOn(authService, 'signOut');
-    const signOutButton = fixture.debugElement.query(
-      By.css('.sign-out-button')
-    );
+    const signOutButton = fixture.debugElement.query(By.css('.sign-out-button'));
     signOutButton.triggerEventHandler('click', null);
 
     expect(authService.signOut).toHaveBeenCalled();
   });
 
   describe('Render', () => {
-    it('should have a link for the movies feature', () => {
-      const movieFeatureLink = fixture.debugElement.queryAll(
-        By.css('.movies-link')
-      );
+    test('should have a link for the movies feature', () => {
+      const movieFeatureLink = fixture.debugElement.queryAll(By.css('.movies-link'));
 
       expect(movieFeatureLink.length).toBe(1);
     });
 
-    it('should have a link for the tv-shows feature', () => {
-      const movieFeatureLink = fixture.debugElement.queryAll(
-        By.css('.tv-shows-link')
-      );
+    test('should have a link for the tv-shows feature', () => {
+      const movieFeatureLink = fixture.debugElement.queryAll(By.css('.tv-shows-link'));
 
       expect(movieFeatureLink.length).toBe(1);
     });
 
-    it('should have a link for the places feature', () => {
-      const movieFeatureLink = fixture.debugElement.queryAll(
-        By.css('.places-link')
-      );
+    test('should have a link for the places feature', () => {
+      const movieFeatureLink = fixture.debugElement.queryAll(By.css('.places-link'));
 
       expect(movieFeatureLink.length).toBe(1);
     });

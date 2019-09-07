@@ -24,20 +24,16 @@ describe('MovieComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  test('should create', () => {
     expect(component).toBeTruthy();
   });
 
   describe('Render', () => {
-    it('should show the movie poster', () => {
-      const moviePosters = fixture.debugElement.queryAll(
-        By.css('img.movie-poster')
-      );
+    test('should show the movie poster', () => {
+      const moviePosters = fixture.debugElement.queryAll(By.css('img.movie-poster'));
 
       expect(moviePosters.length).toBe(1);
-      expect(moviePosters[0].nativeElement.src).toContain(
-        movieToUse.poster_path
-      );
+      expect(moviePosters[0].nativeElement.src).toContain(movieToUse.poster_path);
     });
   });
 
@@ -47,18 +43,14 @@ describe('MovieComponent', () => {
       fixture.detectChanges();
     });
 
-    it('should have a delete button', () => {
-      const deleteButtons = fixture.debugElement.queryAll(
-        By.css('button.delete-button')
-      );
+    test('should have a delete button', () => {
+      const deleteButtons = fixture.debugElement.queryAll(By.css('button.delete-button'));
 
       expect(deleteButtons.length).toBe(1);
     });
 
-    it('should emit the delete event when the delete button is clicked', () => {
-      const deleteButton = fixture.debugElement.query(
-        By.css('button.delete-button')
-      );
+    test('should emit the delete event when the delete button is clicked', () => {
+      const deleteButton = fixture.debugElement.query(By.css('button.delete-button'));
       jest.spyOn(component.delete, 'emit');
 
       deleteButton.triggerEventHandler('click', null);
@@ -73,10 +65,8 @@ describe('MovieComponent', () => {
       fixture.detectChanges();
     });
 
-    it('should not have a delete button', () => {
-      const deleteButtons = fixture.debugElement.queryAll(
-        By.css('button.delete-button')
-      );
+    test('should not have a delete button', () => {
+      const deleteButtons = fixture.debugElement.queryAll(By.css('button.delete-button'));
 
       expect(deleteButtons.length).toBe(0);
     });

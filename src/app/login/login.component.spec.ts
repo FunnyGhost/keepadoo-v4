@@ -54,17 +54,15 @@ describe('LoginComponent', () => {
     authService = TestBed.get(AuthService);
   });
 
-  it('should create', () => {
+  test('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should login the user', () => {
+  test('should login the user', () => {
     const emailToUse = 'batman@gotham.dc';
     const passwordToUse = 'HahahHahAHha';
     const emailInput = fixture.debugElement.query(By.css('input[type=email]'));
-    const passwordInput = fixture.debugElement.query(
-      By.css('input[type=password]')
-    );
+    const passwordInput = fixture.debugElement.query(By.css('input[type=password]'));
     const loginButton = fixture.debugElement.query(By.css('button'));
 
     emailInput.nativeElement.value = emailToUse;
@@ -74,10 +72,7 @@ describe('LoginComponent', () => {
 
     loginButton.triggerEventHandler('click', null);
 
-    expect(authService.signIn).toHaveBeenLastCalledWith(
-      emailToUse,
-      passwordToUse
-    );
+    expect(authService.signIn).toHaveBeenCalledWith(emailToUse, passwordToUse);
   });
 
   describe('email', () => {
@@ -89,7 +84,7 @@ describe('LoginComponent', () => {
       email = component.loginForm.controls['email'];
     });
 
-    it('should be invalid if empty', () => {
+    test('should be invalid if empty', () => {
       expect(email.valid).toBeFalsy();
 
       errors = email.errors || {};
@@ -97,7 +92,7 @@ describe('LoginComponent', () => {
       expect(errors['required']).toBeTruthy();
     });
 
-    it('should be invalid if value is not an email', () => {
+    test('should be invalid if value is not an email', () => {
       email.setValue('test');
       errors = email.errors || {};
 
@@ -105,7 +100,7 @@ describe('LoginComponent', () => {
       expect(errors['email']).toBeTruthy();
     });
 
-    it('should be valid if value is an email', () => {
+    test('should be valid if value is an email', () => {
       email.setValue('test@example.com');
       errors = email.errors || {};
 
@@ -123,14 +118,14 @@ describe('LoginComponent', () => {
       password = component.loginForm.controls['password'];
     });
 
-    it('should be invalid if empty', () => {
+    test('should be invalid if empty', () => {
       expect(password.valid).toBeFalsy();
 
       errors = password.errors || {};
       expect(errors['required']).toBeTruthy();
     });
 
-    it('should be invalid if value is less than 8 characters long', () => {
+    test('should be invalid if value is less than 8 characters long', () => {
       password.setValue('test');
       errors = password.errors || {};
 
@@ -138,7 +133,7 @@ describe('LoginComponent', () => {
       expect(errors['minlength']).toBeTruthy();
     });
 
-    it('should be valid if value is an email', () => {
+    test('should be valid if value is an email', () => {
       password.setValue('somelongpassword');
       errors = password.errors || {};
 
@@ -148,7 +143,7 @@ describe('LoginComponent', () => {
   });
 
   describe('LoginButton', () => {
-    it('should be enabled if the form is valid', () => {
+    test('should be enabled if the form is valid', () => {
       const email = component.loginForm.controls['email'];
       email.setValue('batman@gotham.dc');
       const password = component.loginForm.controls['password'];
@@ -160,7 +155,7 @@ describe('LoginComponent', () => {
       expect(loginButton.nativeElement.disabled).toBeFalsy();
     });
 
-    it('should be disabled if the form is invalid', () => {
+    test('should be disabled if the form is invalid', () => {
       const email = component.loginForm.controls['email'];
       email.setValue('');
 
@@ -172,7 +167,7 @@ describe('LoginComponent', () => {
   });
 
   describe('Error', () => {
-    it('should not be visible if there is no error', () => {
+    test('should not be visible if there is no error', () => {
       queryMock.error.next(null);
 
       const errorElements = fixture.debugElement.queryAll(By.css('.error'));
@@ -180,7 +175,7 @@ describe('LoginComponent', () => {
       expect(errorElements.length).toBe(0);
     });
 
-    it('should be visible if there is an error', () => {
+    test('should be visible if there is an error', () => {
       const errorToUse = 'Invalid username/password';
       queryMock.error.next(errorToUse);
       fixture.detectChanges();
@@ -194,52 +189,42 @@ describe('LoginComponent', () => {
 
   describe('Loading', () => {
     describe('isNotLoading', () => {
-      beforeEach(function() {
+      beforeEach(() => {
         queryMock.loading.next(false);
         fixture.detectChanges();
       });
 
-      it('should not show the loading image', () => {
-        const loadingImage = fixture.debugElement.queryAll(
-          By.css('.loading-image')
-        );
+      test('should not show the loading image', () => {
+        const loadingImage = fixture.debugElement.queryAll(By.css('.loading-image'));
         expect(loadingImage.length).toBe(0);
       });
 
-      it('should show the login button text', () => {
-        const loginButtonText = fixture.debugElement.queryAll(
-          By.css('.login-button-text')
-        );
+      test('should show the login button text', () => {
+        const loginButtonText = fixture.debugElement.queryAll(By.css('.login-button-text'));
         expect(loginButtonText.length).toBe(1);
       });
     });
 
     describe('isLoading', () => {
-      beforeEach(function() {
+      beforeEach(() => {
         queryMock.loading.next(true);
         fixture.detectChanges();
       });
 
-      it('should show the loading image', () => {
-        const loadingImage = fixture.debugElement.queryAll(
-          By.css('.loading-image')
-        );
+      test('should show the loading image', () => {
+        const loadingImage = fixture.debugElement.queryAll(By.css('.loading-image'));
         expect(loadingImage.length).toBe(1);
       });
 
-      it('should not show the login button text', () => {
-        const loginButtonText = fixture.debugElement.queryAll(
-          By.css('.loading-button-text')
-        );
+      test('should not show the login button text', () => {
+        const loginButtonText = fixture.debugElement.queryAll(By.css('.loading-button-text'));
         expect(loginButtonText.length).toBe(0);
       });
     });
   });
 
-  it('should have a button to go to the register page', () => {
-    const registerButton = fixture.debugElement.query(
-      By.css('.register-button')
-    ).nativeElement;
+  test('should have a button to go to the register page', () => {
+    const registerButton = fixture.debugElement.query(By.css('.register-button')).nativeElement;
 
     expect(registerButton.href).toContain('register');
     expect(registerButton.text).toContain('register');
