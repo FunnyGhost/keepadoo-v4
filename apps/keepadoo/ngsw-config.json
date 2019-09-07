@@ -3,7 +3,7 @@
   "index": "/index.html",
   "assetGroups": [
     {
-      "name": "keepadoo",
+      "name": "app",
       "installMode": "prefetch",
       "resources": {
         "files": ["/favicon.ico", "/index.html", "/*.css", "/*.js"]
