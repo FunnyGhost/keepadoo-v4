@@ -15,7 +15,7 @@ const routes: Route[] = [
   {
     path: '',
     pathMatch: 'full',
-    component: LoginComponent
+    redirectTo: 'home'
   },
   {
     path: 'login',
@@ -32,8 +32,10 @@ const routes: Route[] = [
     children: [
       {
         path: 'movies-lists',
-        loadChildren:
-          'apps/keepadoo/src/app/movies-lists/movies-lists.module#MoviesListsModule'
+        loadChildren: () =>
+          import('./movies-lists/movies-lists.module').then(
+            m => m.MoviesListsModule
+          )
       }
     ]
   }
