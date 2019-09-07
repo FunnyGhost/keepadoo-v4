@@ -1,15 +1,15 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
-  "newProjectRoot": "",
+  "newProjectRoot": "projects",
   "projects": {
     "keepadoo": {
-      "root": "apps/keepadoo/",
-      "sourceRoot": "apps/keepadoo/src",
+      "root": "",
+      "sourceRoot": "src",
       "projectType": "application",
       "prefix": "keepadoo",
       "schematics": {
-        "@nrwl/schematics:component": {
+        "@schematics/angular:component": {
           "style": "scss"
         }
       },
@@ -17,28 +17,22 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/apps/keepadoo",
-            "index": "apps/keepadoo/src/index.html",
-            "main": "apps/keepadoo/src/main.ts",
-            "polyfills": "apps/keepadoo/src/polyfills.ts",
-            "tsConfig": "apps/keepadoo/tsconfig.app.json",
-            "assets": [
-              "apps/keepadoo/src/favicon.ico",
-              "apps/keepadoo/src/assets",
-              "apps/keepadoo/src/manifest.json"
-            ],
-            "styles": [
-              "apps/keepadoo/src/styles.scss"
-            ],
-            "scripts": [],
-            "es5BrowserSupport": true
+            "outputPath": "dist/keepadoo",
+            "index": "src/index.html",
+            "main": "src/main.ts",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "src/tsconfig.app.json",
+            "aot": true,
+            "assets": ["src/favicon.ico", "src/assets", "src/manifest.webmanifest"],
+            "styles": ["src/styles.scss"],
+            "scripts": []
           },
           "configurations": {
             "production": {
               "fileReplacements": [
                 {
-                  "replace": "apps/keepadoo/src/environments/environment.ts",
-                  "with": "apps/keepadoo/src/environments/environment.prod.ts"
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
                 }
               ],
               "optimization": true,
@@ -55,9 +49,15 @@
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
                 }
               ],
-              "serviceWorker": true
+              "serviceWorker": true,
+              "ngswConfigPath": "ngsw-config.json"
             }
           }
         },
@@ -81,21 +81,16 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "apps/keepadoo/tsconfig.app.json",
-              "apps/keepadoo/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "tsConfig": ["./src/tsconfig.app.json", "./src/tsconfig.spec.json"],
+            "exclude": ["**/node_modules/**"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "apps/keepadoo/jest.config.js",
-            "tsConfig": "apps/keepadoo/tsconfig.spec.json",
-            "setupFile": "apps/keepadoo/src/test-setup.ts"
+            "jestConfig": "jest.config.js",
+            "tsConfig": "tsconfig.spec.json",
+            "setupFile": "src/test-setup.ts"
           }
         },
         "deploy": {
@@ -103,54 +98,6 @@
           "options": {}
         }
       }
-    },
-    "keepadoo-e2e": {
-      "root": "apps/keepadoo-e2e",
-      "projectType": "application",
-      "prefix": "",
-      "architect": {
-        "e2e": {
-          "builder": "@nrwl/cypress:cypress",
-          "options": {
-            "cypressConfig": "apps/keepadoo-e2e/cypress.json",
-            "tsConfig": "apps/keepadoo-e2e/tsconfig.e2e.json",
-            "devServerTarget": "keepadoo:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "keepadoo:serve:production"
-            }
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": "apps/keepadoo-e2e/tsconfig.e2e.json",
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        }
-      }
-    }
-  },
-  "cli": {
-    "warnings": {
-      "typescriptMismatch": false,
-      "versionMismatch": false
-    },
-    "defaultCollection": "@nrwl/angular"
-  },
-  "schematics": {
-    "@nrwl/schematics:application": {
-      "style": "scss"
-    },
-    "@nrwl/schematics:library": {
-      "style": "scss",
-      "framework": "angular"
-    },
-    "@nrwl/schematics:component": {
-      "styleext": "scss"
     }
   },
   "defaultProject": "keepadoo"

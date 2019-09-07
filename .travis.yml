@@ -18,5 +18,3 @@ deploy:
   token:
     secure: $FIREBASE_TOKEN
   project: 'keepadoo'
-after_deploy:
-  - npm run lh --perf=93 --pwa=95 --bp=90 -- https://keepadoo.com
