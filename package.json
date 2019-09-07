@@ -6,6 +6,7 @@
     "lh": "lighthousebot",
     "ng": "ng",
     "start": "ng serve",
+    "start:decoupled": "http-server -p 8080 -c-1 dist/apps/keepadoo",
     "build": "ng build",
     "build:prod": "ng build --prod",
     "test": "ng test",
