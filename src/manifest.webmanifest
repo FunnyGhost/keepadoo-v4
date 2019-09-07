@@ -1,8 +1,8 @@
 {
   "name": "keepadoo",
   "short_name": "keepadoo",
-  "theme_color": "#1976d2",
-  "background_color": "#fafafa",
+  "theme_color": "#461a81",
+  "background_color": "#461a81",
   "display": "standalone",
   "scope": "/",
   "start_url": "/",
