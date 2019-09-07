@@ -1,8 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  AngularFirestore,
-  AngularFirestoreCollection
-} from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { from } from 'rxjs';
 import { SessionQuery } from '../../state/session.query';
 import { MovieSearchResult } from '../movie-search/state/models/movie-search-results';
@@ -48,8 +45,8 @@ export class MoviesListsService {
       const id = this.firestoreService.createId();
       const list = {
         ...moviesList,
-        id: id,
-        userId: userId,
+        id,
+        userId,
         moviesCount: 0,
         recentMovies: []
       } as MoviesList;
@@ -82,15 +79,10 @@ export class MoviesListsService {
 
   addMovieToCurrentList(movie: MovieSearchResult): void {
     const activeList = this.moviesListsQuery.getActive() as MoviesList;
-    from(this.moviesService.addMovieToList(activeList.id, movie)).subscribe(
-      () => this.fetch()
-    );
+    from(this.moviesService.addMovieToList(activeList.id, movie)).subscribe(() => this.fetch());
   }
 
-  private setupMoviesListsCollection(
-    firestoreService: AngularFirestore,
-    userId: string
-  ): void {
+  private setupMoviesListsCollection(firestoreService: AngularFirestore, userId: string): void {
     this.moviesListsCollection = firestoreService.collection(
       `movies-lists`,
       /* istanbul ignore next */

@@ -1,10 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { Router, RouterStateSnapshot } from '@angular/router';
-import {
-  routerMock,
-  sessionQueryMock,
-  sessionStoreMock
-} from '../../test-utilities/test-mocks';
+import { routerMock, sessionQueryMock, sessionStoreMock } from '../../test-utilities/test-mocks';
 import { AuthGuard } from './auth.guard';
 import { SessionQuery } from './session.query';
 import { SessionStore } from './session.store';
@@ -29,7 +25,7 @@ describe('AuthGuard', () => {
     store = TestBed.get(SessionStore);
   });
 
- test('should return true if the user is logged in', () => {
+  test('should return true if the user is logged in', () => {
     jest.spyOn(query, 'isLoggedIn').mockReturnValue(true);
 
     const result = guard.canActivate(null, {
@@ -39,18 +35,18 @@ describe('AuthGuard', () => {
   });
 
   describe('NotLoggedIn', () => {
-    beforeEach(function() {
+    beforeEach(() => {
       jest.spyOn(query, 'isLoggedIn').mockReturnValue(false);
     });
 
-   test('should return false if the user is not logged in', () => {
+    test('should return false if the user is not logged in', () => {
       const result = guard.canActivate(null, {
         url: 'some-url-here'
       } as RouterStateSnapshot);
       expect(result).toBe(false);
     });
 
-   test('should redirect to login if the user is not logged in', () => {
+    test('should redirect to login if the user is not logged in', () => {
       const router: Router = TestBed.get(Router);
 
       guard.canActivate(null, { url: 'some-url-here' } as RouterStateSnapshot);
@@ -58,7 +54,7 @@ describe('AuthGuard', () => {
       expect(router.navigateByUrl).toHaveBeenCalledWith('/login');
     });
 
-   test('should set the redirectUrl in the store', () => {
+    test('should set the redirectUrl in the store', () => {
       const urlToUse = 'some-url-here';
       guard.canActivate(null, { url: urlToUse } as RouterStateSnapshot);
 

@@ -189,7 +189,7 @@ describe('RegisterComponent', () => {
 
   describe('Loading', () => {
     describe('isNotLoading', () => {
-      beforeEach(function() {
+      beforeEach(() => {
         queryMock.loading.next(false);
         fixture.detectChanges();
       });
@@ -206,7 +206,7 @@ describe('RegisterComponent', () => {
     });
 
     describe('isLoading', () => {
-      beforeEach(function() {
+      beforeEach(() => {
         queryMock.loading.next(true);
         fixture.detectChanges();
       });

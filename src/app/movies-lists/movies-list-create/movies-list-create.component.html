@@ -22,14 +22,9 @@
       [disabled]="!moviesListForm.valid"
       [class.loading]="loading$ | async"
     >
-      <img
-        *ngIf="loading$ | async"
-        class="loading-image"
-        src="/assets/spinner.svg"
-        alt=""
-      />
+      <img *ngIf="loading$ | async" class="loading-image" src="/assets/spinner.svg" alt="" />
 
-      <span class="create-button-text" *ngIf="!(loading$ | async)">Create</span>
+      <span class="create-button-text" *ngIf="(loading$ | async) === false">Create</span>
     </button>
 
     <div class="error" *ngIf="error$ | async; let error">{{ error }}</div>

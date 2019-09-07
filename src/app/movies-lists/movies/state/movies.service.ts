@@ -17,18 +17,15 @@ export class MoviesService {
     moviesListsQuery: MoviesListsQuery,
     private moviesStore: MoviesStore
   ) {
-    combineLatest([
-      sessionQuery.userId$,
-      moviesListsQuery.selectActive()
-    ]).subscribe(([userId, moviesList]: [string, MoviesList]) => {
-      if (!userId || !moviesList) {
-        moviesStore.set([]);
-      } else {
-        this.getMoviesInList(moviesList.id).subscribe(movies =>
-          moviesStore.set(movies)
-        );
+    combineLatest([sessionQuery.userId$, moviesListsQuery.selectActive()]).subscribe(
+      ([userId, moviesList]: [string, MoviesList]) => {
+        if (!userId || !moviesList) {
+          moviesStore.set([]);
+        } else {
+          this.getMoviesInList(moviesList.id).subscribe(movies => moviesStore.set(movies));
+        }
       }
-    });
+    );
   }
 
   public getMoviesInList(listId: string): Observable<Movie[]> {
@@ -43,16 +40,12 @@ export class MoviesService {
   }
 
   public async addMovieToList(listId: string, movie: MovieSearchResult) {
-    const added_on = new Date().toISOString();
-    return this.firestoreService
-      .collection(`movies`)
-      .add({ ...movie, listId, added_on });
+    const addedOn = new Date().toISOString();
+    return this.firestoreService.collection(`movies`).add({ ...movie, listId, added_on: addedOn });
   }
 
   public async deleteMovie(movie: Movie) {
-    const movieToDelete = this.firestoreService
-      .collection(`movies`)
-      .doc(movie.key);
+    const movieToDelete = this.firestoreService.collection(`movies`).doc(movie.key);
     await movieToDelete.delete();
     this.moviesStore.remove(movie.id);
   }
