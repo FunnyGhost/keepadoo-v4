@@ -21,6 +21,7 @@
     "@angular/platform-browser": "~8.2.4",
     "@angular/platform-browser-dynamic": "~8.2.4",
     "@angular/router": "~8.2.4",
+    "@angular/service-worker": "~8.2.4",
     "@datorama/akita": "4.9.6",
     "firebase": "6.4.0",
     "core-js": "^3.2.1",
