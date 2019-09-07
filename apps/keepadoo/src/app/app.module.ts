@@ -3,8 +3,6 @@ import { FirestoreSettingsToken } from '@angular/fire/firestore';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Route, RouterModule } from '@angular/router';
-import { ServiceWorkerModule } from '@angular/service-worker';
-import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { HomeComponent } from './home/home.component';
@@ -17,7 +15,7 @@ const routes: Route[] = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'home'
+    component: LoginComponent
   },
   {
     path: 'login',
@@ -53,10 +51,7 @@ const routes: Route[] = [
     SharedModule,
     BrowserModule,
     BrowserAnimationsModule,
-    RouterModule.forRoot(routes, { initialNavigation: 'enabled' }),
-    ServiceWorkerModule.register('ngsw-worker.js', {
-      enabled: environment.production
-    })
+    RouterModule.forRoot(routes, { initialNavigation: 'enabled' })
   ],
   providers: [{ provide: FirestoreSettingsToken, useValue: {} }],
   bootstrap: [AppComponent]

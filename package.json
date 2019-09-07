@@ -40,9 +40,7 @@
     "@angular/forms": "^8.0.0",
     "@angular/platform-browser": "^8.0.0",
     "@angular/platform-browser-dynamic": "^8.0.0",
-    "@angular/pwa": "0.802",
     "@angular/router": "^8.0.0",
-    "@angular/service-worker": "^8.0.0",
     "@datorama/akita": "4.9.6",
     "@nrwl/angular": "8.4.10",
     "firebase": "6.4.0",
@@ -53,7 +51,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "0.802.2",
-    "@angular/cli": "8.2.2",
+    "@angular/cli": "8.3.3",
     "@angular/compiler-cli": "^8.0.0",
     "@angular/language-service": "^8.2.2",
     "@datorama/akita-ngdevtools": "3.0.2",
