@@ -58,3 +58,9 @@ footer {
 .add-button {
   cursor: pointer;
 }
+
+.spacer {
+  @media (min-width: 768px) {
+    height: 10px;
+  }
+}
