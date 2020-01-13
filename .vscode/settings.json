@@ -2,6 +2,7 @@
     "workbench.colorCustomizations": {
         "terminalCursor.foreground": "#00ffaa",
         "activityBar.background": "#4d21a1",
+        "activityBar.activeBorder": "#000000",
         "activityBar.foreground": "#e7e7e7",
         "activityBar.inactiveForeground": "#e7e7e799",
         "activityBarBadge.background": "#000000",
