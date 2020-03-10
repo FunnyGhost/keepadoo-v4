@@ -17,6 +17,7 @@ export class AuthService {
     private afAuth: AngularFireAuth,
     private router: Router
   ) {
+    this.sessionStore.setLoading(true);
     this.afAuth.authState
       .pipe(
         map((firebaseUser: FirebaseUser) => {
@@ -41,6 +42,7 @@ export class AuthService {
         } else {
           this.sessionStore.logout();
         }
+        this.sessionStore.setLoading(false);
       });
   }
 
@@ -49,10 +51,7 @@ export class AuthService {
     let response;
 
     try {
-      response = await this.afAuth.auth.signInWithEmailAndPassword(
-        email,
-        password
-      );
+      response = await this.afAuth.auth.signInWithEmailAndPassword(email, password);
     } catch (error) {
       this.sessionStore.setError(error.message);
     }
@@ -66,10 +65,7 @@ export class AuthService {
     let response;
 
     try {
-      response = await this.afAuth.auth.createUserWithEmailAndPassword(
-        email,
-        password
-      );
+      response = await this.afAuth.auth.createUserWithEmailAndPassword(email, password);
     } catch (error) {
       this.sessionStore.setError(error.message);
     }

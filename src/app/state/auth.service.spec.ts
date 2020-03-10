@@ -56,10 +56,22 @@ describe('AuthService', () => {
   });
 
   describe('Listening for the current user', () => {
+    test('should set loading when starting up', () => {
+      angularFireAuthMock.authState.next(testFirebaseUser);
+
+      expect(store.setLoading).toHaveBeenCalledWith(true);
+    });
+
     test('should login when a new user is emited by firestore', () => {
       angularFireAuthMock.authState.next(testFirebaseUser);
 
       expect(store.login).toHaveBeenCalledWith(testUser);
+    });
+
+    test('should unset loading after init with a logged in user', () => {
+      angularFireAuthMock.authState.next(testFirebaseUser);
+
+      expect(store.setLoading).toHaveBeenCalledWith(false);
     });
 
     test('should redirect to the storedRedirectURL when the user logs in', () => {
@@ -83,6 +95,12 @@ describe('AuthService', () => {
       angularFireAuthMock.authState.next(null);
 
       expect(store.logout).toHaveBeenCalled();
+    });
+
+    test('should unset loading after init with user that is not logged in', () => {
+      angularFireAuthMock.authState.next(testFirebaseUser);
+
+      expect(store.setLoading).toHaveBeenCalledWith(false);
     });
   });
 
