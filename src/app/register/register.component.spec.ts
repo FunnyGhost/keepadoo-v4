@@ -194,14 +194,9 @@ describe('RegisterComponent', () => {
         fixture.detectChanges();
       });
 
-      test('should not show the loading image', () => {
-        const loadingImage = fixture.debugElement.queryAll(By.css('.loading-image'));
+      test('should not show the loading overlay', () => {
+        const loadingImage = fixture.debugElement.queryAll(By.css('.overlay'));
         expect(loadingImage.length).toBe(0);
-      });
-
-      test('should show the register button text', () => {
-        const registerButtonText = fixture.debugElement.queryAll(By.css('.register-button-text'));
-        expect(registerButtonText.length).toBe(1);
       });
     });
 
@@ -211,14 +206,9 @@ describe('RegisterComponent', () => {
         fixture.detectChanges();
       });
 
-      test('should show the loading image', () => {
-        const loadingImage = fixture.debugElement.queryAll(By.css('.loading-image'));
+      test('should show the loading overlay', () => {
+        const loadingImage = fixture.debugElement.queryAll(By.css('.overlay'));
         expect(loadingImage.length).toBe(1);
-      });
-
-      test('should not show the register button text', () => {
-        const registerButtonText = fixture.debugElement.queryAll(By.css('.loading-button-text'));
-        expect(registerButtonText.length).toBe(0);
       });
     });
   });

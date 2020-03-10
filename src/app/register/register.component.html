@@ -1,5 +1,8 @@
 <div class="container">
   <form class="register-box" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <div class="overlay" *ngIf="(loading$ | async) === true">
+      <img class="loading-image" src="/assets/spinner.svg" alt="" />
+    </div>
     <div class="logo-container"><img src="assets/logo.png" alt="" /></div>
     <h1>Register</h1>
     <div class="input-element">
@@ -22,15 +25,8 @@
     </div>
 
     <div class="button-container">
-      <button
-        type="button"
-        (click)="onSubmit()"
-        [disabled]="!registerForm.valid"
-        [class.loading]="loading$ | async"
-      >
-        <img *ngIf="loading$ | async" class="loading-image" src="/assets/spinner.svg" alt="" />
-
-        <span class="register-button-text" *ngIf="(loading$ | async) === false">Register</span>
+      <button type="button" (click)="onSubmit()" [disabled]="!registerForm.valid">
+        <span class="register-button-text">Register</span>
       </button>
 
       <div class="error" *ngIf="error$ | async; let error">{{ error }}</div>

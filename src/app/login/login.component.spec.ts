@@ -194,14 +194,9 @@ describe('LoginComponent', () => {
         fixture.detectChanges();
       });
 
-      test('should not show the loading image', () => {
-        const loadingImage = fixture.debugElement.queryAll(By.css('.loading-image'));
-        expect(loadingImage.length).toBe(0);
-      });
-
-      test('should show the login button text', () => {
-        const loginButtonText = fixture.debugElement.queryAll(By.css('.login-button-text'));
-        expect(loginButtonText.length).toBe(1);
+      test('should not show the loading overlay', () => {
+        const loadingOverlay = fixture.debugElement.queryAll(By.css('.overlay'));
+        expect(loadingOverlay.length).toBe(0);
       });
     });
 
@@ -211,14 +206,9 @@ describe('LoginComponent', () => {
         fixture.detectChanges();
       });
 
-      test('should show the loading image', () => {
-        const loadingImage = fixture.debugElement.queryAll(By.css('.loading-image'));
-        expect(loadingImage.length).toBe(1);
-      });
-
-      test('should not show the login button text', () => {
-        const loginButtonText = fixture.debugElement.queryAll(By.css('.loading-button-text'));
-        expect(loginButtonText.length).toBe(0);
+      test('should show the loading overlay', () => {
+        const loadingOverlay = fixture.debugElement.queryAll(By.css('.overlay'));
+        expect(loadingOverlay.length).toBe(1);
       });
     });
   });
