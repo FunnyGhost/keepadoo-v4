@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { FirestoreSettingsToken } from '@angular/fire/firestore';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Route, RouterModule } from '@angular/router';
@@ -46,6 +47,8 @@ const routes: Route[] = [
   imports: [
     CoreModule,
     SharedModule,
+    FormsModule,
+    ReactiveFormsModule,
     BrowserModule,
     BrowserAnimationsModule,
     RouterModule.forRoot(routes, { initialNavigation: 'enabled' }),
