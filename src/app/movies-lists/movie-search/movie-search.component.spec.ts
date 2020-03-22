@@ -96,7 +96,7 @@ describe('MovieSearchComponent', () => {
 
     const movieElement = fixture.debugElement.queryAll(By.directive(MovieSearchResultComponent))[0]
       .componentInstance as MovieSearchResultComponent;
-    movieElement.selectedMovie.emit(testMovieSearchResults[0]);
+    movieElement.movieAddedToList.emit(testMovieSearchResults[0]);
     expect(movieListService.addMovieToCurrentList).toHaveBeenCalledWith(testMovieSearchResults[0]);
   });
 
@@ -110,7 +110,7 @@ describe('MovieSearchComponent', () => {
 
     const movieElement = fixture.debugElement.queryAll(By.directive(MovieSearchResultComponent))[0]
       .componentInstance as MovieSearchResultComponent;
-    movieElement.selectedMovie.emit(testMovieSearchResults[0]);
+    movieElement.movieAddedToList.emit(testMovieSearchResults[0]);
 
     expect(router.navigate).toHaveBeenCalled();
   });
