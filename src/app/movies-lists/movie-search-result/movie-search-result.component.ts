@@ -16,13 +16,13 @@ import { MovieSearchResult } from '../movie-search/state/models/movie-search-res
 })
 export class MovieSearchResultComponent implements OnInit {
   @Input() movie: MovieSearchResult;
-  @Output() selectedMovie = new EventEmitter<MovieSearchResult>();
+  @Output() movieAddedToList = new EventEmitter<MovieSearchResult>();
 
   constructor() {}
 
   ngOnInit() {}
 
-  selectMovie(): void {
-    this.selectedMovie.emit(this.movie);
+  addMovieToList(): void {
+    this.movieAddedToList.emit(this.movie);
   }
 }

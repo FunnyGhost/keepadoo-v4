@@ -19,6 +19,27 @@
     color: $dark;
   }
 
+  .buttons {
+    margin-bottom: 1rem;
+  }
+
+  .add-button {
+    padding: 0;
+    color: $white;
+    background-color: $color-primary-2;
+    border: none;
+    border-radius: 3px;
+    font-family: $main-font;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 0.5rem;
+    cursor: pointer;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
   .year {
     font-family: $secondary-font-light;
     font-weight: 300;
@@ -27,6 +48,14 @@
     margin-top: 9px;
     margin-bottom: 9px;
     color: $dark;
+  }
+
+  .movie-details {
+    max-width: 550px;
+
+    @media (max-width: 768px) {
+      max-width: 200px;
+    }
   }
 
   .movie-overview {

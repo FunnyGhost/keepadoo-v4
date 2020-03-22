@@ -1,12 +1,11 @@
-<article class="search-result-container" (click)="selectMovie()">
-  <img
-    src="https://image.tmdb.org/t/p/w154/{{ movie.poster_path }}"
-    alt=""
-    class="movie-poster"
-  />
+<article class="search-result-container">
+  <img src="https://image.tmdb.org/t/p/w154/{{ movie.poster_path }}" alt="" class="movie-poster" />
   <div class="movie-details">
     <h4>{{ movie.title }}</h4>
     <div class="year">{{ movie.release_date | date: 'yyyy' }}</div>
+    <section class="buttons">
+      <button class="add-button" (click)="addMovieToList()">Add to list</button>
+    </section>
     <section class="movie-overview">{{ movie.overview }}</section>
   </div>
 </article>
