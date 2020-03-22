@@ -60,12 +60,12 @@ describe('MovieSearchResultComponent', () => {
     });
   });
 
-  test('should emit when a movie is clicked', () => {
-    jest.spyOn(component.selectedMovie, 'emit');
-    const movieElement = fixture.debugElement.query(By.css('.search-result-container'));
+  test('should emit when the user wants to add the movie to the list', () => {
+    jest.spyOn(component.movieAddedToList, 'emit');
+    const addMovieButton = fixture.debugElement.query(By.css('.add-button'));
 
-    movieElement.triggerEventHandler('click', null);
+    addMovieButton.triggerEventHandler('click', null);
 
-    expect(component.selectedMovie.emit).toHaveBeenCalledWith(movieSearchResultToUse);
+    expect(component.movieAddedToList.emit).toHaveBeenCalledWith(movieSearchResultToUse);
   });
 });
