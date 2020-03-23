@@ -36,7 +36,9 @@ jobs:
         run: npm run test
       - name: Build
         run: npm run build:prod
-      - uses: w9jds/firebase-action@master
+      - name: Deploy
+        uses: w9jds/firebase-action@master
+        if: github.ref == 'master'
         with:
           args: deploy
         env:
