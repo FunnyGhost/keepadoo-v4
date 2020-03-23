@@ -2,13 +2,13 @@
 
 name: CI
 
-# Controls when the action will run. Triggers the workflow on push or pull request 
+# Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -19,25 +19,25 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-    - uses: actions/checkout@v2
-    - uses: actions/setup-node@master
-      with:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@master
+        with:
           node-version: '10.x'
 
-    # Runs a single command using the runners shell
-    - name: Install
-      run: npm install
-    - name: Firebse Functions install
-      run: npm install --prefix ./functions
-    - name: Lint
-      run: npm run lint
-    - name: Test
-      run: npm run test
-    - name: Build
-      run: npm run build:prod
-    - uses: w9jds/firebase-action@master 
-      with:
-        args: deploy
-      env:
-        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+      # Runs a single command using the runners shell
+      - name: Install
+        run: npm ci
+      - name: Firebse Functions install
+        run: npm ci --prefix ./functions
+      - name: Lint
+        run: npm run lint
+      - name: Test
+        run: npm run test
+      - name: Build
+        run: npm run build:prod
+      - uses: w9jds/firebase-action@master
+        with:
+          args: deploy
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
