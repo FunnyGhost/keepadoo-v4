@@ -7,6 +7,14 @@ button.movies-list {
   margin: 0;
   padding: 0;
   background: none;
+  cursor: pointer;
+  transition: all 0.2s ease-out;
+
+  &:hover,
+  &:active {
+    transform: translateY(-10px);
+    box-shadow: 0.5rem 0.3rem 2rem rgba(0, 0, 0, 0.3);
+  }
 }
 
 .heading {
@@ -27,7 +35,7 @@ button.movies-list {
 svg {
   margin-left: 0.6rem;
   margin-bottom: 3px;
-  width: 14px;
+  width: 10px;
 
   path {
     fill: $color-primary;
