@@ -1,5 +1,14 @@
 @import '../../../variables';
 
+button.movies-list {
+  display: block;
+  width: 100%;
+  border: none;
+  margin: 0;
+  padding: 0;
+  background: none;
+}
+
 .heading {
   display: flex;
   flex-direction: row;
@@ -43,6 +52,7 @@ h4 {
 }
 
 .movies {
+  display: flex;
   margin: 10px 0 10px 10px;
 
   img {
