@@ -8,6 +8,7 @@
     "build": "ng build",
     "build:prod": "ng build --prod",
     "test": "jest",
+    "test:dev": "jest --watch",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
