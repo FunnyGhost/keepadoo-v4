@@ -17,19 +17,29 @@
 .top-buttons {
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
 
   .cancel-button {
     margin: 14px;
     margin-bottom: 0;
     cursor: pointer;
     font-family: $main-font;
-    font-size: 0.625rem;
+    font-size: 0.75rem;
     text-transform: uppercase;
     color: $color-primary-1;
     border: none;
     background: $white;
     box-shadow: none;
+    display: flex;
+    align-items: center;
+
+    .icon {
+      width: 20px;
+    }
+
+    span {
+      margin-left: 6px;
+      margin-bottom: -2px;
+    }
   }
 }
 
