@@ -1,5 +1,22 @@
 @import '../../../variables';
 
+button.movies-list {
+  display: block;
+  width: 100%;
+  border: none;
+  margin: 0;
+  padding: 0;
+  background: none;
+  cursor: pointer;
+  transition: all 0.2s ease-out;
+
+  &:hover,
+  &:active {
+    transform: translateY(-10px);
+    box-shadow: 0.5rem 0.3rem 2rem rgba(0, 0, 0, 0.3);
+  }
+}
+
 .heading {
   display: flex;
   flex-direction: row;
@@ -16,10 +33,9 @@
 }
 
 svg {
-  margin-left: 1rem;
+  margin-left: 0.6rem;
   margin-bottom: 3px;
-  width: 18px;
-  height: 18px;
+  width: 10px;
 
   path {
     fill: $color-primary;
@@ -43,6 +59,7 @@ h4 {
 }
 
 .movies {
+  display: flex;
   margin: 10px 0 10px 10px;
 
   img {

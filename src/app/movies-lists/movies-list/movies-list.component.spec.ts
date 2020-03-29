@@ -53,7 +53,7 @@ describe('MoviesListComponent', () => {
   });
 
   test('should emit when the list is clicked', done => {
-    const title = fixture.debugElement.query(By.css('.heading'));
+    const title = fixture.debugElement.query(By.css('button.movies-list'));
     component.listClick.subscribe(listId => {
       expect(listId).toEqual(listToUse.id);
       done();

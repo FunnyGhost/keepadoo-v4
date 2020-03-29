@@ -256,6 +256,22 @@ describe('MoviesListDetailsComponent', () => {
     });
   });
 
+  describe('Back button', () => {
+    test('should have a back button', () => {
+      const backButton = fixture.debugElement.queryAll(By.css('.back-button'));
+
+      expect(backButton.length).toEqual(1);
+    });
+
+    test('should navigate back when the back button is clicked', () => {
+      const backButton = fixture.debugElement.query(By.css('.back-button'));
+
+      backButton.triggerEventHandler('click', null);
+
+      expect(routerMock.navigate).toHaveBeenCalled();
+    });
+  });
+
   afterEach(() => {
     moviesListsServiceMock.setActive.mockClear();
   });
