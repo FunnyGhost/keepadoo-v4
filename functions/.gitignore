@@ -1,5 +1,6 @@
 ## Compiled JavaScript files
 **/*.js
+!**/fix-movies.js
 **/*.js.map
 
 # Typescript v1 declaration files
