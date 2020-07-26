@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { NgxNotificationMsgService, NgxNotificationStatusMsg } from 'ngx-notification-msg';
 import { from } from 'rxjs';
 import { SessionQuery } from '../../state/session.query';
 import { MovieSearchResult } from '../movie-search/state/models/movie-search-results';
@@ -18,7 +19,8 @@ export class MoviesListsService {
     private moviesListsStore: MoviesListsStore,
     private firestoreService: AngularFirestore,
     private sessionQuery: SessionQuery,
-    private moviesService: MoviesService
+    private moviesService: MoviesService,
+    private ngxNotificationMsgService: NgxNotificationMsgService
   ) {
     this.sessionQuery.userId$.subscribe((userId: string) => {
       if (userId) {
@@ -52,8 +54,18 @@ export class MoviesListsService {
       } as MoviesList;
       await this.moviesListsCollection.doc(id).set(list);
       this.moviesListsStore.add(list);
+      this.ngxNotificationMsgService.open({
+        status: NgxNotificationStatusMsg.SUCCESS,
+        header: 'List created',
+        msg: `List: ${moviesList.name} successfully created.`
+      });
     } catch (err) {
       this.moviesListsStore.setError(err);
+      this.ngxNotificationMsgService.open({
+        status: NgxNotificationStatusMsg.FAILURE,
+        header: 'List creation failed.',
+        msg: `List: ${moviesList.name} could not be created. Please try again.`
+      });
     }
 
     this.moviesListsStore.setLoading(false);
@@ -62,11 +74,21 @@ export class MoviesListsService {
   async update(id, moviesList: Partial<MoviesList>): Promise<void> {
     await this.moviesListsCollection.doc(id).update(moviesList);
     this.moviesListsStore.update(id, moviesList);
+    this.ngxNotificationMsgService.open({
+      status: NgxNotificationStatusMsg.SUCCESS,
+      header: 'List updated',
+      msg: `List: ${moviesList.name} successfully updated.`
+    });
   }
 
   async remove(id: string): Promise<void> {
     await this.moviesService.deleteMoviesInList(id);
     await this.moviesListsCollection.doc(id).delete();
+    this.ngxNotificationMsgService.open({
+      status: NgxNotificationStatusMsg.SUCCESS,
+      header: 'List deleted',
+      msg: `List successfully deleted.`
+    });
   }
 
   setActive(id: string): void {
@@ -79,7 +101,14 @@ export class MoviesListsService {
 
   addMovieToCurrentList(movie: MovieSearchResult): void {
     const activeList = this.moviesListsQuery.getActive() as MoviesList;
-    from(this.moviesService.addMovieToList(activeList.id, movie)).subscribe(() => this.fetch());
+    from(this.moviesService.addMovieToList(activeList.id, movie)).subscribe(() => {
+      this.ngxNotificationMsgService.open({
+        status: NgxNotificationStatusMsg.SUCCESS,
+        header: 'Movie added',
+        msg: `Movie ${movie.title} added to list ${activeList.name}.`
+      });
+      this.fetch();
+    });
   }
 
   private setupMoviesListsCollection(firestoreService: AngularFirestore, userId: string): void {

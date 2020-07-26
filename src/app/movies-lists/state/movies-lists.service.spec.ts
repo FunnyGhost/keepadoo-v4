@@ -1,6 +1,7 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { NgxNotificationMsgService, NgxNotificationStatusMsg } from 'ngx-notification-msg';
 import { BehaviorSubject, of } from 'rxjs';
 import {
   moviesListsQueryMock,
@@ -48,11 +49,16 @@ const moviesServiceMock = {
   deleteMoviesInList: () => {}
 };
 
+const notificationServiceMock = {
+  open: () => {}
+};
+
 describe('MoviesListsService', () => {
   let moviesListsService: MoviesListsService;
   let moviesListsStore: MoviesListsStore;
   let firestoreService: AngularFirestore;
   let sessionQuery: SessionQuery;
+  let notificationService: NgxNotificationMsgService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -77,6 +83,10 @@ describe('MoviesListsService', () => {
         {
           provide: MoviesService,
           useValue: moviesServiceMock
+        },
+        {
+          provide: NgxNotificationMsgService,
+          useValue: notificationServiceMock
         }
       ],
       imports: [HttpClientTestingModule]
@@ -86,6 +96,7 @@ describe('MoviesListsService', () => {
     moviesListsStore = TestBed.get(MoviesListsStore);
     firestoreService = TestBed.get(AngularFirestore);
     sessionQuery = TestBed.get(SessionQuery);
+    notificationService = TestBed.get(NgxNotificationMsgService);
 
     firestoreMockSpy.mockClear();
   });
@@ -116,6 +127,7 @@ describe('MoviesListsService', () => {
       sessionQueryMock.userId.mockReturnValue(testUser.userId);
       const idToUse = '52';
       jest.spyOn(firestoreService, 'createId').mockReturnValue(idToUse);
+      jest.spyOn(notificationService, 'open');
       const moviesListToAdd: Partial<MoviesList> = {
         name: 'awesome movies'
       };
@@ -133,6 +145,11 @@ describe('MoviesListsService', () => {
       expect(moviesListsStoreMock.add).toHaveBeenCalledWith(expectedMoviesList);
       expect(moviesListsStoreMock.setLoading).toHaveBeenCalledWith(false);
       expect(moviesListsStoreMock.setError).not.toHaveBeenCalled();
+      expect(notificationService.open).toHaveBeenCalledWith({
+        status: NgxNotificationStatusMsg.SUCCESS,
+        header: expect.any(String),
+        msg: expect.any(String)
+      });
     });
 
     test('should handle errors if adding a movies list fails', async () => {
@@ -140,6 +157,7 @@ describe('MoviesListsService', () => {
       sessionQueryMock.userId.mockReturnValue(testUser.userId);
       const idToUse = '52';
       jest.spyOn(firestoreService, 'createId').mockReturnValue(idToUse);
+      jest.spyOn(notificationService, 'open');
       const errorToUse = new Error('HahhahahaHahAHhAh!');
       docObject.set.mockImplementationOnce(() => {
         throw errorToUse;
@@ -153,11 +171,17 @@ describe('MoviesListsService', () => {
       expect(moviesListsStoreMock.setLoading).toHaveBeenCalledWith(true);
       expect(moviesListsStoreMock.setLoading).toHaveBeenCalledWith(false);
       expect(moviesListsStoreMock.setError).toHaveBeenCalledWith(errorToUse);
+      expect(notificationService.open).toHaveBeenCalledWith({
+        status: NgxNotificationStatusMsg.FAILURE,
+        header: expect.any(String),
+        msg: expect.any(String)
+      });
     });
   });
 
   describe('update', () => {
     test('should update the movies list', async () => {
+      jest.spyOn(notificationService, 'open');
       sessionStoreQueryMock.userId$.next('batman');
       sessionQueryMock.userId.mockReturnValue(testUser.userId);
       const idToUse = '52';
@@ -173,16 +197,27 @@ describe('MoviesListsService', () => {
 
       expect(docObject.update).toHaveBeenCalledWith(moviesListToUpdate);
       expect(moviesListsStoreMock.update).toHaveBeenCalledWith(idToUse, moviesListToUpdate);
+      expect(notificationService.open).toHaveBeenCalledWith({
+        status: NgxNotificationStatusMsg.SUCCESS,
+        header: expect.any(String),
+        msg: expect.any(String)
+      });
     });
   });
 
   describe('remove', () => {
     test('should remove the movies list', async () => {
+      jest.spyOn(notificationService, 'open');
       const idToUse = '52';
 
       await moviesListsService.remove(idToUse);
 
       expect(docObject.delete).toHaveBeenCalled();
+      expect(notificationService.open).toHaveBeenCalledWith({
+        status: NgxNotificationStatusMsg.SUCCESS,
+        header: expect.any(String),
+        msg: expect.any(String)
+      });
     });
 
     test('should remove the movies in the list', async () => {
@@ -222,6 +257,7 @@ describe('MoviesListsService', () => {
 
   describe('addMovieToCurrentList', () => {
     test('should add the movie to the current list', () => {
+      jest.spyOn(notificationService, 'open');
       const moviesService: MoviesService = TestBed.get(MoviesService);
       const selectedList = '123';
       const movieToAdd = testMovieSearchResults[0];
@@ -234,6 +270,11 @@ describe('MoviesListsService', () => {
 
       expect(moviesService.addMovieToList).toHaveBeenCalledWith(selectedList, movieToAdd);
       expect(moviesListsService.fetch).toHaveBeenCalled();
+      expect(notificationService.open).toHaveBeenCalledWith({
+        status: NgxNotificationStatusMsg.SUCCESS,
+        header: expect.any(String),
+        msg: expect.any(String)
+      });
     });
   });
 });
