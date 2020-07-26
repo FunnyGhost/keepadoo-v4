@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { NgxNotificationMsgService, NgxNotificationStatusMsg } from 'ngx-notification-msg';
 import { combineLatest, from, Observable } from 'rxjs';
 import { switchMap, take } from 'rxjs/operators';
 import { SessionQuery } from '../../../state/session.query';
@@ -15,7 +16,8 @@ export class MoviesService {
     private firestoreService: AngularFirestore,
     sessionQuery: SessionQuery,
     moviesListsQuery: MoviesListsQuery,
-    private moviesStore: MoviesStore
+    private moviesStore: MoviesStore,
+    private ngxNotificationMsgService: NgxNotificationMsgService
   ) {
     combineLatest([sessionQuery.userId$, moviesListsQuery.selectActive()]).subscribe(
       ([userId, moviesList]: [string, MoviesList]) => {
@@ -48,6 +50,11 @@ export class MoviesService {
     const movieToDelete = this.firestoreService.collection(`movies`).doc(movie.key);
     await movieToDelete.delete();
     this.moviesStore.remove(movie.id);
+    this.ngxNotificationMsgService.open({
+      status: NgxNotificationStatusMsg.SUCCESS,
+      header: 'Movie deleted',
+      msg: `Movie ${movie.title} successfully deleted.`
+    });
   }
 
   public async deleteMoviesInList(listId: string): Promise<void> {
