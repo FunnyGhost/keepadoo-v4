@@ -28,6 +28,7 @@
     "core-js": "^3.2.1",
     "firebase": "6.4.0",
     "ng-mocks": "8.1.0",
+    "ngx-notification-msg": "0.1.8",
     "rxjs": "~6.5.3",
     "tslib": "^1.10.0",
     "zone.js": "~0.9.1"

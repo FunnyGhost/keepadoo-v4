@@ -5,6 +5,7 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFirePerformanceModule } from '@angular/fire/performance';
 import { AkitaNgDevtools } from '@datorama/akita-ngdevtools';
+import { NgxNotificationMsgModule } from 'ngx-notification-msg';
 import { environment } from '../../environments/environment';
 
 @NgModule({
@@ -15,7 +16,8 @@ import { environment } from '../../environments/environment';
     AngularFireAuthModule,
     AngularFirestoreModule,
     AngularFirePerformanceModule,
-    HttpClientModule
+    HttpClientModule,
+    NgxNotificationMsgModule
   ]
 })
 export class CoreModule {}
