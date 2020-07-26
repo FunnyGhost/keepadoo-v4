@@ -2,6 +2,13 @@ button:focus {
   outline: none;
 }
 
+.ngx_notification-msg {
+  box-shadow: 0 10px 19px 1px rgba(0, 0, 0, 0.2) !important;
+  @media (max-width: 768px) {
+    width: 90%;
+  }
+}
+
 /* You can add global styles to this file, and also import other style files */
 // Reset
 html,

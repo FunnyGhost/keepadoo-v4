@@ -1,5 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { NgxNotificationMsgService, NgxNotificationStatusMsg } from 'ngx-notification-msg';
 import { of, Subject } from 'rxjs';
 import { moviesStoreMock } from '../../../../test-utilities/test-mocks';
 import {
@@ -62,9 +63,14 @@ const moviesListsQueryMock = {
   selectActive: () => activeList.asObservable()
 };
 
+const notificationServiceMock = {
+  open: () => {}
+};
+
 describe('MoviesService', () => {
   let service: MoviesService;
   let moviesStore: MoviesStore;
+  let notificationService: NgxNotificationMsgService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -85,12 +91,17 @@ describe('MoviesService', () => {
         {
           provide: MoviesStore,
           useValue: moviesStoreMock
+        },
+        {
+          provide: NgxNotificationMsgService,
+          useValue: notificationServiceMock
         }
       ]
     });
 
     service = TestBed.get(MoviesService);
     moviesStore = TestBed.get(MoviesStore);
+    notificationService = TestBed.get(NgxNotificationMsgService);
   });
 
   test('should be created', () => {
@@ -150,13 +161,19 @@ describe('MoviesService', () => {
     });
   });
 
-  describe('deleteMovieFromList', () => {
+  describe('deleteMovie', () => {
     test('should delete the movie', async () => {
+      jest.spyOn(notificationService, 'open');
       const movieToDelete = testMovies[0];
 
       await service.deleteMovie(movieToDelete);
       expect(deleteSpy).toHaveBeenCalled();
       expect(moviesStoreMock.remove).toHaveBeenCalledWith(movieToDelete.id);
+      expect(notificationService.open).toHaveBeenCalledWith({
+        status: NgxNotificationStatusMsg.SUCCESS,
+        header: expect.any(String),
+        msg: expect.any(String)
+      });
     });
   });
 
