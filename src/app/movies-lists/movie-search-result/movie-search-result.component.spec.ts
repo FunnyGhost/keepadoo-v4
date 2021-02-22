@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { testMovieSearchResults } from '../../../test-utilities/test-objects';
 import { MovieSearchResultComponent } from './movie-search-result.component';
@@ -9,7 +9,7 @@ describe('MovieSearchResultComponent', () => {
   let component: MovieSearchResultComponent;
   let fixture: ComponentFixture<MovieSearchResultComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [MovieSearchResultComponent]
     }).compileComponents();

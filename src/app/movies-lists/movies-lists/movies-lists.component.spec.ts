@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { MockComponent } from 'ng-mocks';
@@ -17,7 +17,7 @@ describe('MoviesListsComponent', () => {
   let component: MoviesListsComponent;
   let fixture: ComponentFixture<MoviesListsComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [MoviesListsComponent, MockComponent(MoviesListComponent)],
       providers: [
