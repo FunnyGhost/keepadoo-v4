@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { MockComponent } from 'ng-mocks';
 import { of } from 'rxjs';
 import { moviesListsQueryMock, routerMock } from '../../../test-utilities/test-mocks';
-import { testMoviestLists } from '../../../test-utilities/test-objects';
+import { testMoviesLists } from '../../../test-utilities/test-objects';
 import { MoviesListComponent } from '../movies-list/movies-list.component';
 import { MoviesListsQuery } from '../state/movies-lists.query';
 import { MoviesListsService } from '../state/movies-lists.service';
@@ -52,13 +52,13 @@ describe('MoviesListsComponent', () => {
   });
 
   test('should show all lists', () => {
-    moviesListsQueryMock.selectAll.mockReturnValue(of(testMoviestLists));
+    moviesListsQueryMock.selectAll.mockReturnValue(of(testMoviesLists));
 
     component.ngOnInit();
     fixture.detectChanges();
 
     const moviesListsElements = fixture.debugElement.queryAll(By.directive(MoviesListComponent));
-    expect(moviesListsElements.length).toBe(testMoviestLists.length);
+    expect(moviesListsElements.length).toBe(testMoviesLists.length);
     const helperText = fixture.debugElement.query(By.css('.helper-text'));
     expect(helperText).toBeFalsy();
   });
@@ -75,12 +75,12 @@ describe('MoviesListsComponent', () => {
   });
 
   test('should navigate to the list details', () => {
-    moviesListsQueryMock.selectAll.mockReturnValue(of(testMoviestLists));
+    moviesListsQueryMock.selectAll.mockReturnValue(of(testMoviesLists));
 
     component.ngOnInit();
     fixture.detectChanges();
 
-    const listId = testMoviestLists[0].id;
+    const listId = testMoviesLists[0].id;
     const moviesListsElements = fixture.debugElement
       .queryAll(By.directive(MoviesListComponent))
       .map(el => el.componentInstance);

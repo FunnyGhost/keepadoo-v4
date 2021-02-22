@@ -10,7 +10,7 @@ import {
 } from '../../../test-utilities/test-mocks';
 import {
   testMovieSearchResults,
-  testMoviestLists,
+  testMoviesLists,
   testUser
 } from '../../../test-utilities/test-objects';
 import { SessionQuery } from '../../state/session.query';
@@ -32,7 +32,7 @@ const firestoreMock = {
 
 const firestoreMockSpy = jest.spyOn(firestoreMock, 'collection').mockReturnValue({
   valueChanges() {
-    return of(testMoviestLists);
+    return of(testMoviesLists);
   },
   doc() {
     return docObject;
@@ -109,7 +109,7 @@ describe('MoviesListsService', () => {
     test('should get all the movies lists for the logged in user', () => {
       sessionStoreQueryMock.userId$.next('batman');
       expect(firestoreMockSpy).toHaveBeenCalledWith('movies-lists', expect.any(Function));
-      expect(moviesListsStoreMock.set).toHaveBeenCalledWith(testMoviestLists);
+      expect(moviesListsStoreMock.set).toHaveBeenCalledWith(testMoviesLists);
     });
 
     test('should clear the store if the user logs out', () => {

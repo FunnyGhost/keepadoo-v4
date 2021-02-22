@@ -10,7 +10,7 @@ import {
   moviesQueryMock,
   routerMock
 } from '../../../test-utilities/test-mocks';
-import { testMovies, testMoviestLists } from '../../../test-utilities/test-objects';
+import { testMovies, testMoviesLists } from '../../../test-utilities/test-objects';
 import { DialogComponent } from '../../shared/dialog/dialog.component';
 import { MovieComponent } from '../movie/movie.component';
 import { MoviesQuery } from '../movies/state/movies.query';
@@ -129,7 +129,7 @@ describe('MoviesListDetailsComponent', () => {
     });
 
     test('should show the selected list title', () => {
-      const moviesListToUse = testMoviestLists[0];
+      const moviesListToUse = testMoviesLists[0];
       moviesListsQueryMock.selectActive.mockReturnValue(of(moviesListToUse));
 
       component.ngOnInit();
@@ -190,7 +190,7 @@ describe('MoviesListDetailsComponent', () => {
     });
 
     test('should delete the list when the user clicks the confirmation button', () => {
-      const moviesListToUse = testMoviestLists[0];
+      const moviesListToUse = testMoviesLists[0];
       moviesListsQueryMock.selectActive.mockReturnValue(of(moviesListToUse));
 
       const deleteButton = fixture.debugElement.query(By.css('button.delete-button'));

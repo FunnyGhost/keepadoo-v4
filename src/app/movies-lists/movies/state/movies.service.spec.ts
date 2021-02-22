@@ -6,7 +6,7 @@ import { moviesStoreMock } from '../../../../test-utilities/test-mocks';
 import {
   testMovies,
   testMovieSearchResults,
-  testMoviestLists,
+  testMoviesLists,
   testUser
 } from '../../../../test-utilities/test-objects';
 import { SessionQuery } from '../../../state/session.query';
@@ -116,9 +116,9 @@ describe('MoviesService', () => {
       });
 
       test('should populate the store with the movies in the currently selected list', () => {
-        activeList.next(testMoviestLists[0]);
+        activeList.next(testMoviesLists[0]);
         expect(moviesStore.set).toHaveBeenCalledWith(testMovies);
-        expect(service.getMoviesInList).toHaveBeenCalledWith(testMoviestLists[0].id);
+        expect(service.getMoviesInList).toHaveBeenCalledWith(testMoviesLists[0].id);
       });
 
       test('should clear the store if there is no selected list', () => {

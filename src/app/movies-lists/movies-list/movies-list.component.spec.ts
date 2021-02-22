@@ -1,12 +1,12 @@
 import { DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { testMoviestLists } from '../../../test-utilities/test-objects';
+import { testMoviesLists } from '../../../test-utilities/test-objects';
 import { Movie } from '../movies/state/models/movie';
 import { MoviesListComponent } from './movies-list.component';
 
 describe('MoviesListComponent', () => {
-  const listToUse = testMoviestLists[1];
+  const listToUse = testMoviesLists[1];
   let component: MoviesListComponent;
   let fixture: ComponentFixture<MoviesListComponent>;
 
