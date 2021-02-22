@@ -12,6 +12,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { SharedModule } from './shared/shared.module';
 import { AuthGuard } from './state/auth.guard';
+import { HotToastModule } from '@ngneat/hot-toast';
 
 const routes: Route[] = [
   {
@@ -54,7 +55,8 @@ const routes: Route[] = [
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
       registrationStrategy: 'registerImmediately'
-    })
+    }),
+    HotToastModule.forRoot()
   ],
   bootstrap: [AppComponent]
 })

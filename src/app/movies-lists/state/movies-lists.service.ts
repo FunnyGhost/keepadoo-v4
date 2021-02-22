@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
-import { NgxNotificationMsgService, NgxNotificationStatusMsg } from 'ngx-notification-msg';
 import { from } from 'rxjs';
 import { SessionQuery } from '../../state/session.query';
 import { MovieSearchResult } from '../movie-search/state/models/movie-search-results';
@@ -8,10 +7,10 @@ import { MoviesService } from '../movies/state/movies.service';
 import { MoviesList } from './models/movies-list';
 import { MoviesListsQuery } from './movies-lists.query';
 import { MoviesListsStore } from './movies-lists.store';
+import { HotToastService } from '@ngneat/hot-toast';
 
 @Injectable()
 export class MoviesListsService {
-  readonly MOST_RECENT_MOVIES_LIMIT = 4;
   private moviesListsCollection: AngularFirestoreCollection;
 
   constructor(
@@ -20,7 +19,7 @@ export class MoviesListsService {
     private firestoreService: AngularFirestore,
     private sessionQuery: SessionQuery,
     private moviesService: MoviesService,
-    private ngxNotificationMsgService: NgxNotificationMsgService
+    private toast: HotToastService
   ) {
     this.sessionQuery.userId$.subscribe((userId: string) => {
       if (userId) {
@@ -54,17 +53,13 @@ export class MoviesListsService {
       } as MoviesList;
       await this.moviesListsCollection.doc(id).set(list);
       this.moviesListsStore.add(list);
-      this.ngxNotificationMsgService.open({
-        status: NgxNotificationStatusMsg.SUCCESS,
-        header: 'List created',
-        msg: `List: ${moviesList.name} successfully created.`
+      this.toast.success('List created!', {
+        duration: 3000
       });
     } catch (err) {
       this.moviesListsStore.setError(err);
-      this.ngxNotificationMsgService.open({
-        status: NgxNotificationStatusMsg.FAILURE,
-        header: 'List creation failed.',
-        msg: `List: ${moviesList.name} could not be created. Please try again.`
+      this.toast.error('List creation failed.', {
+        duration: 3000
       });
     }
 
@@ -74,20 +69,16 @@ export class MoviesListsService {
   async update(id, moviesList: Partial<MoviesList>): Promise<void> {
     await this.moviesListsCollection.doc(id).update(moviesList);
     this.moviesListsStore.update(id, moviesList);
-    this.ngxNotificationMsgService.open({
-      status: NgxNotificationStatusMsg.SUCCESS,
-      header: 'List updated',
-      msg: `List: ${moviesList.name} successfully updated.`
+    this.toast.success('List updated!', {
+      duration: 3000
     });
   }
 
   async remove(id: string): Promise<void> {
     await this.moviesService.deleteMoviesInList(id);
     await this.moviesListsCollection.doc(id).delete();
-    this.ngxNotificationMsgService.open({
-      status: NgxNotificationStatusMsg.SUCCESS,
-      header: 'List deleted',
-      msg: `List successfully deleted.`
+    this.toast.success('List deleted!', {
+      duration: 3000
     });
   }
 
@@ -102,10 +93,8 @@ export class MoviesListsService {
   addMovieToCurrentList(movie: MovieSearchResult): void {
     const activeList = this.moviesListsQuery.getActive() as MoviesList;
     from(this.moviesService.addMovieToList(activeList.id, movie)).subscribe(() => {
-      this.ngxNotificationMsgService.open({
-        status: NgxNotificationStatusMsg.SUCCESS,
-        header: 'Movie added',
-        msg: `Movie ${movie.title} added to list ${activeList.name}.`
+      this.toast.success('Movie added!', {
+        duration: 3000
       });
       this.fetch();
     });
