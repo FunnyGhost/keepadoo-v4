@@ -51,7 +51,7 @@ const routes: Route[] = [
     ReactiveFormsModule,
     BrowserModule,
     BrowserAnimationsModule,
-    RouterModule.forRoot(routes, { initialNavigation: 'enabled' }),
+    RouterModule.forRoot(routes, { initialNavigation: 'enabled', relativeLinkResolution: 'legacy' }),
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
       registrationStrategy: 'registerImmediately'
