@@ -10,18 +10,20 @@ describe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      imports: [RouterTestingModule],
-      providers: [
-        {
-          provide: AuthService,
-          useValue: authServiceMock
-        }
-      ],
-      declarations: [HomeComponent]
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [RouterTestingModule],
+        providers: [
+          {
+            provide: AuthService,
+            useValue: authServiceMock
+          }
+        ],
+        declarations: [HomeComponent]
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(HomeComponent);
@@ -34,7 +36,7 @@ describe('HomeComponent', () => {
   });
 
   test('should navigate to the add route when the + button is clicked', () => {
-    const router: Router = TestBed.get(Router);
+    const router = TestBed.inject(Router);
     jest.spyOn(router, 'navigateByUrl').mockImplementation();
 
     const addButton = fixture.debugElement.query(By.css('.add-button'));
@@ -44,7 +46,7 @@ describe('HomeComponent', () => {
   });
 
   test('should navigate to the add route when the + button is clicked', () => {
-    const authService: AuthService = TestBed.get(AuthService);
+    const authService = TestBed.inject(AuthService);
     jest.spyOn(authService, 'signOut');
     const signOutButton = fixture.debugElement.query(By.css('.sign-out-button'));
     signOutButton.triggerEventHandler('click', null);

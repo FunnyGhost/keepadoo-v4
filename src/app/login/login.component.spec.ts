@@ -25,33 +25,35 @@ describe('LoginComponent', () => {
   let fixture: ComponentFixture<LoginComponent>;
   let authService: AuthService;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule, RouterTestingModule],
-      declarations: [LoginComponent],
-      providers: [
-        {
-          provide: AuthService,
-          useValue: authServiceMock
-        },
-        {
-          provide: SessionQuery,
-          useValue: queryMock
-        }
-      ]
-    })
-      .overrideComponent(LoginComponent, {
-        set: { changeDetection: ChangeDetectionStrategy.Default }
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [ReactiveFormsModule, RouterTestingModule],
+        declarations: [LoginComponent],
+        providers: [
+          {
+            provide: AuthService,
+            useValue: authServiceMock
+          },
+          {
+            provide: SessionQuery,
+            useValue: queryMock
+          }
+        ]
       })
-      .compileComponents();
-  }));
+        .overrideComponent(LoginComponent, {
+          set: { changeDetection: ChangeDetectionStrategy.Default }
+        })
+        .compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
 
-    authService = TestBed.get(AuthService);
+    authService = TestBed.inject(AuthService);
   });
 
   test('should create', () => {

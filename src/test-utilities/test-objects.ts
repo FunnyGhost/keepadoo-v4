@@ -1,4 +1,3 @@
-
 import { MovieSearchResult } from '../app/movies-lists/movie-search/state/models/movie-search-results';
 import { Movie } from '../app/movies-lists/movies/state/models/movie';
 import { MoviesList } from '../app/movies-lists/state/models/movies-list';

@@ -15,13 +15,8 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     trigger('dialog', [
-      transition('void => *', [
-        style({ transform: 'scale3d(.3, .3, .3)' }),
-        animate(100)
-      ]),
-      transition('* => void', [
-        animate(100, style({ transform: 'scale3d(.0, .0, .0)' }))
-      ])
+      transition('void => *', [style({ transform: 'scale3d(.3, .3, .3)' }), animate(100)]),
+      transition('* => void', [animate(100, style({ transform: 'scale3d(.0, .0, .0)' }))])
     ])
   ]
 })

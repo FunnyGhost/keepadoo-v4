@@ -10,11 +10,13 @@ describe('MoviesListComponent', () => {
   let component: MoviesListComponent;
   let fixture: ComponentFixture<MoviesListComponent>;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [MoviesListComponent]
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [MoviesListComponent]
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(MoviesListComponent);
@@ -52,9 +54,9 @@ describe('MoviesListComponent', () => {
     });
   });
 
-  test('should emit when the list is clicked', done => {
+  test('should emit when the list is clicked', (done) => {
     const title = fixture.debugElement.query(By.css('button.movies-list'));
-    component.listClick.subscribe(listId => {
+    component.listClick.subscribe((listId) => {
       expect(listId).toEqual(listToUse.id);
       done();
     });

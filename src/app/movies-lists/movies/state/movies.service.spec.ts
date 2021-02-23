@@ -64,10 +64,8 @@ const moviesListsQueryMock = {
 };
 
 const notificationServiceMock = {
-  error: () => {
-  },
-  success: () => {
-  }
+  error: () => {},
+  success: () => {}
 };
 
 describe('MoviesService', () => {
@@ -142,7 +140,7 @@ describe('MoviesService', () => {
   });
 
   describe('getMoviesInList', () => {
-    test('should get movies in list', done => {
+    test('should get movies in list', (done) => {
       service.getMoviesInList('1').subscribe((data: Movie[]) => {
         expect(data).toEqual(testMovies);
         done();
@@ -172,9 +170,9 @@ describe('MoviesService', () => {
       await service.deleteMovie(movieToDelete);
       expect(deleteSpy).toHaveBeenCalled();
       expect(moviesStoreMock.remove).toHaveBeenCalledWith(movieToDelete.id);
-      expect(notificationService.success).toHaveBeenCalledWith(
-        expect.any(String), { duration: 3000 }
-      );
+      expect(notificationService.success).toHaveBeenCalledWith(expect.any(String), {
+        duration: 3000
+      });
     });
   });
 

@@ -7,10 +7,7 @@ import { MovieSearchStore } from './movie-search.store';
 
 @Injectable()
 export class MovieSearchService {
-  constructor(
-    private movieSearchStore: MovieSearchStore,
-    private http: HttpClient
-  ) {}
+  constructor(private movieSearchStore: MovieSearchStore, private http: HttpClient) {}
 
   searchMovies(text: string): void {
     const urlToUse = `${environment.tmdbConfig.apiUrl}/search/movie`;
@@ -22,12 +19,10 @@ export class MovieSearchService {
       .get(urlToUse, { params })
       .pipe(
         map((response: any) => response.results as MovieSearchResult[]),
-        map(data => {
-          return data.filter(
-            movieSearchResult => !!movieSearchResult.poster_path
-          );
+        map((data) => {
+          return data.filter((movieSearchResult) => !!movieSearchResult.poster_path);
         })
       )
-      .subscribe(entities => this.movieSearchStore.set(entities));
+      .subscribe((entities) => this.movieSearchStore.set(entities));
   }
 }

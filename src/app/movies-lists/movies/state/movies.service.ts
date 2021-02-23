@@ -24,7 +24,7 @@ export class MoviesService {
         if (!userId || !moviesList) {
           moviesStore.set([]);
         } else {
-          this.getMoviesInList(moviesList.id).subscribe(movies => moviesStore.set(movies));
+          this.getMoviesInList(moviesList.id).subscribe((movies) => moviesStore.set(movies));
         }
       }
     );
@@ -35,7 +35,7 @@ export class MoviesService {
       .collection<Movie[]>(
         `movies`,
         /* istanbul ignore next */
-        ref => ref.where('listId', '==', listId)
+        (ref) => ref.where('listId', '==', listId)
       )
       .valueChanges({ idField: 'key' })
       .pipe(take(1)) as Observable<Movie[]>;
@@ -57,12 +57,12 @@ export class MoviesService {
 
   public async deleteMoviesInList(listId: string): Promise<void> {
     return this.firestoreService
-      .collection(`movies`, ref => ref.where('listId', '==', listId))
+      .collection(`movies`, (ref) => ref.where('listId', '==', listId))
       .snapshotChanges()
       .pipe(
         take(1),
-        switchMap(data => from(data)),
-        switchMap(item => item.payload.doc.ref.delete())
+        switchMap((data) => from(data)),
+        switchMap((item) => item.payload.doc.ref.delete())
       )
       .toPromise();
   }

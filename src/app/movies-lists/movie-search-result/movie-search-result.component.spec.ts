@@ -9,11 +9,13 @@ describe('MovieSearchResultComponent', () => {
   let component: MovieSearchResultComponent;
   let fixture: ComponentFixture<MovieSearchResultComponent>;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [MovieSearchResultComponent]
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [MovieSearchResultComponent]
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(MovieSearchResultComponent);

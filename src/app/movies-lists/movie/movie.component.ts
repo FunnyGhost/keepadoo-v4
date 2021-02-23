@@ -21,9 +21,7 @@ export class MovieComponent implements OnInit {
   @Input() movie: Movie;
   @Output() delete = new EventEmitter<Movie>();
 
-  wiggleStyle = this.wiggleClasses[
-    Math.floor(Math.random() * this.wiggleClasses.length)
-  ];
+  wiggleStyle = this.wiggleClasses[Math.floor(Math.random() * this.wiggleClasses.length)];
   animationDelay = `${this.generateRandomNumber(-0.75, -0.15)}s`;
   animationDuration = `${this.generateRandomNumber(0.2, 0.35)}s`;
 

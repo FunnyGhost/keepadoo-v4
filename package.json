@@ -10,7 +10,9 @@
     "test": "jest",
     "test:dev": "jest --watch",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "format:check": "prettier --config ./.prettierrc --check \"src/**/*.{ts,js,json}\" ",
+    "format:fix": "prettier --config ./.prettierrc --write \"src/**/*.{ts,js,json}\" "
   },
   "private": true,
   "dependencies": {

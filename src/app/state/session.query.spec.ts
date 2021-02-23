@@ -16,7 +16,7 @@ describe('SessionQuery', () => {
   });
 
   describe('isLoggedIn$', () => {
-    test('should return true if there is a user', done => {
+    test('should return true if there is a user', (done) => {
       store.update({ user: testUser });
 
       query.isLoggedIn$.subscribe((data: boolean) => {
@@ -25,7 +25,7 @@ describe('SessionQuery', () => {
       });
     });
 
-    test('should return false if there is no user', done => {
+    test('should return false if there is no user', (done) => {
       store.update({ user: null });
 
       query.isLoggedIn$.subscribe((data: boolean) => {
@@ -36,7 +36,7 @@ describe('SessionQuery', () => {
   });
 
   describe('loggedInUser$', () => {
-    test('should return the logged in user display name', done => {
+    test('should return the logged in user display name', (done) => {
       store.update({ user: testUser });
 
       query.loggedInUser$.subscribe((data: string) => {
@@ -47,7 +47,7 @@ describe('SessionQuery', () => {
   });
 
   describe('userId$', () => {
-    test('should return the logged in userId', done => {
+    test('should return the logged in userId', (done) => {
       store.update({ user: testUser });
 
       query.userId$.subscribe((data: string) => {

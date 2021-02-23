@@ -26,10 +26,8 @@ const docObject = {
   delete: jest.fn()
 };
 const firestoreMock = {
-  createId() {
-  },
-  collection() {
-  }
+  createId() {},
+  collection() {}
 };
 
 const firestoreMockSpy = jest.spyOn(firestoreMock, 'collection').mockReturnValue({
@@ -48,15 +46,12 @@ const sessionStoreQueryMock = {
 
 const moviesServiceMock = {
   addMovieToList: jest.fn().mockReturnValue(of({})),
-  deleteMoviesInList: () => {
-  }
+  deleteMoviesInList: () => {}
 };
 
 const notificationServiceMock = {
-  error: () => {
-  },
-  success: () => {
-  }
+  error: () => {},
+  success: () => {}
 };
 
 describe('MoviesListsService', () => {
@@ -151,9 +146,9 @@ describe('MoviesListsService', () => {
       expect(moviesListsStoreMock.add).toHaveBeenCalledWith(expectedMoviesList);
       expect(moviesListsStoreMock.setLoading).toHaveBeenCalledWith(false);
       expect(moviesListsStoreMock.setError).not.toHaveBeenCalled();
-      expect(notificationService.success).toHaveBeenCalledWith(
-        expect.any(String), { duration: 3000 }
-      );
+      expect(notificationService.success).toHaveBeenCalledWith(expect.any(String), {
+        duration: 3000
+      });
     });
 
     test('should handle errors if adding a movies list fails', async () => {
@@ -175,9 +170,9 @@ describe('MoviesListsService', () => {
       expect(moviesListsStoreMock.setLoading).toHaveBeenCalledWith(true);
       expect(moviesListsStoreMock.setLoading).toHaveBeenCalledWith(false);
       expect(moviesListsStoreMock.setError).toHaveBeenCalledWith(errorToUse);
-      expect(notificationService.error).toHaveBeenCalledWith(
-        expect.any(String), { duration: 3000 }
-      );
+      expect(notificationService.error).toHaveBeenCalledWith(expect.any(String), {
+        duration: 3000
+      });
     });
   });
 
@@ -199,9 +194,9 @@ describe('MoviesListsService', () => {
 
       expect(docObject.update).toHaveBeenCalledWith(moviesListToUpdate);
       expect(moviesListsStoreMock.update).toHaveBeenCalledWith(idToUse, moviesListToUpdate);
-      expect(notificationService.success).toHaveBeenCalledWith(
-        expect.any(String), { duration: 3000 }
-      );
+      expect(notificationService.success).toHaveBeenCalledWith(expect.any(String), {
+        duration: 3000
+      });
     });
   });
 
@@ -213,9 +208,9 @@ describe('MoviesListsService', () => {
       await moviesListsService.remove(idToUse);
 
       expect(docObject.delete).toHaveBeenCalled();
-      expect(notificationService.success).toHaveBeenCalledWith(
-        expect.any(String), { duration: 3000 }
-      );
+      expect(notificationService.success).toHaveBeenCalledWith(expect.any(String), {
+        duration: 3000
+      });
     });
 
     test('should remove the movies in the list', async () => {
@@ -268,9 +263,9 @@ describe('MoviesListsService', () => {
 
       expect(moviesService.addMovieToList).toHaveBeenCalledWith(selectedList, movieToAdd);
       expect(moviesListsService.fetch).toHaveBeenCalled();
-      expect(notificationService.success).toHaveBeenCalledWith(
-        expect.any(String), { duration: 3000 }
-      );
+      expect(notificationService.success).toHaveBeenCalledWith(expect.any(String), {
+        duration: 3000
+      });
     });
   });
 });

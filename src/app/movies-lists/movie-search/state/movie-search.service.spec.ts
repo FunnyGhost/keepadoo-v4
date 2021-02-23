@@ -17,9 +17,9 @@ describe('MovieSearchService', () => {
       imports: [HttpClientTestingModule]
     });
 
-    movieSearchService = TestBed.get(MovieSearchService);
-    movieSearchStore = TestBed.get(MovieSearchStore);
-    httpTestingController = TestBed.get(HttpTestingController);
+    movieSearchService = TestBed.inject(MovieSearchService);
+    movieSearchStore = TestBed.inject(MovieSearchStore);
+    httpTestingController = TestBed.inject(HttpTestingController);
   });
 
   test('should be created', () => {
@@ -96,8 +96,8 @@ describe('MovieSearchService', () => {
         const req = httpTestingController.expectOne((request: HttpRequest<any>) => {
           const containsUrl = request.url.includes(environment.tmdbConfig.apiUrl);
           const containsKey = request.params.get('api_key') === environment.tmdbConfig.api_key;
-          const containesSearchQuery = request.params.get('query') === searchText;
-          return containsUrl && containsKey && containesSearchQuery;
+          const containsSearchQuery = request.params.get('query') === searchText;
+          return containsUrl && containsKey && containsSearchQuery;
         });
 
         expect(req.request.method).toEqual('GET');

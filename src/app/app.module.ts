@@ -36,7 +36,7 @@ const routes: Route[] = [
       {
         path: 'movies-lists',
         loadChildren: () =>
-          import('./movies-lists/movies-lists.module').then(m => m.MoviesListsModule)
+          import('./movies-lists/movies-lists.module').then((m) => m.MoviesListsModule)
       }
     ]
   }
@@ -51,7 +51,10 @@ const routes: Route[] = [
     ReactiveFormsModule,
     BrowserModule,
     BrowserAnimationsModule,
-    RouterModule.forRoot(routes, { initialNavigation: 'enabled', relativeLinkResolution: 'legacy' }),
+    RouterModule.forRoot(routes, {
+      initialNavigation: 'enabled',
+      relativeLinkResolution: 'legacy'
+    }),
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
       registrationStrategy: 'registerImmediately'

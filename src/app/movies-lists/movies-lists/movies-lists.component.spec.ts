@@ -17,29 +17,31 @@ describe('MoviesListsComponent', () => {
   let component: MoviesListsComponent;
   let fixture: ComponentFixture<MoviesListsComponent>;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [MoviesListsComponent, MockComponent(MoviesListComponent)],
-      providers: [
-        {
-          provide: Router,
-          useValue: routerMock
-        },
-        {
-          provide: MoviesListsQuery,
-          useValue: moviesListsQueryMock
-        },
-        {
-          provide: MoviesListsService,
-          useValue: moviesListsServiceMock
-        }
-      ]
-    })
-      .overrideComponent(MoviesListsComponent, {
-        set: { changeDetection: ChangeDetectionStrategy.Default }
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [MoviesListsComponent, MockComponent(MoviesListComponent)],
+        providers: [
+          {
+            provide: Router,
+            useValue: routerMock
+          },
+          {
+            provide: MoviesListsQuery,
+            useValue: moviesListsQueryMock
+          },
+          {
+            provide: MoviesListsService,
+            useValue: moviesListsServiceMock
+          }
+        ]
       })
-      .compileComponents();
-  }));
+        .overrideComponent(MoviesListsComponent, {
+          set: { changeDetection: ChangeDetectionStrategy.Default }
+        })
+        .compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(MoviesListsComponent);
@@ -83,7 +85,7 @@ describe('MoviesListsComponent', () => {
     const listId = testMoviesLists[0].id;
     const moviesListsElements = fixture.debugElement
       .queryAll(By.directive(MoviesListComponent))
-      .map(el => el.componentInstance);
+      .map((el) => el.componentInstance);
     (moviesListsElements[0] as MoviesListComponent).listClick.emit(listId);
 
     expect(routerMock.navigate).toHaveBeenCalledWith([`/home/movies-lists/${listId}`]);

@@ -9,13 +9,15 @@ describe('MovieComponent', () => {
   let component: MovieComponent;
   let fixture: ComponentFixture<MovieComponent>;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({ declarations: [MovieComponent] })
-      .overrideComponent(MovieComponent, {
-        set: { changeDetection: ChangeDetectionStrategy.Default }
-      })
-      .compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({ declarations: [MovieComponent] })
+        .overrideComponent(MovieComponent, {
+          set: { changeDetection: ChangeDetectionStrategy.Default }
+        })
+        .compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(MovieComponent);

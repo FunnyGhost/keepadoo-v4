@@ -32,18 +32,14 @@ export class MoviesListDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.activatedRoute.paramMap.subscribe(params => {
+    this.activatedRoute.paramMap.subscribe((params) => {
       const listId = params.get('id');
       this.moviesListsService.setActive(listId);
     });
 
     this.movies$ = this.moviesQuery.selectAll();
-    this.selectedList$ = this.moviesListQuery.selectActive() as Observable<
-      MoviesList
-    >;
-    this.editMode$ = this.moviesQuery
-      .select()
-      .pipe(map(state => state.editMode));
+    this.selectedList$ = this.moviesListQuery.selectActive() as Observable<MoviesList>;
+    this.editMode$ = this.moviesQuery.select().pipe(map((state) => state.editMode));
   }
 
   edit(): void {
@@ -59,7 +55,7 @@ export class MoviesListDetailsComponent implements OnInit {
   }
 
   deleteList(): void {
-    this.selectedList$.pipe(take(1)).subscribe(data => {
+    this.selectedList$.pipe(take(1)).subscribe((data) => {
       this.moviesListsService.remove(data.id);
       this.showConfirmationDialog = false;
       this.goBack();

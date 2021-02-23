@@ -104,7 +104,7 @@ export class MoviesListsService {
     this.moviesListsCollection = firestoreService.collection(
       `movies-lists`,
       /* istanbul ignore next */
-      ref => ref.where('userId', '==', userId)
+      (ref) => ref.where('userId', '==', userId)
     );
   }
 }

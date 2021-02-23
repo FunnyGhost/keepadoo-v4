@@ -10,9 +10,9 @@ import { SessionStore } from './session.store';
 
 const angularFireAuthMock = {
   authState: new Subject<any>(),
-    signInWithEmailAndPassword: jest.fn(),
-    createUserWithEmailAndPassword: jest.fn(),
-    signOut: jest.fn()
+  signInWithEmailAndPassword: jest.fn(),
+  createUserWithEmailAndPassword: jest.fn(),
+  signOut: jest.fn()
 };
 
 describe('AuthService', () => {

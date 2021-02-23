@@ -29,33 +29,35 @@ describe('MoviesListCreateComponent', () => {
   let fixture: ComponentFixture<MoviesListCreateComponent>;
   let moviesListService: MoviesListsService;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule, RouterTestingModule],
-      declarations: [MoviesListCreateComponent],
-      providers: [
-        {
-          provide: MoviesListsService,
-          useValue: moviesListsServiceMock
-        },
-        {
-          provide: MoviesListsQuery,
-          useValue: queryMock
-        }
-      ]
-    })
-      .overrideComponent(MoviesListCreateComponent, {
-        set: { changeDetection: ChangeDetectionStrategy.Default }
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [ReactiveFormsModule, RouterTestingModule],
+        declarations: [MoviesListCreateComponent],
+        providers: [
+          {
+            provide: MoviesListsService,
+            useValue: moviesListsServiceMock
+          },
+          {
+            provide: MoviesListsQuery,
+            useValue: queryMock
+          }
+        ]
       })
-      .compileComponents();
-  }));
+        .overrideComponent(MoviesListCreateComponent, {
+          set: { changeDetection: ChangeDetectionStrategy.Default }
+        })
+        .compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(MoviesListCreateComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
 
-    moviesListService = TestBed.get(MoviesListsService);
+    moviesListService = TestBed.inject(MoviesListsService);
   });
 
   test('should create', () => {
@@ -63,7 +65,7 @@ describe('MoviesListCreateComponent', () => {
   });
 
   test('should create the movies list', () => {
-    const router: Router = TestBed.get(Router);
+    const router = TestBed.inject(Router);
     spyOn(router, 'navigate');
 
     const listNameToUse = 'batman stuff';
@@ -106,7 +108,7 @@ describe('MoviesListCreateComponent', () => {
     });
 
     test('should be valid if value is longer than 2 characters', () => {
-      listName.setValue('somelongpassword');
+      listName.setValue('some-long-password');
       errors = listName.errors || {};
 
       expect(errors['required']).toBeFalsy();
