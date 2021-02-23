@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy } from '@angular/core';
-import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
@@ -26,24 +26,26 @@ describe('MovieSearchComponent', () => {
   let component: MovieSearchComponent;
   let fixture: ComponentFixture<MovieSearchComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule, RouterTestingModule],
-      declarations: [MovieSearchComponent, MockComponent(MovieSearchResultComponent)],
-      providers: [
-        { provide: MovieSearchService, useValue: movieSearchServiceMock },
-        { provide: MoviesListsService, useValue: movieListServiceMock },
-        {
-          provide: MovieSearchQuery,
-          useValue: movieSearchQueryMock
-        }
-      ]
-    })
-      .overrideComponent(MovieSearchComponent, {
-        set: { changeDetection: ChangeDetectionStrategy.Default }
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [ReactiveFormsModule, RouterTestingModule],
+        declarations: [MovieSearchComponent, MockComponent(MovieSearchResultComponent)],
+        providers: [
+          { provide: MovieSearchService, useValue: movieSearchServiceMock },
+          { provide: MoviesListsService, useValue: movieListServiceMock },
+          {
+            provide: MovieSearchQuery,
+            useValue: movieSearchQueryMock
+          }
+        ]
       })
-      .compileComponents();
-  }));
+        .overrideComponent(MovieSearchComponent, {
+          set: { changeDetection: ChangeDetectionStrategy.Default }
+        })
+        .compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(MovieSearchComponent);
@@ -61,7 +63,7 @@ describe('MovieSearchComponent', () => {
     const searchInput = fixture.debugElement.query(By.css('input'));
     expect(searchInput).toBeTruthy();
 
-    const movieSearchService: MovieSearchService = TestBed.get(MovieSearchService);
+    const movieSearchService = TestBed.inject(MovieSearchService);
     jest.spyOn(movieSearchService, 'searchMovies');
 
     searchInput.nativeElement.value = movieToSearchFor;
@@ -84,9 +86,9 @@ describe('MovieSearchComponent', () => {
   });
 
   test('should add a movie to the list when selected', () => {
-    const movieListService: MoviesListsService = TestBed.get(MoviesListsService);
+    const movieListService = TestBed.inject(MoviesListsService);
     jest.spyOn(movieListService, 'addMovieToCurrentList');
-    const router: Router = TestBed.get(Router);
+    const router = TestBed.inject(Router);
     spyOn(router, 'navigate');
 
     movieSearchQueryMock.selectAll.mockReturnValue(of(testMovieSearchResults));
@@ -101,7 +103,7 @@ describe('MovieSearchComponent', () => {
   });
 
   test('should go up one level when a movie is added', () => {
-    const router: Router = TestBed.get(Router);
+    const router = TestBed.inject(Router);
     spyOn(router, 'navigate').and.callFake(() => {});
     movieSearchQueryMock.selectAll.mockReturnValue(of(testMovieSearchResults));
 
@@ -116,7 +118,7 @@ describe('MovieSearchComponent', () => {
   });
 
   test('should go up one level when the cancel button is hit', () => {
-    const router: Router = TestBed.get(Router);
+    const router = TestBed.inject(Router);
     spyOn(router, 'navigate').and.callFake(() => {});
     const cancelButton = fixture.debugElement.query(By.css('button.cancel-button'));
 

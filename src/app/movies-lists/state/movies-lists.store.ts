@@ -6,10 +6,7 @@ export interface MoviesListsState extends EntityState<MoviesList> {}
 
 @Injectable()
 @StoreConfig({ name: 'movies-lists' })
-export class MoviesListsStore extends EntityStore<
-  MoviesListsState,
-  MoviesList
-> {
+export class MoviesListsStore extends EntityStore<MoviesListsState, MoviesList> {
   constructor() {
     super();
   }

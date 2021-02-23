@@ -2,13 +2,6 @@ button:focus {
   outline: none;
 }
 
-.ngx_notification-msg {
-  box-shadow: 0 10px 19px 1px rgba(0, 0, 0, 0.2) !important;
-  @media (max-width: 768px) {
-    width: 90%;
-  }
-}
-
 /* You can add global styles to this file, and also import other style files */
 // Reset
 html,
@@ -99,6 +92,7 @@ video {
   font: inherit;
   vertical-align: baseline;
 }
+
 /* HTML5 display-role reset for older browsers */
 article,
 aside,
@@ -113,17 +107,21 @@ nav,
 section {
   display: block;
 }
+
 body {
   line-height: 1;
 }
+
 ol,
 ul {
   list-style: none;
 }
+
 blockquote,
 q {
   quotes: none;
 }
+
 blockquote:before,
 blockquote:after,
 q:before,
@@ -131,6 +129,7 @@ q:after {
   content: '';
   content: none;
 }
+
 table {
   border-collapse: collapse;
   border-spacing: 0;
@@ -140,9 +139,14 @@ table {
 html {
   height: 100%;
 }
+
 body {
   min-height: 100%;
   font-size: 16px;
+
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji',
+  'Segoe UI Emoji', 'Segoe UI Symbol';
+
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 

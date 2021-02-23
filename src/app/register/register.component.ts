@@ -31,9 +31,6 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.authService.signUp(
-      this.registerForm.value.email,
-      this.registerForm.value.password
-    );
+    this.authService.signUp(this.registerForm.value.email, this.registerForm.value.password);
   }
 }

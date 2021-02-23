@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { MockComponent } from 'ng-mocks';
 import { of } from 'rxjs';
 import { moviesListsQueryMock, routerMock } from '../../../test-utilities/test-mocks';
-import { testMoviestLists } from '../../../test-utilities/test-objects';
+import { testMoviesLists } from '../../../test-utilities/test-objects';
 import { MoviesListComponent } from '../movies-list/movies-list.component';
 import { MoviesListsQuery } from '../state/movies-lists.query';
 import { MoviesListsService } from '../state/movies-lists.service';
@@ -17,29 +17,31 @@ describe('MoviesListsComponent', () => {
   let component: MoviesListsComponent;
   let fixture: ComponentFixture<MoviesListsComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [MoviesListsComponent, MockComponent(MoviesListComponent)],
-      providers: [
-        {
-          provide: Router,
-          useValue: routerMock
-        },
-        {
-          provide: MoviesListsQuery,
-          useValue: moviesListsQueryMock
-        },
-        {
-          provide: MoviesListsService,
-          useValue: moviesListsServiceMock
-        }
-      ]
-    })
-      .overrideComponent(MoviesListsComponent, {
-        set: { changeDetection: ChangeDetectionStrategy.Default }
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [MoviesListsComponent, MockComponent(MoviesListComponent)],
+        providers: [
+          {
+            provide: Router,
+            useValue: routerMock
+          },
+          {
+            provide: MoviesListsQuery,
+            useValue: moviesListsQueryMock
+          },
+          {
+            provide: MoviesListsService,
+            useValue: moviesListsServiceMock
+          }
+        ]
       })
-      .compileComponents();
-  }));
+        .overrideComponent(MoviesListsComponent, {
+          set: { changeDetection: ChangeDetectionStrategy.Default }
+        })
+        .compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(MoviesListsComponent);
@@ -52,13 +54,13 @@ describe('MoviesListsComponent', () => {
   });
 
   test('should show all lists', () => {
-    moviesListsQueryMock.selectAll.mockReturnValue(of(testMoviestLists));
+    moviesListsQueryMock.selectAll.mockReturnValue(of(testMoviesLists));
 
     component.ngOnInit();
     fixture.detectChanges();
 
     const moviesListsElements = fixture.debugElement.queryAll(By.directive(MoviesListComponent));
-    expect(moviesListsElements.length).toBe(testMoviestLists.length);
+    expect(moviesListsElements.length).toBe(testMoviesLists.length);
     const helperText = fixture.debugElement.query(By.css('.helper-text'));
     expect(helperText).toBeFalsy();
   });
@@ -75,15 +77,15 @@ describe('MoviesListsComponent', () => {
   });
 
   test('should navigate to the list details', () => {
-    moviesListsQueryMock.selectAll.mockReturnValue(of(testMoviestLists));
+    moviesListsQueryMock.selectAll.mockReturnValue(of(testMoviesLists));
 
     component.ngOnInit();
     fixture.detectChanges();
 
-    const listId = testMoviestLists[0].id;
+    const listId = testMoviesLists[0].id;
     const moviesListsElements = fixture.debugElement
       .queryAll(By.directive(MoviesListComponent))
-      .map(el => el.componentInstance);
+      .map((el) => el.componentInstance);
     (moviesListsElements[0] as MoviesListComponent).listClick.emit(listId);
 
     expect(routerMock.navigate).toHaveBeenCalledWith([`/home/movies-lists/${listId}`]);

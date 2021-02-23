@@ -1,7 +1,6 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { NgxNotificationMsgService, NgxNotificationStatusMsg } from 'ngx-notification-msg';
 import { BehaviorSubject, of } from 'rxjs';
 import {
   moviesListsQueryMock,
@@ -10,7 +9,7 @@ import {
 } from '../../../test-utilities/test-mocks';
 import {
   testMovieSearchResults,
-  testMoviestLists,
+  testMoviesLists,
   testUser
 } from '../../../test-utilities/test-objects';
 import { SessionQuery } from '../../state/session.query';
@@ -19,6 +18,7 @@ import { MoviesList } from './models/movies-list';
 import { MoviesListsQuery } from './movies-lists.query';
 import { MoviesListsService } from './movies-lists.service';
 import { MoviesListsStore } from './movies-lists.store';
+import { HotToastService } from '@ngneat/hot-toast';
 
 const docObject = {
   set: jest.fn(),
@@ -32,7 +32,7 @@ const firestoreMock = {
 
 const firestoreMockSpy = jest.spyOn(firestoreMock, 'collection').mockReturnValue({
   valueChanges() {
-    return of(testMoviestLists);
+    return of(testMoviesLists);
   },
   doc() {
     return docObject;
@@ -50,7 +50,8 @@ const moviesServiceMock = {
 };
 
 const notificationServiceMock = {
-  open: () => {}
+  error: () => {},
+  success: () => {}
 };
 
 describe('MoviesListsService', () => {
@@ -58,7 +59,7 @@ describe('MoviesListsService', () => {
   let moviesListsStore: MoviesListsStore;
   let firestoreService: AngularFirestore;
   let sessionQuery: SessionQuery;
-  let notificationService: NgxNotificationMsgService;
+  let notificationService: HotToastService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -85,18 +86,18 @@ describe('MoviesListsService', () => {
           useValue: moviesServiceMock
         },
         {
-          provide: NgxNotificationMsgService,
+          provide: HotToastService,
           useValue: notificationServiceMock
         }
       ],
       imports: [HttpClientTestingModule]
     });
 
-    moviesListsService = TestBed.get(MoviesListsService);
-    moviesListsStore = TestBed.get(MoviesListsStore);
-    firestoreService = TestBed.get(AngularFirestore);
-    sessionQuery = TestBed.get(SessionQuery);
-    notificationService = TestBed.get(NgxNotificationMsgService);
+    moviesListsService = TestBed.inject(MoviesListsService);
+    moviesListsStore = TestBed.inject(MoviesListsStore);
+    firestoreService = TestBed.inject(AngularFirestore);
+    sessionQuery = TestBed.inject(SessionQuery);
+    notificationService = TestBed.inject(HotToastService);
 
     firestoreMockSpy.mockClear();
   });
@@ -109,7 +110,7 @@ describe('MoviesListsService', () => {
     test('should get all the movies lists for the logged in user', () => {
       sessionStoreQueryMock.userId$.next('batman');
       expect(firestoreMockSpy).toHaveBeenCalledWith('movies-lists', expect.any(Function));
-      expect(moviesListsStoreMock.set).toHaveBeenCalledWith(testMoviestLists);
+      expect(moviesListsStoreMock.set).toHaveBeenCalledWith(testMoviesLists);
     });
 
     test('should clear the store if the user logs out', () => {
@@ -127,7 +128,7 @@ describe('MoviesListsService', () => {
       sessionQueryMock.userId.mockReturnValue(testUser.userId);
       const idToUse = '52';
       jest.spyOn(firestoreService, 'createId').mockReturnValue(idToUse);
-      jest.spyOn(notificationService, 'open');
+      jest.spyOn(notificationService, 'success');
       const moviesListToAdd: Partial<MoviesList> = {
         name: 'awesome movies'
       };
@@ -145,10 +146,8 @@ describe('MoviesListsService', () => {
       expect(moviesListsStoreMock.add).toHaveBeenCalledWith(expectedMoviesList);
       expect(moviesListsStoreMock.setLoading).toHaveBeenCalledWith(false);
       expect(moviesListsStoreMock.setError).not.toHaveBeenCalled();
-      expect(notificationService.open).toHaveBeenCalledWith({
-        status: NgxNotificationStatusMsg.SUCCESS,
-        header: expect.any(String),
-        msg: expect.any(String)
+      expect(notificationService.success).toHaveBeenCalledWith(expect.any(String), {
+        duration: 3000
       });
     });
 
@@ -157,7 +156,7 @@ describe('MoviesListsService', () => {
       sessionQueryMock.userId.mockReturnValue(testUser.userId);
       const idToUse = '52';
       jest.spyOn(firestoreService, 'createId').mockReturnValue(idToUse);
-      jest.spyOn(notificationService, 'open');
+      jest.spyOn(notificationService, 'error');
       const errorToUse = new Error('HahhahahaHahAHhAh!');
       docObject.set.mockImplementationOnce(() => {
         throw errorToUse;
@@ -171,17 +170,15 @@ describe('MoviesListsService', () => {
       expect(moviesListsStoreMock.setLoading).toHaveBeenCalledWith(true);
       expect(moviesListsStoreMock.setLoading).toHaveBeenCalledWith(false);
       expect(moviesListsStoreMock.setError).toHaveBeenCalledWith(errorToUse);
-      expect(notificationService.open).toHaveBeenCalledWith({
-        status: NgxNotificationStatusMsg.FAILURE,
-        header: expect.any(String),
-        msg: expect.any(String)
+      expect(notificationService.error).toHaveBeenCalledWith(expect.any(String), {
+        duration: 3000
       });
     });
   });
 
   describe('update', () => {
     test('should update the movies list', async () => {
-      jest.spyOn(notificationService, 'open');
+      jest.spyOn(notificationService, 'success');
       sessionStoreQueryMock.userId$.next('batman');
       sessionQueryMock.userId.mockReturnValue(testUser.userId);
       const idToUse = '52';
@@ -197,31 +194,27 @@ describe('MoviesListsService', () => {
 
       expect(docObject.update).toHaveBeenCalledWith(moviesListToUpdate);
       expect(moviesListsStoreMock.update).toHaveBeenCalledWith(idToUse, moviesListToUpdate);
-      expect(notificationService.open).toHaveBeenCalledWith({
-        status: NgxNotificationStatusMsg.SUCCESS,
-        header: expect.any(String),
-        msg: expect.any(String)
+      expect(notificationService.success).toHaveBeenCalledWith(expect.any(String), {
+        duration: 3000
       });
     });
   });
 
   describe('remove', () => {
     test('should remove the movies list', async () => {
-      jest.spyOn(notificationService, 'open');
+      jest.spyOn(notificationService, 'success');
       const idToUse = '52';
 
       await moviesListsService.remove(idToUse);
 
       expect(docObject.delete).toHaveBeenCalled();
-      expect(notificationService.open).toHaveBeenCalledWith({
-        status: NgxNotificationStatusMsg.SUCCESS,
-        header: expect.any(String),
-        msg: expect.any(String)
+      expect(notificationService.success).toHaveBeenCalledWith(expect.any(String), {
+        duration: 3000
       });
     });
 
     test('should remove the movies in the list', async () => {
-      const moviesService: MoviesService = TestBed.get(MoviesService);
+      const moviesService: MoviesService = TestBed.inject(MoviesService);
       jest.spyOn(moviesService, 'deleteMoviesInList');
       const idToUse = '52';
 
@@ -257,8 +250,8 @@ describe('MoviesListsService', () => {
 
   describe('addMovieToCurrentList', () => {
     test('should add the movie to the current list', () => {
-      jest.spyOn(notificationService, 'open');
-      const moviesService: MoviesService = TestBed.get(MoviesService);
+      jest.spyOn(notificationService, 'success');
+      const moviesService: MoviesService = TestBed.inject(MoviesService);
       const selectedList = '123';
       const movieToAdd = testMovieSearchResults[0];
       moviesListsQueryMock.getActive.mockReturnValue({
@@ -270,10 +263,8 @@ describe('MoviesListsService', () => {
 
       expect(moviesService.addMovieToList).toHaveBeenCalledWith(selectedList, movieToAdd);
       expect(moviesListsService.fetch).toHaveBeenCalled();
-      expect(notificationService.open).toHaveBeenCalledWith({
-        status: NgxNotificationStatusMsg.SUCCESS,
-        header: expect.any(String),
-        msg: expect.any(String)
+      expect(notificationService.success).toHaveBeenCalledWith(expect.any(String), {
+        duration: 3000
       });
     });
   });

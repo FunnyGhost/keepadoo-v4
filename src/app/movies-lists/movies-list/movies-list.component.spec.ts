@@ -1,20 +1,22 @@
 import { DebugElement } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { testMoviestLists } from '../../../test-utilities/test-objects';
+import { testMoviesLists } from '../../../test-utilities/test-objects';
 import { Movie } from '../movies/state/models/movie';
 import { MoviesListComponent } from './movies-list.component';
 
 describe('MoviesListComponent', () => {
-  const listToUse = testMoviestLists[1];
+  const listToUse = testMoviesLists[1];
   let component: MoviesListComponent;
   let fixture: ComponentFixture<MoviesListComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [MoviesListComponent]
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [MoviesListComponent]
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(MoviesListComponent);
@@ -52,9 +54,9 @@ describe('MoviesListComponent', () => {
     });
   });
 
-  test('should emit when the list is clicked', done => {
+  test('should emit when the list is clicked', (done) => {
     const title = fixture.debugElement.query(By.css('button.movies-list'));
-    component.listClick.subscribe(listId => {
+    component.listClick.subscribe((listId) => {
       expect(listId).toEqual(listToUse.id);
       done();
     });

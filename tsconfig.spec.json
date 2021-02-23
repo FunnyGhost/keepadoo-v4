@@ -1,13 +1,9 @@
 {
-  "extends": "../tsconfig.json",
+  "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "./out-tsc/spec",
     "emitDecoratorMetadata": true,
     "types": ["node", "jest"]
   },
-  // "files": ["test.ts", "polyfills.ts"],
   "include": ["**/*.spec.ts", "**/*.d.ts"],
-  "angularCompilerOptions": {
-    "enableIvy": false
-  }
 }

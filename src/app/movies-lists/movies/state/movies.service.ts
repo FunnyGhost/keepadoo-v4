@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { NgxNotificationMsgService, NgxNotificationStatusMsg } from 'ngx-notification-msg';
 import { combineLatest, from, Observable } from 'rxjs';
 import { switchMap, take } from 'rxjs/operators';
 import { SessionQuery } from '../../../state/session.query';
@@ -9,6 +8,7 @@ import { MoviesList } from '../../state/models/movies-list';
 import { MoviesListsQuery } from '../../state/movies-lists.query';
 import { Movie } from './models/movie';
 import { MoviesStore } from './movies.store';
+import { HotToastService } from '@ngneat/hot-toast';
 
 @Injectable()
 export class MoviesService {
@@ -17,14 +17,14 @@ export class MoviesService {
     sessionQuery: SessionQuery,
     moviesListsQuery: MoviesListsQuery,
     private moviesStore: MoviesStore,
-    private ngxNotificationMsgService: NgxNotificationMsgService
+    private notificationService: HotToastService
   ) {
     combineLatest([sessionQuery.userId$, moviesListsQuery.selectActive()]).subscribe(
       ([userId, moviesList]: [string, MoviesList]) => {
         if (!userId || !moviesList) {
           moviesStore.set([]);
         } else {
-          this.getMoviesInList(moviesList.id).subscribe(movies => moviesStore.set(movies));
+          this.getMoviesInList(moviesList.id).subscribe((movies) => moviesStore.set(movies));
         }
       }
     );
@@ -35,7 +35,7 @@ export class MoviesService {
       .collection<Movie[]>(
         `movies`,
         /* istanbul ignore next */
-        ref => ref.where('listId', '==', listId)
+        (ref) => ref.where('listId', '==', listId)
       )
       .valueChanges({ idField: 'key' })
       .pipe(take(1)) as Observable<Movie[]>;
@@ -50,21 +50,19 @@ export class MoviesService {
     const movieToDelete = this.firestoreService.collection(`movies`).doc(movie.key);
     await movieToDelete.delete();
     this.moviesStore.remove(movie.id);
-    this.ngxNotificationMsgService.open({
-      status: NgxNotificationStatusMsg.SUCCESS,
-      header: 'Movie deleted',
-      msg: `Movie ${movie.title} successfully deleted.`
+    this.notificationService.success('Movie deleted!', {
+      duration: 3000
     });
   }
 
   public async deleteMoviesInList(listId: string): Promise<void> {
     return this.firestoreService
-      .collection(`movies`, ref => ref.where('listId', '==', listId))
+      .collection(`movies`, (ref) => ref.where('listId', '==', listId))
       .snapshotChanges()
       .pipe(
         take(1),
-        switchMap(data => from(data)),
-        switchMap(item => item.payload.doc.ref.delete())
+        switchMap((data) => from(data)),
+        switchMap((item) => item.payload.doc.ref.delete())
       )
       .toPromise();
   }

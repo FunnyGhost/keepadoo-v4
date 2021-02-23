@@ -10,11 +10,9 @@ import { SessionStore } from './session.store';
 
 const angularFireAuthMock = {
   authState: new Subject<any>(),
-  auth: {
-    signInWithEmailAndPassword: jest.fn(),
-    createUserWithEmailAndPassword: jest.fn(),
-    signOut: jest.fn()
-  }
+  signInWithEmailAndPassword: jest.fn(),
+  createUserWithEmailAndPassword: jest.fn(),
+  signOut: jest.fn()
 };
 
 describe('AuthService', () => {
@@ -45,10 +43,10 @@ describe('AuthService', () => {
       ]
     });
 
-    service = TestBed.get(AuthService);
-    store = TestBed.get(SessionStore);
-    query = TestBed.get(SessionQuery);
-    router = TestBed.get(Router);
+    service = TestBed.inject(AuthService);
+    store = TestBed.inject(SessionStore);
+    query = TestBed.inject(SessionQuery);
+    router = TestBed.inject(Router);
   });
 
   test('should be created', () => {
@@ -62,7 +60,7 @@ describe('AuthService', () => {
       expect(store.setLoading).toHaveBeenCalledWith(true);
     });
 
-    test('should login when a new user is emited by firestore', () => {
+    test('should login when a new user is emitted by firestore', () => {
       angularFireAuthMock.authState.next(testFirebaseUser);
 
       expect(store.login).toHaveBeenCalledWith(testUser);
@@ -110,7 +108,7 @@ describe('AuthService', () => {
       const inputPassword = 'password';
 
       await service.signIn(inputEmail, inputPassword);
-      expect(angularFireAuthMock.auth.signInWithEmailAndPassword).toHaveBeenCalledWith(
+      expect(angularFireAuthMock.signInWithEmailAndPassword).toHaveBeenCalledWith(
         inputEmail,
         inputPassword
       );
@@ -130,7 +128,7 @@ describe('AuthService', () => {
       const inputEmail = 'test@test.com';
       const inputPassword = 'password';
 
-      angularFireAuthMock.auth.signInWithEmailAndPassword.mockReturnValueOnce({});
+      angularFireAuthMock.signInWithEmailAndPassword.mockReturnValueOnce({});
       await service.signIn(inputEmail, inputPassword);
 
       expect(store.setError).not.toHaveBeenCalled();
@@ -140,7 +138,7 @@ describe('AuthService', () => {
       const errorToUse = 'Invalid username/password';
       const inputEmail = 'test@test.com';
       const inputPassword = 'password';
-      angularFireAuthMock.auth.signInWithEmailAndPassword.mockRejectedValue({
+      angularFireAuthMock.signInWithEmailAndPassword.mockRejectedValue({
         message: errorToUse
       });
 
@@ -153,7 +151,7 @@ describe('AuthService', () => {
       const errorToUse = 'Invalid username/password';
       const inputEmail = 'test@test.com';
       const inputPassword = 'password';
-      angularFireAuthMock.auth.signInWithEmailAndPassword.mockRejectedValue(errorToUse);
+      angularFireAuthMock.signInWithEmailAndPassword.mockRejectedValue(errorToUse);
 
       await service.signIn(inputEmail, inputPassword);
 
@@ -167,7 +165,7 @@ describe('AuthService', () => {
       const inputPassword = 'password';
 
       await service.signUp(inputEmail, inputPassword);
-      expect(angularFireAuthMock.auth.createUserWithEmailAndPassword).toHaveBeenCalledWith(
+      expect(angularFireAuthMock.createUserWithEmailAndPassword).toHaveBeenCalledWith(
         inputEmail,
         inputPassword
       );
@@ -187,7 +185,7 @@ describe('AuthService', () => {
       const inputEmail = 'test@test.com';
       const inputPassword = 'password';
 
-      angularFireAuthMock.auth.createUserWithEmailAndPassword.mockReturnValueOnce({});
+      angularFireAuthMock.createUserWithEmailAndPassword.mockReturnValueOnce({});
       await service.signUp(inputEmail, inputPassword);
 
       expect(store.setError).not.toHaveBeenCalled();
@@ -197,7 +195,7 @@ describe('AuthService', () => {
       const errorToUse = 'Invalid username/password';
       const inputEmail = 'test@test.com';
       const inputPassword = 'password';
-      angularFireAuthMock.auth.createUserWithEmailAndPassword.mockRejectedValue({
+      angularFireAuthMock.createUserWithEmailAndPassword.mockRejectedValue({
         message: errorToUse
       });
 
@@ -210,7 +208,7 @@ describe('AuthService', () => {
       const errorToUse = 'Invalid username/password';
       const inputEmail = 'test@test.com';
       const inputPassword = 'password';
-      angularFireAuthMock.auth.createUserWithEmailAndPassword.mockRejectedValue(errorToUse);
+      angularFireAuthMock.createUserWithEmailAndPassword.mockRejectedValue(errorToUse);
 
       await service.signUp(inputEmail, inputPassword);
 
@@ -222,7 +220,7 @@ describe('AuthService', () => {
     test('should sign out', async () => {
       await service.signOut();
 
-      expect(angularFireAuthMock.auth.signOut).toHaveBeenCalled();
+      expect(angularFireAuthMock.signOut).toHaveBeenCalled();
     });
 
     test('should navigate to the login route', async () => {
@@ -234,9 +232,9 @@ describe('AuthService', () => {
 
   afterEach(() => {
     sessionStoreMock.login.mockClear();
-    angularFireAuthMock.auth.signInWithEmailAndPassword.mockClear();
-    angularFireAuthMock.auth.createUserWithEmailAndPassword.mockClear();
-    angularFireAuthMock.auth.signOut.mockClear();
+    angularFireAuthMock.signInWithEmailAndPassword.mockClear();
+    angularFireAuthMock.createUserWithEmailAndPassword.mockClear();
+    angularFireAuthMock.signOut.mockClear();
     routerMock.navigate.mockClear();
     routerMock.navigateByUrl.mockClear();
     (store as any).setLoading.mockClear();

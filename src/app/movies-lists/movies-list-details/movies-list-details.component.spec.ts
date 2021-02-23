@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MockComponent } from 'ng-mocks';
@@ -10,7 +10,7 @@ import {
   moviesQueryMock,
   routerMock
 } from '../../../test-utilities/test-mocks';
-import { testMovies, testMoviestLists } from '../../../test-utilities/test-objects';
+import { testMovies, testMoviesLists } from '../../../test-utilities/test-objects';
 import { DialogComponent } from '../../shared/dialog/dialog.component';
 import { MovieComponent } from '../movie/movie.component';
 import { MoviesQuery } from '../movies/state/movies.query';
@@ -33,7 +33,7 @@ const moviesServiceMock = {
 const listIdToUse = 'dc-movies';
 const activatedRouteMock = {
   paramMap: of({
-    get: (key: string) => listIdToUse
+    get: () => listIdToUse
   })
 };
 
@@ -41,45 +41,47 @@ describe('MoviesListDetailsComponent', () => {
   let component: MoviesListDetailsComponent;
   let fixture: ComponentFixture<MoviesListDetailsComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        MoviesListDetailsComponent,
-        MockComponent(MovieComponent),
-        MockComponent(DialogComponent)
-      ],
-      providers: [
-        {
-          provide: MoviesQuery,
-          useValue: moviesQueryMock
-        },
-        {
-          provide: MoviesListsQuery,
-          useValue: moviesListsQueryMock
-        },
-        {
-          provide: MoviesService,
-          useValue: moviesServiceMock
-        },
-        {
-          provide: MoviesListsService,
-          useValue: moviesListsServiceMock
-        },
-        {
-          provide: ActivatedRoute,
-          useValue: activatedRouteMock
-        },
-        {
-          provide: Router,
-          useValue: routerMock
-        }
-      ]
-    })
-      .overrideComponent(MoviesListDetailsComponent, {
-        set: { changeDetection: ChangeDetectionStrategy.Default }
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          MoviesListDetailsComponent,
+          MockComponent(MovieComponent),
+          MockComponent(DialogComponent)
+        ],
+        providers: [
+          {
+            provide: MoviesQuery,
+            useValue: moviesQueryMock
+          },
+          {
+            provide: MoviesListsQuery,
+            useValue: moviesListsQueryMock
+          },
+          {
+            provide: MoviesService,
+            useValue: moviesServiceMock
+          },
+          {
+            provide: MoviesListsService,
+            useValue: moviesListsServiceMock
+          },
+          {
+            provide: ActivatedRoute,
+            useValue: activatedRouteMock
+          },
+          {
+            provide: Router,
+            useValue: routerMock
+          }
+        ]
       })
-      .compileComponents();
-  }));
+        .overrideComponent(MoviesListDetailsComponent, {
+          set: { changeDetection: ChangeDetectionStrategy.Default }
+        })
+        .compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(MoviesListDetailsComponent);
@@ -106,9 +108,9 @@ describe('MoviesListDetailsComponent', () => {
       expect(moviesQueryMock.selectAll).toHaveBeenCalled();
       const movieComponents = childComponents<MovieComponent>(fixture, MovieComponent);
       expect(movieComponents.length).toBe(testMovies.length);
-      testMovies.forEach(movie => {
+      testMovies.forEach((movie) => {
         const element = movieComponents.find(
-          movieComponent => movieComponent.movie.id === movie.id
+          (movieComponent) => movieComponent.movie.id === movie.id
         );
         expect(element).toBeTruthy();
       });
@@ -129,7 +131,7 @@ describe('MoviesListDetailsComponent', () => {
     });
 
     test('should show the selected list title', () => {
-      const moviesListToUse = testMoviestLists[0];
+      const moviesListToUse = testMoviesLists[0];
       moviesListsQueryMock.selectActive.mockReturnValue(of(moviesListToUse));
 
       component.ngOnInit();
@@ -151,7 +153,7 @@ describe('MoviesListDetailsComponent', () => {
 
     test('should show the movies in edit mode', () => {
       const movieComponents = childComponents<MovieComponent>(fixture, MovieComponent);
-      movieComponents.forEach(movieComponent => {
+      movieComponents.forEach((movieComponent) => {
         expect(movieComponent.editMode).toBe(true);
       });
     });
@@ -190,7 +192,7 @@ describe('MoviesListDetailsComponent', () => {
     });
 
     test('should delete the list when the user clicks the confirmation button', () => {
-      const moviesListToUse = testMoviestLists[0];
+      const moviesListToUse = testMoviesLists[0];
       moviesListsQueryMock.selectActive.mockReturnValue(of(moviesListToUse));
 
       const deleteButton = fixture.debugElement.query(By.css('button.delete-button'));
@@ -205,7 +207,7 @@ describe('MoviesListDetailsComponent', () => {
     });
 
     test('should delete a movie when the delete event is triggered', () => {
-      const moviesService: MoviesService = TestBed.get(MoviesService);
+      const moviesService = TestBed.inject(MoviesService);
       const movieComponents = childComponents<MovieComponent>(fixture, MovieComponent);
       const movieToDelete = testMovies[0];
 
@@ -216,7 +218,7 @@ describe('MoviesListDetailsComponent', () => {
 
     test('should disable edit mode when done button is clicked', () => {
       const doneButton = fixture.debugElement.query(By.css('button.done-button'));
-      const moviesService: MoviesService = TestBed.get(MoviesService);
+      const moviesService = TestBed.inject(MoviesService);
 
       doneButton.triggerEventHandler('click', null);
 
@@ -235,7 +237,7 @@ describe('MoviesListDetailsComponent', () => {
 
     test('should not show the movies in edit mode', () => {
       const movieComponents = childComponents<MovieComponent>(fixture, MovieComponent);
-      movieComponents.forEach(movieComponent => {
+      movieComponents.forEach((movieComponent) => {
         expect(movieComponent.editMode).toBe(false);
       });
     });
@@ -248,7 +250,7 @@ describe('MoviesListDetailsComponent', () => {
 
     test('should enable edit mode when edit button is clicked', () => {
       const editButton = fixture.debugElement.query(By.css('button.edit-button'));
-      const moviesService: MoviesService = TestBed.get(MoviesService);
+      const moviesService = TestBed.inject(MoviesService);
 
       editButton.triggerEventHandler('click', null);
 

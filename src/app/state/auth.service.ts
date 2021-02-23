@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
-import { User as FirebaseUser } from 'firebase';
 import { map } from 'rxjs/operators';
 import { User } from './models/user';
 import { SessionQuery } from './session.query';
@@ -20,7 +19,7 @@ export class AuthService {
     this.sessionStore.setLoading(true);
     this.afAuth.authState
       .pipe(
-        map((firebaseUser: FirebaseUser) => {
+        map((firebaseUser) => {
           if (firebaseUser) {
             const user: User = {
               displayName: firebaseUser.displayName,
@@ -51,7 +50,7 @@ export class AuthService {
     let response;
 
     try {
-      response = await this.afAuth.auth.signInWithEmailAndPassword(email, password);
+      response = await this.afAuth.signInWithEmailAndPassword(email, password);
     } catch (error) {
       this.sessionStore.setError(error.message);
     }
@@ -62,10 +61,8 @@ export class AuthService {
 
   async signUp(email, password) {
     this.sessionStore.setLoading(true);
-    let response;
-
     try {
-      response = await this.afAuth.auth.createUserWithEmailAndPassword(email, password);
+      await this.afAuth.createUserWithEmailAndPassword(email, password);
     } catch (error) {
       this.sessionStore.setError(error.message);
     }
@@ -74,7 +71,7 @@ export class AuthService {
   }
 
   async signOut() {
-    await this.afAuth.auth.signOut();
+    await this.afAuth.signOut();
     return this.router.navigate(['/login']);
   }
 }

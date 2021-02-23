@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { AbstractControl, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -25,33 +25,35 @@ describe('RegisterComponent', () => {
   let fixture: ComponentFixture<RegisterComponent>;
   let authService: AuthService;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule, RouterTestingModule],
-      declarations: [RegisterComponent],
-      providers: [
-        {
-          provide: AuthService,
-          useValue: authServiceMock
-        },
-        {
-          provide: SessionQuery,
-          useValue: queryMock
-        }
-      ]
-    })
-      .overrideComponent(RegisterComponent, {
-        set: { changeDetection: ChangeDetectionStrategy.Default }
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [ReactiveFormsModule, RouterTestingModule],
+        declarations: [RegisterComponent],
+        providers: [
+          {
+            provide: AuthService,
+            useValue: authServiceMock
+          },
+          {
+            provide: SessionQuery,
+            useValue: queryMock
+          }
+        ]
       })
-      .compileComponents();
-  }));
+        .overrideComponent(RegisterComponent, {
+          set: { changeDetection: ChangeDetectionStrategy.Default }
+        })
+        .compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(RegisterComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
 
-    authService = TestBed.get(AuthService);
+    authService = TestBed.inject(AuthService);
   });
 
   test('should create', () => {
@@ -134,7 +136,7 @@ describe('RegisterComponent', () => {
     });
 
     test('should be valid if value is an email', () => {
-      password.setValue('somelongpassword');
+      password.setValue('some-long-password');
       errors = password.errors || {};
 
       expect(errors['required']).toBeFalsy();

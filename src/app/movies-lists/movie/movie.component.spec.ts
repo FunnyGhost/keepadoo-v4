@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { testMovies } from '../../../test-utilities/test-objects';
 import { MovieComponent } from './movie.component';
@@ -9,13 +9,15 @@ describe('MovieComponent', () => {
   let component: MovieComponent;
   let fixture: ComponentFixture<MovieComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({ declarations: [MovieComponent] })
-      .overrideComponent(MovieComponent, {
-        set: { changeDetection: ChangeDetectionStrategy.Default }
-      })
-      .compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({ declarations: [MovieComponent] })
+        .overrideComponent(MovieComponent, {
+          set: { changeDetection: ChangeDetectionStrategy.Default }
+        })
+        .compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(MovieComponent);

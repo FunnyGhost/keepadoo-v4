@@ -30,10 +30,7 @@ export class MovieSearchComponent implements OnInit {
     this.movieResults$ = this.movieSearchQuery.selectAll();
 
     this.movieToSearchFor.valueChanges
-      .pipe(
-        debounceTime(500),
-        distinctUntilChanged()
-      )
+      .pipe(debounceTime(500), distinctUntilChanged())
       .subscribe((movieName: string) => {
         this.movieSearchService.searchMovies(movieName);
       });

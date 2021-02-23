@@ -20,9 +20,9 @@ describe('AuthGuard', () => {
       ]
     });
 
-    guard = TestBed.get(AuthGuard);
-    query = TestBed.get(SessionQuery);
-    store = TestBed.get(SessionStore);
+    guard = TestBed.inject(AuthGuard);
+    query = TestBed.inject(SessionQuery);
+    store = TestBed.inject(SessionStore);
   });
 
   test('should return true if the user is logged in', () => {
@@ -47,7 +47,7 @@ describe('AuthGuard', () => {
     });
 
     test('should redirect to login if the user is not logged in', () => {
-      const router: Router = TestBed.get(Router);
+      const router = TestBed.inject(Router);
 
       guard.canActivate(null, { url: 'some-url-here' } as RouterStateSnapshot);
 

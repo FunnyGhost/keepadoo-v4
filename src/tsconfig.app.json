@@ -5,8 +5,5 @@
     "types": []
   },
   "files": ["main.ts", "polyfills.ts"],
-  "include": ["**/*.d.ts"],
-  "angularCompilerOptions": {
-    "enableIvy": false
-  }
+  "include": ["**/*.d.ts"]
 }

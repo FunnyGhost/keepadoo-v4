@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { FirestoreSettingsToken } from '@angular/fire/firestore';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -13,6 +12,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { SharedModule } from './shared/shared.module';
 import { AuthGuard } from './state/auth.guard';
+import { HotToastModule } from '@ngneat/hot-toast';
 
 const routes: Route[] = [
   {
@@ -36,7 +36,7 @@ const routes: Route[] = [
       {
         path: 'movies-lists',
         loadChildren: () =>
-          import('./movies-lists/movies-lists.module').then(m => m.MoviesListsModule)
+          import('./movies-lists/movies-lists.module').then((m) => m.MoviesListsModule)
       }
     ]
   }
@@ -51,13 +51,16 @@ const routes: Route[] = [
     ReactiveFormsModule,
     BrowserModule,
     BrowserAnimationsModule,
-    RouterModule.forRoot(routes, { initialNavigation: 'enabled' }),
+    RouterModule.forRoot(routes, {
+      initialNavigation: 'enabled',
+      relativeLinkResolution: 'legacy'
+    }),
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
       registrationStrategy: 'registerImmediately'
-    })
+    }),
+    HotToastModule.forRoot()
   ],
-  providers: [{ provide: FirestoreSettingsToken, useValue: {} }],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

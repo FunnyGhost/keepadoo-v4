@@ -1,8 +1,8 @@
-import { User as FirebaseUser } from 'firebase';
 import { MovieSearchResult } from '../app/movies-lists/movie-search/state/models/movie-search-results';
 import { Movie } from '../app/movies-lists/movies/state/models/movie';
 import { MoviesList } from '../app/movies-lists/state/models/movies-list';
 import { User } from '../app/state/models/user';
+import firebase from 'firebase';
 
 export const testUser: User = {
   displayName: 'Batman',
@@ -10,13 +10,13 @@ export const testUser: User = {
   userId: '1'
 };
 
-export const testFirebaseUser: FirebaseUser = {
+export const testFirebaseUser = {
   displayName: 'Batman',
   email: 'bruce_wayne@gotham.dc',
   uid: '1'
-} as FirebaseUser;
+} as firebase.User;
 
-export const testMoviestLists: MoviesList[] = [
+export const testMoviesLists: MoviesList[] = [
   {
     id: '1',
     name: 'to see',

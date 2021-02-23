@@ -6,10 +6,7 @@ export interface MovieSearchState extends EntityState<MovieSearchResult> {}
 
 @Injectable()
 @StoreConfig({ name: 'movie-search' })
-export class MovieSearchStore extends EntityStore<
-  MovieSearchState,
-  MovieSearchResult
-> {
+export class MovieSearchStore extends EntityStore<MovieSearchState, MovieSearchResult> {
   constructor() {
     super();
   }
